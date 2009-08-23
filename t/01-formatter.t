@@ -1,11 +1,25 @@
 #!/usr/bin/perl
 
-use Test::More tests => 17;
+use Test::More tests => 18;
 
 use_ok("Quiki::Formatter");
 
 is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
 one paragraph.
+
+two paragraphs.
+EOI
+<p>one paragraph.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+one paragraph.
+
+
+
+
 
 two paragraphs.
 EOI
@@ -138,6 +152,9 @@ is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
 ======foo======
 
 =====bar=====
+
+
+
 
 ====zbr====
 

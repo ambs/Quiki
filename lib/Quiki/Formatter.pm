@@ -11,7 +11,7 @@ use feature ':5.10';
 sub format {
     my $string = shift;
 
-    my @chunks = split /^$/m, $string;
+    my @chunks = split /^$(?:\n^$)*/m, $string;
 
     my $html = join("\n\n", map { _format_chunk($_) } @chunks);
     return $html . "\n";
