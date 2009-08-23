@@ -13,9 +13,10 @@ WriteMakefile(
     PL_FILES            => {},
     EXE_FILES => [ 'script/quiki_create.pl' ],
     PREREQ_PM => {
-		'CGI' => 0,
-        'CGI::Cookie' => 0,
-        'Test::More' => 0,
+                  'CGI' => 0,
+                  'CGI::Cookie' => 0,
+                  'Test::More' => 0,
+                  'URI::Escape' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Quiki-*' },

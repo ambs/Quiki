@@ -1,7 +1,11 @@
 package Quiki::Formatter;
 
-use CGI ':standard';
 use feature ':5.10';
+
+use CGI ':standard';
+use URI::Escape;
+
+
 
 # Formatter (format)
 #------------------------------------------------------------
@@ -60,12 +64,16 @@ sub _inlines {
        ## [[http://foo]] -- same as http://foo ?
        qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
        ## [[nodo]]
-       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>"$script?node=$1"}, $1) },
+       qr/\[\[([^\]|]+)\]\]/                    => sub {
+           a({-href=>"$script?node=$1"}, uri_escape($1))
+       },
        ## [[protocol://foo|descricao]]
-       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($Quiki, $2)) },
+       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub {
+           a({-href=>$1}, _inlines($Quiki, $2))
+       },
        ## [[nodo|descricao]]
        qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub {
-           a({-href=>"$script?node=$1"}, _inlines($Quiki, $2))
+           a({-href=>"$script?node=$1"}, _inlines($Quiki, uri_escape($2)))
        },
        ## ** foo **
        qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x   => sub { b(_inlines($Quiki, $1)) },
