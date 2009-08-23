@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 11;
+use Test::More tests => 13;
 
 use_ok("Quiki::Formatter");
 
@@ -102,4 +102,16 @@ EOI
 <p>one paragraph with an <i>italic / with / slashes</i>.</p>
 
 <p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<'EOI'), <<"EOO");
+foo /\/ bar \** zbr \/\/ ugh \*\*.
+EOI
+<p>foo // bar ** zbr // ugh **.</p>
+EOO
+
+is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+foo \\ bar \[[ zbr \]] ugh \*\*.
+EOI
+<p>foo \ bar [[ zbr ]] ugh **.</p>
 EOO

@@ -56,10 +56,18 @@ sub _format_paragraph {
     while (@inline) {
         my $re = shift @inline;
         my $code = shift @inline;
-        $chunk =~ s/$re/ $code->() /eg;
+        $chunk =~ s/(?<!\\) $re/ $code->() /xeg;
     }
 
+    $chunk = _unbackslash($chunk);
+
     return p($chunk);
+}
+
+sub _unbackslash {
+    my $string = shift;
+    $string =~ s/\\(.)/$1/g;
+    return $string;
 }
 
 sub _protect {
