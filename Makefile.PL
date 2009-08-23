@@ -11,6 +11,7 @@ WriteMakefile(
       ? ('LICENSE'=> 'perl')
       : ()),
     PL_FILES            => {},
+    EXE_FILES => [ 'scripts/create_wiki.pl' ],
     PREREQ_PM => {
 		'CGI' => 0,
         'CGI::Cookie' => 0,
