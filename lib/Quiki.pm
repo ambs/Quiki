@@ -29,20 +29,12 @@ our $VERSION = '0.01';
 
     Quiki->new(%conf)->run;
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
-=head1 FUNCTIONS
+=head1 EXPORT FUNCTIONS
 
 =head2 Quiki
 
 =cut
 
-my %conf = (
-            'name' => 'defaultName',
-           );
 
 
 sub new {
@@ -50,6 +42,11 @@ sub new {
     my $self;
 
     # XXX
+    # Make it local O:-)
+    my %conf = (
+                'name' => 'defaultName',
+                'index' => 'index', # index node
+               );
     $self = {%conf, %args};
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
@@ -78,7 +75,7 @@ sub run {
 
     # XXX
     if ($save) {
-   	my $text = param('text') || '';
+   	my $text = param('text') // '';
    	open F, "> data/content/$node" or die "can't open file";
    	print F $text;
    	close F;
@@ -88,13 +85,13 @@ sub run {
     my $content = `cat data/content/$node`;
 
     print header(-charset=>'UTF-8');
-    print start_html("$conf{'name'}::$node");
-    print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?node=index"},
-               "$conf{'name'}::$node"));
+    print start_html("$self->{name}::$node");
+    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}},
+               "$self->{name}::$node"));
 
     if ($edit) {
         print start_form(-method=>'POST'),
-          textarea('text',$content,10,50),
+          textarea('text',$content,15,80),
             hidden('node',$node),
               hidden('save','1'),
                 hr,
