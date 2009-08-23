@@ -1,6 +1,7 @@
 package Quiki::Formatter;
 
 use CGI ':standard';
+use feature ':5.10';
 
 # Formatter (format)
 #------------------------------------------------------------
@@ -38,19 +39,39 @@ sub _format_paragraph {
 
     $chunk = _protect($chunk);
 
+    if ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1/x) {
+        given(length($1)) {
+            when (1) { $chunk = h6(_inlines($2)) }
+            when (2) { $chunk = h5(_inlines($2)) }
+            when (3) { $chunk = h4(_inlines($2)) }
+            when (4) { $chunk = h3(_inlines($2)) }
+            when (5) { $chunk = h2(_inlines($2)) }
+            when (6) { $chunk = h1(_inlines($2)) }
+        }
+    } else {
+        $chunk = p(_inlines($chunk));
+    }
+    $chunk = _unbackslash($chunk);
+
+    return $chunk;
+}
+
+sub _inlines {
+    my $chunk = shift;
     my @inline = (
                   ## [[http://foo]] -- same as http://foo ?
                   qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
                   ## [[nodo]]
                   qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
                   ## [[protocol://foo|descricao]]
-                  qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, $2) },
+                  qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($2)) },
                   ## [[nodo|descricao]]
-                  qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, $2) },
+                  qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($2)) },
                   ## ** foo **
-                  qr/\*\* ((?:[^*]|\*[^*])+) \*\*/x        => sub { b($1) },
+                  qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x        => sub { b(_inlines($1)) },
                   ## // foo //
-                  qr/\/\/ ((?:[^\/]|\/[^\/])+) \/\//x      => sub { i($1) },
+                  qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x      => sub { i(_inlines($1)) },
+
                  );
 
     while (@inline) {
@@ -58,10 +79,7 @@ sub _format_paragraph {
         my $code = shift @inline;
         $chunk =~ s/(?<!\\) $re/ $code->() /xeg;
     }
-
-    $chunk = _unbackslash($chunk);
-
-    return p($chunk);
+    return $chunk;
 }
 
 sub _unbackslash {
