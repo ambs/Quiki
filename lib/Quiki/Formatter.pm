@@ -23,23 +23,14 @@ sub format {
 # formatter.
 sub _format_chunk {
     my $chunk = shift;
-
-    $chunk = _format_paragraph($chunk);
-
-    return $chunk;
-}
-
-# _format_paragraph
-#------------------------------------------------------------
-# formats a paragraph and inline formats.
-sub _format_paragraph {
-    my $chunk = shift;
     $chunk =~ s/\n$//;
     $chunk =~ s/^\n//;
-
     $chunk = _protect($chunk);
 
-    if ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1/x) {
+    if ($chunk =~ /^ -{10,} \s* $ /x) {
+        $chunk = "<hr/>";
+    }
+    elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
         given(length($1)) {
             when (1) { $chunk = h6(_inlines($2)) }
             when (2) { $chunk = h5(_inlines($2)) }
@@ -48,34 +39,35 @@ sub _format_paragraph {
             when (5) { $chunk = h2(_inlines($2)) }
             when (6) { $chunk = h1(_inlines($2)) }
         }
-    } else {
+    }
+    else {
         $chunk = p(_inlines($chunk));
     }
-    $chunk = _unbackslash($chunk);
 
+    $chunk = _unbackslash($chunk);
     return $chunk;
 }
 
 sub _inlines {
     my $chunk = shift;
-    my @inline = (
-                  ## [[http://foo]] -- same as http://foo ?
-                  qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
-                  ## [[nodo]]
-                  qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
-                  ## [[protocol://foo|descricao]]
-                  qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($2)) },
-                  ## [[nodo|descricao]]
-                  qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($2)) },
-                  ## ** foo **
-                  qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x        => sub { b(_inlines($1)) },
-                  ## // foo //
-                  qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x      => sub { i(_inlines($1)) },
-
-                 );
+    my @inline =
+      (
+       ## [[http://foo]] -- same as http://foo ?
+       qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
+       ## [[nodo]]
+       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
+       ## [[protocol://foo|descricao]]
+       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($2)) },
+       ## [[nodo|descricao]]
+       qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($2)) },
+       ## ** foo **
+       qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x        => sub { b(_inlines($1)) },
+       ## // foo //
+       qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x      => sub { i(_inlines($1)) },
+      );
 
     while (@inline) {
-        my $re = shift @inline;
+        my $re   = shift @inline;
         my $code = shift @inline;
         $chunk =~ s/(?<!\\) $re/ $code->() /xeg;
     }

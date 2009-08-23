@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 18;
+use Test::More tests => 19;
 
 use_ok("Quiki::Formatter");
 
@@ -156,7 +156,7 @@ is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
 
 
 
-====zbr====
+====zbr====      
 
 A paragraph.
 
@@ -181,3 +181,16 @@ EOI
 <h6>zbr != ugh</h6>
 EOO
 
+is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+------------
+
+---------------------
+
+---------------------------------
+EOI
+<hr/>
+
+<hr/>
+
+<hr/>
+EOO
