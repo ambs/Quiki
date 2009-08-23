@@ -53,7 +53,7 @@ sub new {
 }
 
 sub run {
-	my $self = shift;
+    my $self = shift;
     use CGI qw/:standard/;
 
     # XXX
@@ -61,6 +61,9 @@ sub run {
     my $edit = param('edit') || 0;
     my $save = param('save') || 0;
     my $create = param('create') || 0;
+
+    # XXX
+    $node =~ s/\s/_/g;
 
     # XXX
     if ($create or !-f "data/content/$node") {
