@@ -1,5 +1,6 @@
 package Quiki;
 
+use Quiki::Formatter;
 # vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
 
 use warnings;
@@ -22,7 +23,11 @@ our $VERSION = '0.01';
 
     use Quiki;
 
-    Quiki( %conf );
+    my %conf = (
+               'name' => 'MyQuiki'
+                );
+
+    Quiki->new(%conf)->run;
 
 =head1 EXPORT
 

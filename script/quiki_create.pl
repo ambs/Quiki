@@ -19,11 +19,10 @@ my $cgi_file=<<'EOF';
 use lib '### CHANGE ME ###';
 
 use Quiki;
-use Quiki::Formatter;
 
 my %conf = (
-                'name' => 'MyQuiki'
-        );
+           'name' => 'MyQuiki'
+            );
 
 Quiki->new(%conf)->run;
 EOF
