@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-Quiki - The great new Quiki!
+Quiki - A lightweight Wiki in Perl
 
 =head1 VERSION
 
@@ -18,14 +18,9 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Quiki;
 
-    my $foo = Quiki->new();
-    ...
+    Quiki( %conf );
 
 =head1 EXPORT
 
@@ -34,18 +29,12 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 FUNCTIONS
 
-=head2 function1
+=head2 Quiki
 
 =cut
 
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
+sub Quiki {
+    
 }
 
 =head1 AUTHOR
@@ -54,12 +43,11 @@ Alberto Simoes and Nuno Carvalho, C<< <ambs at cpan.org and smash@cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-quiki at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Quiki>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
+Please report any bugs or feature requests to C<bug-quiki at
+rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Quiki>.  I will be
+notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
 
 =head1 SUPPORT
 

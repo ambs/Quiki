@@ -4,8 +4,16 @@ use CGI ':standard';
 
 sub format {
     my $string = shift;
-    my $html = pre($string);
+
+    my @chunks = split /^$/, $string;
+
+    my $html = join("\n", map { _format_chunk{$_} } @chunks);
     return $html;
+}
+
+sub _format_chunk {
+    my $chunk = shift;
+    return p($chunk);
 }
 
 
