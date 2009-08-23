@@ -6,3 +6,4 @@ lib/Quiki.pm
 t/00-load.t
 t/pod-coverage.t
 t/pod.t
+lib/Quiki/Formatter.pm
