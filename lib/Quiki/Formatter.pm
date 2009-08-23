@@ -60,13 +60,13 @@ sub _inlines {
        ## [[http://foo]] -- same as http://foo ?
        qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
        ## [[nodo]]
-       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$script?node=$1}, $1) },
+       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>"$script?node=$1"}, $1) },
        ## [[protocol://foo|descricao]]
-       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub {
-           a({-href=>$script?node=$1}, _inlines($Quiki, $2))
-       },
+       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($Quiki, $2)) },
        ## [[nodo|descricao]]
-       qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($Quiki, $2)) },
+       qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub {
+           a({-href=>"$script?node=$1"}, _inlines($Quiki, $2))
+       },
        ## ** foo **
        qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x   => sub { b(_inlines($Quiki, $1)) },
        ## __ foo __

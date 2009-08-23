@@ -4,7 +4,7 @@ use Test::More tests => 21;
 
 use_ok("Quiki::Formatter");
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph.
 
 two paragraphs.
@@ -14,7 +14,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph.
 
 
@@ -28,7 +28,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph < other paragraph.
 
 two paragraphs.
@@ -38,27 +38,27 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a [[link]].
 
 two paragraphs.
 EOI
-<p>one paragraph with a <a href="link">link</a>.</p>
+<p>one paragraph with a <a href="quiki?node=link">link</a>.</p>
 
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with [[more]] than a [[link]].
 
 two paragraphs.
 EOI
-<p>one paragraph with <a href="more">more</a> than a <a href="link">link</a>.</p>
+<p>one paragraph with <a href="quiki?node=more">more</a> than a <a href="quiki?node=link">link</a>.</p>
 
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with [[http://www.google.com|an external link]].
 
 two paragraphs.
@@ -68,17 +68,17 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a [[named link|link]].
 
 two paragraphs.
 EOI
-<p>one paragraph with a <a href="named link">link</a>.</p>
+<p>one paragraph with a <a href="quiki?node=named link">link</a>.</p>
 
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a **bold**.
 
 two paragraphs.
@@ -88,7 +88,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a **bold * with \*\* stars**.
 
 two paragraphs.
@@ -98,7 +98,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with an //italic//.
 
 two paragraphs.
@@ -108,7 +108,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with an //italic / with \/\/ slashes//.
 
 two paragraphs.
@@ -118,49 +118,49 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo /\/ bar \** zbr \/\/ ugh \*\*.
 EOI
 <p>foo // bar ** zbr // ugh **.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo \\ bar \[[ zbr \]] ugh \*\*.
 EOI
 <p>foo \ bar [[ zbr ]] ugh **.</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will //**bold and italic**// work?
 EOI
 <p>will <i><b>bold and italic</b></i> work?</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will **//bold and italic//** work?
 EOI
 <p>will <b><i>bold and italic</i></b> work?</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will **//__bold and italic and underline__//** work?
 EOI
 <p>will <b><i><u>bold and italic and underline</u></i></b> work?</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will __underline__ work? __foo _ bar__
 EOI
 <p>will <u>underline</u> work? <u>foo _ bar</u></p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will [[link|Links **with** formatting //work//]]?
 EOI
-<p>will <a href="link">Links <b>with</b> formatting <i>work</i></a>?</p>
+<p>will <a href="quiki?node=link">Links <b>with</b> formatting <i>work</i></a>?</p>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ======foo======
 
 =====bar=====
@@ -193,7 +193,7 @@ EOI
 <h6>zbr != ugh</h6>
 EOO
 
-is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ------------
 
 ---------------------
