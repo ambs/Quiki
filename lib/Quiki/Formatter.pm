@@ -9,13 +9,13 @@ use feature ':5.10';
 # Note that lines with spaces are not empty.
 # Each chunk is processed by _format_chunk.
 sub format {
-    my $string = shift;
+    my ($Quiki, $string) = @_;
 
     $string =~ s/\r//g;
 
     my @chunks = split /^$(?:\n^$)*/m, $string;
 
-    my $html = join("\n\n", map { _format_chunk($_) } @chunks);
+    my $html = join("\n\n", map { _format_chunk($Quiki, $_) } @chunks);
     return $html . "\n";
 }
 
@@ -34,16 +34,16 @@ sub _format_chunk {
     }
     elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
         given(length($1)) {
-            when (1) { $chunk = h6(_inlines($2)) }
-            when (2) { $chunk = h5(_inlines($2)) }
-            when (3) { $chunk = h4(_inlines($2)) }
-            when (4) { $chunk = h3(_inlines($2)) }
-            when (5) { $chunk = h2(_inlines($2)) }
-            when (6) { $chunk = h1(_inlines($2)) }
+            when (1) { $chunk = h6(_inlines($Quiki, $2)) }
+            when (2) { $chunk = h5(_inlines($Quiki, $2)) }
+            when (3) { $chunk = h4(_inlines($Quiki, $2)) }
+            when (4) { $chunk = h3(_inlines($Quiki, $2)) }
+            when (5) { $chunk = h2(_inlines($Quiki, $2)) }
+            when (6) { $chunk = h1(_inlines($Quiki, $2)) }
         }
     }
     else {
-        $chunk = p(_inlines($chunk));
+        $chunk = p(_inlines($Quiki, $chunk));
     }
 
     $chunk = _unbackslash($chunk);
@@ -51,23 +51,28 @@ sub _format_chunk {
 }
 
 sub _inlines {
-    my $chunk = shift;
+    my ($Quiki, $chunk) = @_;
+
+    my $script = $Quiki->{SCRIPT_NAME};
+
     my @inline =
       (
        ## [[http://foo]] -- same as http://foo ?
        qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
        ## [[nodo]]
-       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
+       qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$script?node=$1}, $1) },
        ## [[protocol://foo|descricao]]
-       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, _inlines($2)) },
+       qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub {
+           a({-href=>$script?node=$1}, _inlines($Quiki, $2))
+       },
        ## [[nodo|descricao]]
-       qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($2)) },
+       qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, _inlines($Quiki, $2)) },
        ## ** foo **
-       qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x        => sub { b(_inlines($1)) },
+       qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x   => sub { b(_inlines($Quiki, $1)) },
        ## __ foo __
-       qr/__ ((?:\\_|[^_]|_[^_])+) __/x              => sub { u(_inlines($1)) },
+       qr/__ ((?:\\_|[^_]|_[^_])+) __/x         => sub { u(_inlines($Quiki, $1)) },
        ## // foo //
-       qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x      => sub { i(_inlines($1)) },
+       qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x => sub { i(_inlines($Quiki, $1)) },
       );
 
     while (@inline) {
