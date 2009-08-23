@@ -34,7 +34,8 @@ if you don't export anything, such as for a purely object-oriented module.
 =cut
 
 sub Quiki {
-    
+    my $class = 'Quiki';
+    my $self = bless { @_ }, $class; # amen
 }
 
 =head1 AUTHOR
