@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 6;
+use Test::More tests => 11;
 
 use_ok("Quiki::Formatter");
 
@@ -10,6 +10,16 @@ one paragraph.
 two paragraphs.
 EOI
 <p>one paragraph.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<"EOI"), <<"EOO");
+one paragraph < other paragraph.
+
+two paragraphs.
+EOI
+<p>one paragraph &lt; other paragraph.</p>
 
 <p>two paragraphs.</p>
 EOO
@@ -50,6 +60,46 @@ one paragraph with a [[named link|link]].
 two paragraphs.
 EOI
 <p>one paragraph with a <a href="named link">link</a>.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<"EOI"), <<"EOO");
+one paragraph with a **bold**.
+
+two paragraphs.
+EOI
+<p>one paragraph with a <b>bold</b>.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<"EOI"), <<"EOO");
+one paragraph with a **bold * with * stars**.
+
+two paragraphs.
+EOI
+<p>one paragraph with a <b>bold * with * stars</b>.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<"EOI"), <<"EOO");
+one paragraph with an //italic//.
+
+two paragraphs.
+EOI
+<p>one paragraph with an <i>italic</i>.</p>
+
+<p>two paragraphs.</p>
+EOO
+
+is(Quiki::Formatter::format(<<"EOI"), <<"EOO");
+one paragraph with an //italic / with / slashes//.
+
+two paragraphs.
+EOI
+<p>one paragraph with an <i>italic / with / slashes</i>.</p>
 
 <p>two paragraphs.</p>
 EOO

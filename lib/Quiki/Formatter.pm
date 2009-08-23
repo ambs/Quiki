@@ -36,10 +36,21 @@ sub _format_paragraph {
     $chunk =~ s/\n$//;
     $chunk =~ s/^\n//;
 
+    $chunk = _protect($chunk);
+
     my @inline = (
+                  ## [[http://foo]] -- same as http://foo ?
+                  qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
+                  ## [[nodo]]
                   qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
+                  ## [[protocol://foo|descricao]]
                   qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, $2) },
+                  ## [[nodo|descricao]]
                   qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, $2) },
+                  ## ** foo **
+                  qr/\*\* ((?:[^*]|\*[^*])+) \*\*/x        => sub { b($1) },
+                  ## // foo //
+                  qr/\/\/ ((?:[^\/]|\/[^\/])+) \/\//x      => sub { i($1) },
                  );
 
     while (@inline) {
@@ -51,6 +62,15 @@ sub _format_paragraph {
     return p($chunk);
 }
 
+sub _protect {
+    my $string = shift;
+    for ($string) {
+        s/&/&amp;/g;
+        s/>/&gt;/g;
+        s/</&lt;/g;
+    }
+    return $string;
+}
 
 "false";
 
