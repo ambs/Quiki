@@ -5,14 +5,24 @@ use CGI ':standard';
 sub format {
     my $string = shift;
 
-    my @chunks = split /^$/, $string;
+    my @chunks = split /^$/m, $string;
 
-    my $html = join("\n", map { _format_chunk{$_} } @chunks);
-    return $html;
+    my $html = join("\n\n", map { _format_chunk($_) } @chunks);
+    return $html . "\n";
 }
 
 sub _format_chunk {
     my $chunk = shift;
+
+    $chunk = _format_paragraph($chunk);
+
+    return $chunk;
+}
+
+sub _format_paragraph {
+    my $chunk = shift;
+    $chunk =~ s/\n$//;
+    $chunk =~ s/^\n//;
     return p($chunk);
 }
 
@@ -31,6 +41,14 @@ Quiki::Formatter - Quiki formatter module
 =head1 DESCRIPTION
 
 Hides formatting subroutine.
+
+=head1 EXPORTS
+
+None. Use Quiki::Formatter::format.
+
+=head2 format
+
+Receives a string in Wiki syntax. Returns a string in HTML.
 
 =head1 SEE ALSO
 
