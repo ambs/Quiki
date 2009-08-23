@@ -2,6 +2,11 @@ package Quiki::Formatter;
 
 use CGI ':standard';
 
+# Formatter (format)
+#------------------------------------------------------------
+# Receives a string. Splits in empty lines (LaTeX like).
+# Note that lines with spaces are not empty.
+# Each chunk is processed by _format_chunk.
 sub format {
     my $string = shift;
 
@@ -11,6 +16,10 @@ sub format {
     return $html . "\n";
 }
 
+# _format_chunk
+#------------------------------------------------------------
+# Receives a chunk string. Analyzes it and calls the correct
+# formatter.
 sub _format_chunk {
     my $chunk = shift;
 
@@ -19,10 +28,26 @@ sub _format_chunk {
     return $chunk;
 }
 
+# _format_paragraph
+#------------------------------------------------------------
+# formats a paragraph and inline formats.
 sub _format_paragraph {
     my $chunk = shift;
     $chunk =~ s/\n$//;
     $chunk =~ s/^\n//;
+
+    my @inline = (
+                  qr/\[\[([^\]|]+)\]\]/                    => sub { a({-href=>$1}, $1) },
+                  qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub { a({-href=>$1}, $2) },
+                  qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub { a({-href=>$1}, $2) },
+                 );
+
+    while (@inline) {
+        my $re = shift @inline;
+        my $code = shift @inline;
+        $chunk =~ s/$re/ $code->() /eg;
+    }
+
     return p($chunk);
 }
 
