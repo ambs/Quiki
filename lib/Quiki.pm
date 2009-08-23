@@ -33,9 +33,75 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
-sub Quiki {
-    my $class = 'Quiki';
-    my $self = bless { @_ }, $class; # amen
+my %conf = (
+		'name' => 'defaultName',
+	);
+
+
+sub new {
+	my ($class, %args) = @_;
+	my $self = bless({}, $class);
+
+	# XXX
+	%conf = %args;
+
+	return $self;
+}
+
+sub run {
+	use CGI qw/:standard/;
+
+
+	# XXX
+	my $page = param('page') || 'index';
+	my $edit = param('edit') || 0;
+	my $save = param('save') || 0;
+	my $create = param('create') || 0;
+
+	# XXX
+	if ($create or !-f "data/content/$page") {
+   	`echo 'edit me' > data/content/$page`;
+   	`chmod 777 data/content/$page`;
+	}
+
+	# XXX
+	if ($save) {
+   	my $text = param('text') || '';
+   	open F, "> data/content/$page" or die "can't open file";
+   	print F $text;
+   	close F;
+	}
+
+	# XXX
+	my $content = `cat data/content/$page`;
+
+	print header, start_html("$conf{'name'}::$page");
+	print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?page=index"},"$conf{'name'}::$page"));
+
+	if ($edit) {
+		print start_form(-method=>'POST'),
+				textarea('text',$content,10,50),
+				hidden('page',$page),
+				hidden('save','1'),
+				hr,
+				submit('submit', 'save'),
+				end_form;
+	}
+	else {
+   	print Quiki::Formatter::format($content);
+		print hr,
+				start_form(-method=>'POST'),
+				hidden('page',$page),
+				hidden('edit','1'),
+				submit('submit', 'edit'),
+				end_form;
+		print start_form(-method=>'POST'),
+            submit('submit', 'new page'),
+				textfield('page','',10).
+            hidden('create','1'),
+            end_form;
+	}
+
 }
 
 =head1 AUTHOR
