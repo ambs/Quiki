@@ -1,5 +1,7 @@
 package Quiki;
 
+# vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
+
 use warnings;
 use strict;
 
@@ -34,74 +36,75 @@ if you don't export anything, such as for a purely object-oriented module.
 =cut
 
 my %conf = (
-		'name' => 'defaultName',
-	);
+            'name' => 'defaultName',
+           );
 
 
 sub new {
-	my ($class, %args) = @_;
-	my $self = bless({}, $class);
+    my ($class, %args) = @_;
+    my $self;
 
-	# XXX
-	%conf = %args;
+    # XXX
+    $self = {%conf, %args};
 
-	return $self;
+    $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
+
+    return bless $self, $class;
 }
 
 sub run {
-	use CGI qw/:standard/;
+    use CGI qw/:standard/;
 
+    # XXX
+    my $page = param('page') || 'index';
+    my $edit = param('edit') || 0;
+    my $save = param('save') || 0;
+    my $create = param('create') || 0;
 
-	# XXX
-	my $page = param('page') || 'index';
-	my $edit = param('edit') || 0;
-	my $save = param('save') || 0;
-	my $create = param('create') || 0;
-
-	# XXX
-	if ($create or !-f "data/content/$page") {
+    # XXX
+    if ($create or !-f "data/content/$page") {
    	`echo 'edit me' > data/content/$page`;
    	`chmod 777 data/content/$page`;
-	}
+    }
 
-	# XXX
-	if ($save) {
+    # XXX
+    if ($save) {
    	my $text = param('text') || '';
    	open F, "> data/content/$page" or die "can't open file";
    	print F $text;
    	close F;
-	}
+    }
 
-	# XXX
-	my $content = `cat data/content/$page`;
+    # XXX
+    my $content = `cat data/content/$page`;
 
-	print header, start_html("$conf{'name'}::$page");
-	print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?page=index"},"$conf{'name'}::$page"));
+    print header, start_html("$conf{'name'}::$page");
+    print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?page=index"},
+               "$conf{'name'}::$page"));
 
-	if ($edit) {
-		print start_form(-method=>'POST'),
-				textarea('text',$content,10,50),
-				hidden('page',$page),
-				hidden('save','1'),
-				hr,
-				submit('submit', 'save'),
-				end_form;
-	}
-	else {
-   	print Quiki::Formatter::format($content);
-		print hr,
-				start_form(-method=>'POST'),
-				hidden('page',$page),
-				hidden('edit','1'),
-				submit('submit', 'edit'),
-				end_form;
-		print start_form(-method=>'POST'),
-            submit('submit', 'new page'),
-				textfield('page','',10).
-            hidden('create','1'),
-            end_form;
-	}
-
+    if ($edit) {
+        print start_form(-method=>'POST'),
+          textarea('text',$content,10,50),
+            hidden('page',$page),
+              hidden('save','1'),
+                hr,
+                  submit('submit', 'save'),
+                    end_form;
+    }
+    else {
+   	print Quiki::Formatter::format($self, $content);
+        print hr,
+          start_form(-method=>'POST'),
+            hidden('page',$page),
+              hidden('edit','1'),
+                submit('submit', 'edit'),
+                  end_form;
+        print start_form(-method=>'POST'),
+          submit('submit', 'new page'),
+            textfield('page','',10).
+              hidden('create','1'),
+                end_form;
+    }
 }
 
 =head1 AUTHOR
@@ -162,4 +165,4 @@ See http://dev.perl.org/licenses/ for more information.
 
 =cut
 
-1; # End of Quiki
+42; # End of Quiki

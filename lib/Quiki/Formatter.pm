@@ -24,7 +24,7 @@ sub format {
 # Receives a chunk string. Analyzes it and calls the correct
 # formatter.
 sub _format_chunk {
-    my $chunk = shift;
+    my ($Quiki, $chunk) = @_;
     $chunk =~ s/\n$//;
     $chunk =~ s/^\n//;
     $chunk = _protect($chunk);
