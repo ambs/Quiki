@@ -31,7 +31,9 @@ our $VERSION = '0.01';
 
 =head1 EXPORT FUNCTIONS
 
-=head2 Quiki
+=head2 new
+
+=head2 run
 
 =cut
 
@@ -86,7 +88,7 @@ sub run {
 
     print header(-charset=>'UTF-8');
     print start_html("$self->{name}::$node");
-    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}},
+    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
                "$self->{name}::$node"));
 
     if ($edit) {

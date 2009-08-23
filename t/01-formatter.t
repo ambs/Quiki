@@ -73,7 +73,7 @@ one paragraph with a [[named link|link]].
 
 two paragraphs.
 EOI
-<p>one paragraph with a <a href="quiki?node=named link">link</a>.</p>
+<p>one paragraph with a <a href="quiki?node=named%20link">link</a>.</p>
 
 <p>two paragraphs.</p>
 EOO

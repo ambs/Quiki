@@ -65,7 +65,7 @@ sub _inlines {
        qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
        ## [[nodo]]
        qr/\[\[([^\]|]+)\]\]/                    => sub {
-           a({-href=>"$script?node=".uri_encode($1) }, $1)
+           a({-href=>"$script?node=".uri_escape($1) }, $1)
        },
        ## [[protocol://foo|descricao]]
        qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub {
@@ -73,7 +73,7 @@ sub _inlines {
        },
        ## [[nodo|descricao]]
        qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub {
-           a({-href=>"$script?node=".uri_encode($1) }, _inlines($Quiki, $2))
+           a({-href=>"$script?node=".uri_escape($1) }, _inlines($Quiki, $2))
        },
        ## ** foo **
        qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x   => sub { b(_inlines($Quiki, $1)) },
