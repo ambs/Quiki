@@ -62,9 +62,9 @@ sub run {
     use CGI qw/:standard/;
 
     # XXX
-    my $node = param('node') || 'index';
-    my $edit = param('edit') || 0;
-    my $save = param('save') || 0;
+    my $node   = param('node')   || 'index';
+    my $edit   = param('edit')   || 0;
+    my $save   = param('save')   || 0;
     my $create = param('create') || 0;
 
     # XXX
@@ -87,7 +87,8 @@ sub run {
     # XXX
     my $content = `cat data/content/$node`;
 
-    print header, start_html("$conf{'name'}::$node");
+    print header(-charset=>'UTF-8');
+    print start_html("$conf{'name'}::$node");
     print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?node=index"},
                "$conf{'name'}::$node"));
 
