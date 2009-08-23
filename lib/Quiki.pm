@@ -53,39 +53,40 @@ sub new {
 }
 
 sub run {
+	my $self = shift;
     use CGI qw/:standard/;
 
     # XXX
-    my $page = param('page') || 'index';
+    my $node = param('node') || 'index';
     my $edit = param('edit') || 0;
     my $save = param('save') || 0;
     my $create = param('create') || 0;
 
     # XXX
-    if ($create or !-f "data/content/$page") {
-   	`echo 'edit me' > data/content/$page`;
-   	`chmod 777 data/content/$page`;
+    if ($create or !-f "data/content/$node") {
+   	`echo 'edit me' > data/content/$node`;
+   	`chmod 777 data/content/$node`;
     }
 
     # XXX
     if ($save) {
    	my $text = param('text') || '';
-   	open F, "> data/content/$page" or die "can't open file";
+   	open F, "> data/content/$node" or die "can't open file";
    	print F $text;
    	close F;
     }
 
     # XXX
-    my $content = `cat data/content/$page`;
+    my $content = `cat data/content/$node`;
 
-    print header, start_html("$conf{'name'}::$page");
-    print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?page=index"},
-               "$conf{'name'}::$page"));
+    print header, start_html("$conf{'name'}::$node");
+    print h3(a({href=>"http://nrc.homelinux.org/quiki/quiki.cgi?node=index"},
+               "$conf{'name'}::$node"));
 
     if ($edit) {
         print start_form(-method=>'POST'),
           textarea('text',$content,10,50),
-            hidden('page',$page),
+            hidden('node',$node),
               hidden('save','1'),
                 hr,
                   submit('submit', 'save'),
@@ -95,13 +96,13 @@ sub run {
    	print Quiki::Formatter::format($self, $content);
         print hr,
           start_form(-method=>'POST'),
-            hidden('page',$page),
+            hidden('node',$node),
               hidden('edit','1'),
                 submit('submit', 'edit'),
                   end_form;
         print start_form(-method=>'POST'),
-          submit('submit', 'new page'),
-            textfield('page','',10).
+          submit('submit', 'new node'),
+            textfield('node','',10).
               hidden('create','1'),
                 end_form;
     }
