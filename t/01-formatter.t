@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 19;
+use Test::More tests => 21;
 
 use_ok("Quiki::Formatter");
 
@@ -140,6 +140,18 @@ is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
 will **//bold and italic//** work?
 EOI
 <p>will <b><i>bold and italic</i></b> work?</p>
+EOO
+
+is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+will **//__bold and italic and underline__//** work?
+EOI
+<p>will <b><i><u>bold and italic and underline</u></i></b> work?</p>
+EOO
+
+is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
+will __underline__ work? __foo _ bar__
+EOI
+<p>will <u>underline</u> work? <u>foo _ bar</u></p>
 EOO
 
 is(Quiki::Formatter::format(<<'EOI'), <<'EOO');
