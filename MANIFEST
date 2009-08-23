@@ -8,3 +8,4 @@ t/pod-coverage.t
 t/pod.t
 lib/Quiki/Formatter.pm
 t/01-formatter.t
+script/quiki_create.pl
