@@ -126,33 +126,33 @@ sub run {
     }
     else {
    	print Quiki::Formatter::format_page($self, $content);
-		# user is authenticated
-		if ($session->param('authenticated')) {
-			print hr,
-			  "Username: ",
-				$session->param('username'),
-				  start_form(-method=>'post'),
-					hidden('node',$node),
-					  "<input type='hidden' name='action' value='edit' />",
-						submit('submit', 'edit'),
-						  end_form;
-			print start_form(-method=>'post'),
-			  submit('submit', 'new node'),
-				textfield('node','',10),
-				  "<input type='hidden' name='action' value='create' />",
-					end_form;
+        # user is authenticated
+        if ($session->param('authenticated')) {
+            print hr,
+              "Username: ",
+                $session->param('username'),
+                  start_form(-method=>'post'),
+                    hidden('node',$node),
+                      hidden('action','edit'),
+                        submit('submit', 'edit'),
+                          end_form;
+            print start_form(-method=>'post'),
+              submit('submit', 'new node'),
+                textfield('node','',10),
+                  hidden('action','create'),
+                    end_form;
             print start_form(-method=>'post'),
               submit('submit', 'logout'),
-				  "<input type='hidden' name='action' value='logout' />",
-                    end_form;
+                hidden('action','logout'),
+                  end_form;
         }
-		# user is not authenticated
+        # user is not authenticated
         else {
             print hr,
               start_form(-method=>'post'),
-				"Username: ", textfield('username','',10),
-				  " Password: ", password_field('password','',10),
-				    "<input type='hidden' name='action' value='login' />",
+                "Username: ", textfield('username','',10),
+                  " Password: ", password_field('password','',10),
+                    input('action','login'),
                       submit('submit', 'login'),
                         end_form;
         }
