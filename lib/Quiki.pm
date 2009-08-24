@@ -59,7 +59,7 @@ sub run {
     my $self = shift;
 
     # XXX -- É diferente fazê-lo aqui ou globalmente?
-    use CGI qw.:standard -nosticky.;
+    use CGI qw/:standard -nosticky/;
     use CGI::Session;
 
     my $sid = cookie("QuikiSID") || undef;
@@ -113,7 +113,7 @@ sub run {
     print header(-charset=>'UTF-8',-cookie=>$cookie);
     print start_html( -title => "$self->{name}::$node",
                       -style => {
-                                 src => '/css/quiki.css'
+                                 src => 'css/quiki.css'
                                 }
                     );
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},

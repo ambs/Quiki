@@ -53,11 +53,11 @@ my %conf = (
 
 Quiki->new(%conf)->run;
 ----css/quiki.css----
-.quiki_body { 
+.quiki_body {
   background-color: #ededed;
 }
 
-.quiki_body pre { 
+.quiki_body pre {
   padding: 3px;
   background-color: #dcdcdc;
   border: solid 1px #999999;
