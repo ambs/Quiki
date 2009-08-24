@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 24;
+use Test::More tests => 25;
 
 use_ok("Quiki::Formatter");
 
@@ -242,7 +242,6 @@ zbr
 <p>xpto</p>
 EOO
 
-
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 foo
 
@@ -254,6 +253,25 @@ EOI
 <p>foo</p>
 
 <pre>bar
+zbr
+  xpto
+</pre>
+
+<p>xpto</p>
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+foo
+
+      bar
+    zbr
+      xpto
+xpto
+EOI
+<p>foo</p>
+
+<pre>  bar
 zbr
   xpto
 </pre>
