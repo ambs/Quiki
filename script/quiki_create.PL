@@ -33,6 +33,7 @@ while(<L>) {
     } else {
         open I, "Site/".$name or die $!;
         while(<I>) { print $_ };
+        print "\n"; # just in case
         close I;
     }
 }
