@@ -10,7 +10,6 @@ WriteMakefile(
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
-    PL_FILES            => {},
     EXE_FILES => [ 'script/quiki_create.pl' ],
     PREREQ_PM => {
                   'CGI' => 0,
