@@ -119,7 +119,7 @@ sub run {
         print start_form(-method=>'post'),
           textarea('text',$content,15,80),
             hidden('node',$node),
-              "<input type='hidden' name='action' value='save' />",
+              hidden('action','save'),
                 hr,
                   submit('submit', 'save'),
                     end_form;
