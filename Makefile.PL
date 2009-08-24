@@ -15,6 +15,8 @@ WriteMakefile(
     PREREQ_PM => {
                   'CGI' => 0,
                   'CGI::Cookie' => 0,
+                  'CGI::Session' => 0,
+                  'Apache::Htpasswd' => 0,
                   'Test::More' => 0,
                   'URI::Escape' => 0,
     },

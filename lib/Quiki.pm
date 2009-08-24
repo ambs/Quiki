@@ -58,25 +58,44 @@ sub new {
 
 sub run {
     my $self = shift;
+
     use CGI qw/:standard/;
+	use CGI::Session;
+
+    my $sid = cookie("QuikiSID") || undef;
+    my $session = new CGI::Session(undef, $sid, undef);
 
     # XXX
-    my $node   = param('node')   || 'index';
-    my $edit   = param('edit')   || 0;
-    my $save   = param('save')   || 0;
-    my $create = param('create') || 0;
+    my $node = param('node') || $self->{index};
+    my $action = param('action') || '';
 
     # XXX
     $node =~ s/\s/_/g;
 
+	# XXX
+	if ($action eq 'login') {
+		my $username = param('username') || '';
+		my $password = param('password') || '';
+		if ($username and $password) {
+			$self->auth($username,$password) and $session->param('authenticated',1) and $session->param('username',$username);;
+		}
+		print redirect("$self->{SCRIPT_NAME}?node=$self->{index}");
+	}
+
+	# XXX
+	if ($action eq 'logout') {
+		$session->param('authenticated') and $session->param('authenticated',0) and  $session->param('username','');
+	}
+
     # XXX
-    if ($create or !-f "data/content/$node") {
+	($action eq 'create') and (-f "data/content/$node") and ($action = '');
+    if( ($action eq 'create') or !-f "data/content/$node") {
    	`echo 'edit me' > data/content/$node`;
    	`chmod 777 data/content/$node`;
     }
 
     # XXX
-    if ($save) {
+    if ($action eq 'save') {
    	my $text = param('text') // '';
    	open F, "> data/content/$node" or die "can't open file";
    	print F $text;
@@ -86,34 +105,63 @@ sub run {
     # XXX
     my $content = `cat data/content/$node`;
 
-    print header(-charset=>'UTF-8');
+	my $cookie = cookie('QuikiSID' => $session->id);
+    print header(-charset=>'UTF-8',-cookie=>$cookie);
     print start_html("$self->{name}::$node");
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
                "$self->{name}::$node"));
 
-    if ($edit) {
-        print start_form(-method=>'POST'),
+    if ($action eq 'edit') {
+        print start_form(-method=>'post'),
           textarea('text',$content,15,80),
             hidden('node',$node),
-              hidden('save','1'),
+			  "<input type='hidden' name='action' value='save' />",
                 hr,
                   submit('submit', 'save'),
                     end_form;
     }
     else {
    	print Quiki::Formatter::format($self, $content);
-        print hr,
-          start_form(-method=>'POST'),
-            hidden('node',$node),
-              hidden('edit','1'),
-                submit('submit', 'edit'),
-                  end_form;
-        print start_form(-method=>'POST'),
-          submit('submit', 'new node'),
-            textfield('node','',10).
-              hidden('create','1'),
-                end_form;
+		if ($session->param('authenticated')) {
+			print hr,
+			  "Username: ",
+				$session->param('username'),
+			  start_form(-method=>'post'),
+				hidden('node',$node),
+				  hidden('action','edit'),
+					submit('submit', 'edit'),
+					  end_form;
+			print start_form(-method=>'post'),
+			  submit('submit', 'new node'),
+				textfield('node','',10),
+			  	  hidden('action','create'),
+					end_form;
+            print start_form(-method=>'post'),
+              submit('submit', 'logout'),
+                  hidden('action','logout'),
+                    end_form;
+		}
+		else {
+			print hr,
+              start_form(-method=>'post'),
+				"Username: ", textfield('username','',10),
+				  " Password: ", password_field('password','',10),
+					hidden('action','login'),
+                      submit('submit', 'login'),
+                        end_form;
+		}
     }
+
+	print end_html;
+}
+
+sub auth {
+	my ($selt, $username, $password) = @_;
+
+	use Apache::Htpasswd;
+
+	my $passwd = new Apache::Htpasswd("./passwd");
+    $passwd->htCheckPassword($username, $password);
 }
 
 =head1 AUTHOR
