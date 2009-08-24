@@ -4,34 +4,28 @@ $path = shift || '.';
 
 (!-d $path) and warn "$path not found" and exit;
 
-my $html_file=<<'EOF';
-<META HTTP-EQUIV="Refresh" Content="0; URL=quiki.cgi">
-EOF
-print "Creating $path/index.html file.. ";
-open F, ">$path/index.html";
-print F $html_file;
-close F;
-print "ok!\n";
+mkdir 'css';
 
-my $cgi_file=<<'EOF';
-#!/usr/bin/perl
+my $file = undef;
+while(<DATA>) {
+    if (/^----([^-]*)----\n$/) {
+        if ($file) {
+            print "ok!\n";
+            close $file;
+        }
+        open $file, ">$1" or die;
+        print "Creating $1...";
+    }
+    elsif ($file) {
+        print {$file} $_;
+    }
+}
+if ($file) {
+    print "ok!\n";
+    close $file;
+}
 
-use lib '### CHANGE ME ###';
-
-use Quiki;
-
-my %conf = (
-           'name' => 'MyQuiki'
-            );
-
-Quiki->new(%conf)->run;
-EOF
-print "Creating $path/quiki.cgi file.. ";
-open F, ">$path/quiki.cgi";
-print F $cgi_file;
-close F;
 chmod 0755, "$path/quiki.cgi";
-print "ok!\n";
 
 print "Creating index file.. ";
 mkdir "$path/data";
@@ -43,3 +37,28 @@ close F;
 chmod 0777, "$path/data/content/index";
 print "ok!\n";
 
+__DATA__
+----index.html----
+<META HTTP-EQUIV="Refresh" Content="0; URL=quiki.cgi">
+----quiki.cgi----
+#!/usr/bin/perl
+
+use lib '### CHANGE ME ###';
+
+use Quiki;
+
+my %conf = (
+           'name' => 'MyQuiki'
+            );
+
+Quiki->new(%conf)->run;
+----css/quiki.css----
+.quiki_body { 
+  background-color: #ededed;
+}
+
+.quiki_body pre { 
+  padding: 3px;
+  background-color: #dcdcdc;
+  border: solid 1px #999999;
+}
