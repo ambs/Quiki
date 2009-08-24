@@ -77,7 +77,7 @@ sub run {
         my $username = param('username') || '';
         my $password = param('password') || '';
         if ($username and $password) {
-            $self->auth($username,$password) and
+            $self->_auth($username,$password) and
               $session->param('authenticated',1) and
                 $session->param('username',$username);
         }
@@ -159,7 +159,7 @@ sub run {
     print end_html;
 }
 
-sub auth {
+sub _auth {
     my ($selt, $username, $password) = @_;
 
     use Apache::Htpasswd;
