@@ -14,7 +14,7 @@ WriteMakefile(
       ? ('LICENSE'=> 'perl')
       : ()),
     EXE_FILES => [ 'script/quiki_create' ],
-    PL_FILES  => { 'scripts/quiki_create.PL' => 'scripts/quiki_create' },
+    PL_FILES  => { 'script/quiki_create.PL' => 'script/quiki_create' },
     PREREQ_PM => {
                   'CGI' => 0,
                   'CGI::Session' => 0,

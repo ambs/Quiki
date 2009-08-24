@@ -3,6 +3,9 @@
 use MIME::Base64;
 use strict;
 
+my $out = shift;
+open OUT, ">$out" or die $!;
+select OUT;
 open T, "script/quiki_create.template" or die $!;
 while(<T>) { print $_ }
 close T;
@@ -34,4 +37,4 @@ while(<L>) {
     }
 }
 close L;
-
+close OUT;
