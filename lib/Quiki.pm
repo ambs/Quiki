@@ -59,7 +59,7 @@ sub run {
     my $self = shift;
 
     # XXX -- É diferente fazê-lo aqui ou globalmente?
-    use CGI qw/-nosticky :standard/;
+    use CGI qw/:standard/;
     use CGI::Session;
 
     my $sid = cookie("QuikiSID") || undef;
@@ -122,8 +122,8 @@ sub run {
     if ($action eq 'edit') {
         print start_form(-method=>'post'),
           textarea('text',$content,15,80),
-            hidden('node',$node),
-              hidden('action','save'),
+            hidden(-name => 'node', -value => $node, -override => 1),
+              hidden(-name => 'action', -value => 'save', -override => 1),
                 hr,
                   submit('submit', 'save'),
                     end_form;
@@ -137,17 +137,17 @@ sub run {
                 $session->param('username'),
                   start_form(-method=>'post'),
                     hidden('node',$node),
-                      hidden('action','edit'),
-                        submit('submit', 'edit'),
+                      hidden(-name => 'action', -value => 'edit', -override => 1),
+                        submit(-name => 'submit', -value => 'edit', -override => 1),
                           end_form;
             print start_form(-method=>'post'),
               submit('submit', 'new node'),
                 textfield('node','',10),
-                  hidden('action','create'),
+                  hidden(-name => 'action', -value => 'create', -override => 1),
                     end_form;
             print start_form(-method=>'post'),
               submit('submit', 'logout'),
-                hidden('action','logout'),
+                hidden(-name => 'action', -value => 'logout', -override => 1),
                   end_form;
         }
         # user is not authenticated
@@ -156,7 +156,7 @@ sub run {
               start_form(-method=>'post'),
                 "Username: ", textfield('username','',10),
                   " Password: ", password_field('password','',10),
-                    input('action','login'),
+                    input(-name => 'action', -value => 'login', -override => 1),
                       submit('submit', 'login'),
                         end_form;
         }
