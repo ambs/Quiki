@@ -97,7 +97,7 @@ sub run {
     # XXX
     if ($action eq 'save') {
    	my $text = param('text') // '';
-   	open F, "> data/content/$node" or die "can't open file";
+   	open F, ">data/content/$node" or die "can't open file";
    	print F $text;
    	close F;
     }
@@ -122,31 +122,33 @@ sub run {
     }
     else {
    	print Quiki::Formatter::format($self, $content);
+		# user is authenticated
 		if ($session->param('authenticated')) {
 			print hr,
 			  "Username: ",
 				$session->param('username'),
 			  start_form(-method=>'post'),
 				hidden('node',$node),
-				  hidden('action','edit'),
+				  "<input type='hidden' name='action' value='edit' />",
 					submit('submit', 'edit'),
 					  end_form;
 			print start_form(-method=>'post'),
 			  submit('submit', 'new node'),
 				textfield('node','',10),
-			  	  hidden('action','create'),
+				  "<input type='hidden' name='action' value='create' />",
 					end_form;
             print start_form(-method=>'post'),
               submit('submit', 'logout'),
-                  hidden('action','logout'),
+				  "<input type='hidden' name='action' value='logout' />",
                     end_form;
 		}
+		# user is not authenticated
 		else {
 			print hr,
               start_form(-method=>'post'),
 				"Username: ", textfield('username','',10),
 				  " Password: ", password_field('password','',10),
-					hidden('action','login'),
+				    "<input type='hidden' name='action' value='login' />",
                       submit('submit', 'login'),
                         end_form;
 		}
