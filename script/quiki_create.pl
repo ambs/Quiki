@@ -4,7 +4,7 @@ $path = shift || '.';
 
 (!-d $path) and warn "$path not found" and exit;
 
-mkdir 'css';
+mkdir "$path/css";
 
 my $file = undef;
 while(<DATA>) {
