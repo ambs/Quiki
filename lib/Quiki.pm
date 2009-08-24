@@ -82,7 +82,6 @@ sub run {
                 $session->param('username',$username) and
 				  $session->param('msg',"Login successfull! Welcome $username");
         }
-        print redirect("$self->{SCRIPT_NAME}?node=$self->{index}");
     }
 
     # XXX
@@ -117,7 +116,13 @@ sub run {
                      -style =>
                      {
                       code => " \@import \"css/quiki.css\";\n \@import \"css/local.css\"; \@import \"css/gritter.css\"; "
-                     }
+                     },
+                     -script=> [{ -type=>'JAVASCRIPT',
+                                  -src=>'js/jquery.js'
+                                },
+                                { -type=>'JAVASCRIPT',
+                                  -src=>'js/jquery.gritter.js'
+                                }]
                     );
 
 	# XXX - show message if we have one
