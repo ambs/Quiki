@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 25;
+use Test::More tests => 29;
 
 use_ok("Quiki::Formatter");
 
@@ -211,8 +211,8 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 foo
 
-    bar
-    zbr
+   bar
+   zbr
 
 xpto
 EOI
@@ -229,8 +229,8 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 foo
 
-    bar
-    zbr
+   bar
+   zbr
 xpto
 EOI
 <p>foo</p>
@@ -245,9 +245,9 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 foo
 
-    bar
-    zbr
-      xpto
+   bar
+   zbr
+     xpto
 xpto
 EOI
 <p>foo</p>
@@ -264,9 +264,9 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 foo
 
-      bar
-    zbr
-      xpto
+     bar
+   zbr
+     xpto
 xpto
 EOI
 <p>foo</p>
@@ -277,4 +277,67 @@ zbr
 </pre>
 
 <p>xpto</p>
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  * one
+  * two
+EOI
+<ul>
+<li> one</li>
+<li> two</li>
+</ul>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  - one
+  - two
+EOI
+<ol>
+<li> one</li>
+<li> two</li>
+</ol>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  * one
+    * one dot one
+    * one dot two
+  * two
+EOI
+<ul>
+<li> one<ul>
+<li> one dot one</li>
+<li> one dot two</li>
+</ul>
+</li>
+<li> two</li>
+</ul>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  - one
+    - one dot one
+    - one dot two
+  - two
+    * two dot one
+    * two dot two
+EOI
+<ol>
+<li> one<ol>
+<li> one dot one</li>
+<li> one dot two</li>
+</ol>
+</li>
+<li> two<ul>
+<li> two dot one</li>
+<li> two dot two</li>
+</ul>
+</li>
+</ol>
+
 EOO

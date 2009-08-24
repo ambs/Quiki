@@ -28,6 +28,47 @@ sub format {
     return $html . "\n";
 }
 
+sub _format_list {
+    my $chunk = shift;
+    my @level = ();
+    my $openitem = 0;
+    my $list;
+    my @c = split /\n/, $chunk;
+
+    while (@c && $c[0] =~ /^((?:\s{2})+)([*-])(.*)$/) {
+        my $level = length($1)/2 - 1;
+        my $type  = $2;
+        my $item  = $3;
+        if ($level > $#level) {
+            push @level, $type;
+            $list .= ($type eq "*")?"<ul>":"<ol>";
+            $openitem = 0;
+            $list .= "\n";
+        }
+        elsif ($level < $#level) {
+            $list .= "</li>\n" if $openitem;
+
+            my $ctype = pop @level;
+            $list .= ($ctype eq "*")?"</ul>":"</ol>";
+            $list .= "\n";
+        }
+        else {
+            $list .= "</li>\n" if $openitem;
+            $list .= "<li>$item";
+            $openitem = 1;
+            shift @c;
+        }
+    }
+    while (@level) {
+        my $ctype = pop @level;
+        $list .= "</li>\n";
+        $list .= ($ctype eq "*")?"</ul>":"</ol>";
+        $list .= "\n";
+    }
+
+    return (@c)?($list . "\n\n" . _format_chunk($Quiki, join("\n", @c))):$list;
+}
+
 # _format_chunk
 #------------------------------------------------------------
 # Receives a chunk string. Analyzes it and calls the correct
@@ -38,10 +79,13 @@ sub _format_chunk {
     $chunk =~ s/^\n//;
     $chunk = _protect($chunk);
 
-    if ($chunk =~ /^\s{4}/) {
+    if ($chunk =~ /^\s{2}[*-]/) {
+        $chunk = _format_list($chunk);
+
+    } elsif ($chunk =~ /^\s{3}/) {
         my $pre;
         my @c = split /\n/, $chunk;
-        while (@c && $c[0] =~ /^\s{4}(.*)/) {
+        while (@c && $c[0] =~ /^\s{3}(.*)/) {
             $pre .= $1 . "\n";
             shift @c;
         }
