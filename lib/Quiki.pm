@@ -59,7 +59,7 @@ sub run {
     my $self = shift;
 
     # XXX -- É diferente fazê-lo aqui ou globalmente?
-    use CGI ':standard -nosticky';
+    use CGI qw.:standard -nosticky.;
     use CGI::Session;
 
     my $sid = cookie("QuikiSID") || undef;
