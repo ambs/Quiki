@@ -131,11 +131,11 @@ sub run {
 			print hr,
 			  "Username: ",
 				$session->param('username'),
-			  start_form(-method=>'post'),
-				hidden('node',$node),
-				  "<input type='hidden' name='action' value='edit' />",
-					submit('submit', 'edit'),
-					  end_form;
+				  start_form(-method=>'post'),
+					hidden('node',$node),
+					  "<input type='hidden' name='action' value='edit' />",
+						submit('submit', 'edit'),
+						  end_form;
 			print start_form(-method=>'post'),
 			  submit('submit', 'new node'),
 				textfield('node','',10),
@@ -145,15 +145,8 @@ sub run {
               submit('submit', 'logout'),
 				  "<input type='hidden' name='action' value='logout' />",
                     end_form;
-		}
-		# user is not authenticated
-		else {
-			print hr,
-            print start_form(-method=>'post'),
-              submit('submit', 'logout'),
-                hidden('action','logout'),
-                  end_form;
         }
+		# user is not authenticated
         else {
             print hr,
               start_form(-method=>'post'),
