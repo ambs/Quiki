@@ -4,6 +4,7 @@ use feature ':5.10';
 
 use CGI qw/-nosticky :standard/;
 use URI::Escape;
+use Regexp::Common qw/URI/;
 
 sub format_page {
     my ($Quiki, $string) = @_;
@@ -158,6 +159,8 @@ sub _inlines {
        qr/__ ((?:\\_|[^_]|_[^_])+) __/x         => sub { u(_inlines($Quiki, $1)) },
        ## // foo //
        qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x => sub { i(_inlines($Quiki, $1)) },
+       ## urls que nao sigam aspas
+       qr/(?<!")$RE{URI}{-keep}/                => sub { a({-href=>$1}, $1) },
       );
 
     while (@inline) {

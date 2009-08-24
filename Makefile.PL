@@ -22,6 +22,7 @@ WriteMakefile(
                   'Test::More' => 0,
                   'URI::Escape' => 0,
                   'MIME::Base64' => 0,
+                  'Regexp::Common' => '2.122',
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Quiki-*' },
