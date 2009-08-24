@@ -14,6 +14,7 @@
 
 .quiki_nav_bar { 
   padding: 3px;
-  background-color: wheat;
-  border: solid 1px #990000;
+  background-color: #dedede;
+  border: solid 1px #cccccc;
+  margin-bottom: 5px;
 }
