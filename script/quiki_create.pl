@@ -1,46 +1,105 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -s
+
+our ($force);
 
 $path = shift || '.';
 
 (!-d $path) and warn "$path not found" and exit;
 
-mkdir "$path/css";
+print "Creating dirs:\n";
+my @paths = qw!css data data/content!;
 
-my $file = undef;
-while(<DATA>) {
-    if (/^----([^-]*)----\n$/) {
-        if ($file) {
-            print "ok!\n";
-            close $file;
-        }
-        open $file, ">$path/$1" or die;
-        print "Creating $1...";
-    }
-    elsif ($file) {
-        print {$file} $_;
+for my $p (@paths) {
+    print " - $p...";
+    if (!-d "$path/$p") {
+        mkdir "$path/$p";
+        print " created.\n";
+    } else {
+        print " skipped.\n";
     }
 }
-if ($file) {
-    print "ok!\n";
-    close $file;
-}
 
+print "Creating files:\n";
+create_files_from_data($path);
+
+print "Setting up permissions... ";
 chmod 0755, "$path/quiki.cgi";
-
-print "Creating index file.. ";
-mkdir "$path/data";
-mkdir "$path/data/content";
 chmod 0777, "$path/data/content";
-open F, ">$path/data/content/index";
-print F "Edit me!";
-close F;
 chmod 0777, "$path/data/content/index";
-print "ok!\n";
+print "done.\n";
+
+sub create_files_from_data {
+    my $path = shift;
+    my $file = undef;
+    while(<DATA>) {
+        if (/^(!!|)----([^-]*)----\n$/) {
+            if ($file) {
+                print " created.\n";
+                close $file;
+            }
+            my $f = $2;
+            if ($force || !-f $f || $1) {
+                print " - $f...";
+                open $file, ">$path/$f" or die;
+
+            }
+            else {
+                print " - $f... skipped.\n";
+                $file = undef;
+            }
+        }
+        elsif ($file) {
+            print {$file} $_;
+        }
+    }
+    if ($file) {
+        print " created.\n";
+        close $file;
+    }
+}
+
+
+=head1 NAME
+
+quiki_create.pl - Deploys a Quiki!
+
+=head1 SYNOPSIS
+
+  quiki_create.pl /path/to/your/new/quiki/apache/dir
+
+=head1 DESCRIPTION
+
+Creates the needed files for a Quiki installation.
+
+=head1 SEE ALSO
+
+Quiki
+
+=head1 AUTHOR
+
+Alberto Simões, E<lt>ambs@cpan.orgE<gt>
+Nuno Carvalho, E<lt>smash@cpan.orgE<gt>
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2009 Alberto Simoes and Nuno Carvalho.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut
+
 
 __DATA__
-----index.html----
+----data/content/index----
+Edit me!
+!!----index.html----
 <META HTTP-EQUIV="Refresh" Content="0; URL=quiki.cgi">
-----quiki.cgi----
+!!----quiki.cgi----
 #!/usr/bin/perl
 
 use lib '### CHANGE ME ###';
@@ -52,7 +111,11 @@ my %conf = (
             );
 
 Quiki->new(%conf)->run;
-----css/quiki.css----
+----css/local.css----
+/* Use this file for your own stylesheet */
+!!----css/quiki.css----
+/* Use local.css for your custom stylesheet */
+
 .quiki_body {
   background-color: #ededed;
 }
