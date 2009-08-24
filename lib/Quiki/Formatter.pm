@@ -8,7 +8,7 @@ use URI::Escape;
 sub format_page {
     my ($Quiki, $string) = @_;
 
-    return div({-class=>'quiki_body'}, format($Quiki,$string));
+    return div({-class=>'quiki_body'}, Quiki::Formatter::format($Quiki,$string));
 }
 
 
@@ -151,6 +151,10 @@ None. Use Quiki::Formatter::format.
 =head2 format
 
 Receives a string in Wiki syntax. Returns a string in HTML.
+
+=head2 format_page
+
+Receives a Wiki page. Returns it in HTML.
 
 =head1 SEE ALSO
 
