@@ -33,24 +33,41 @@ sub _format_chunk {
     $chunk =~ s/^\n//;
     $chunk = _protect($chunk);
 
-    if ($chunk =~ /^ -{10,} \s* $ /x) {
-        $chunk = "<hr/>";
-    }
-    elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
-        given(length($1)) {
-            when (1) { $chunk = h6(_inlines($Quiki, $2)) }
-            when (2) { $chunk = h5(_inlines($Quiki, $2)) }
-            when (3) { $chunk = h4(_inlines($Quiki, $2)) }
-            when (4) { $chunk = h3(_inlines($Quiki, $2)) }
-            when (5) { $chunk = h2(_inlines($Quiki, $2)) }
-            when (6) { $chunk = h1(_inlines($Quiki, $2)) }
+    if ($chunk =~ /^\s{4}/) {
+        my $pre;
+        my @c = split /\n/, $chunk;
+        while (@c && $c[0] =~ /^\s{4}(.*)/) {
+            $pre .= $1 . "\n";
+            shift @c;
         }
+
+        if (@c) {
+            $chunk = pre($pre) . "\n\n" . _format_chunk($Quiki, join("\n", @c));
+        }
+        else {
+            $chunk = pre($pre);
+        }
+
     }
     else {
-        $chunk = p(_inlines($Quiki, $chunk));
+        if ($chunk =~ /^ -{10,} \s* $ /x) {
+            $chunk = "<hr/>";
+        }
+        elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
+            given(length($1)) {
+                when (1) { $chunk = h6(_inlines($Quiki, $2)) }
+                when (2) { $chunk = h5(_inlines($Quiki, $2)) }
+                when (3) { $chunk = h4(_inlines($Quiki, $2)) }
+                when (4) { $chunk = h3(_inlines($Quiki, $2)) }
+                when (5) { $chunk = h2(_inlines($Quiki, $2)) }
+                when (6) { $chunk = h1(_inlines($Quiki, $2)) }
+            }
+        }
+        else {
+            $chunk = p(_inlines($Quiki, $chunk));
+        }
+        $chunk = _unbackslash($chunk);
     }
-
-    $chunk = _unbackslash($chunk);
     return $chunk;
 }
 
