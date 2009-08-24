@@ -118,9 +118,11 @@ Quiki->new(%conf)->run;
 
 .quiki_body {
   background-color: #ededed;
+  padding: 5px;
 }
 
 .quiki_body pre {
+  margin: 5px;
   padding: 3px;
   background-color: #dcdcdc;
   border: solid 1px #999999;
