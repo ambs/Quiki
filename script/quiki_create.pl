@@ -1,5 +1,7 @@
 #!/usr/bin/perl -s
 
+use File::Copy;
+
 our ($force);
 
 $path = shift || '.';
@@ -7,7 +9,7 @@ $path = shift || '.';
 (!-d $path) and warn "$path not found" and exit;
 
 print "Creating dirs:\n";
-my @paths = qw!css data data/content!;
+my @paths = qw!css data data/content images js!;
 
 for my $p (@paths) {
     print " - $p...";
@@ -21,6 +23,17 @@ for my $p (@paths) {
 
 print "Creating files:\n";
 create_files_from_data($path);
+
+print "Copying needed files... ";
+my @dirs_to_copy = qw!css js images!; # inside Site/
+for my $d (@dirs_to_copy) {
+	opendir(DIR, "Site/$d");
+	while (defined($f = readdir(DIR))) {
+		copy("Site/$d/$f", "$path/$d/$f");
+	}
+	closedir(DIR);
+}
+print "done.\n";
 
 print "Setting up permissions... ";
 chmod 0755, "$path/quiki.cgi";

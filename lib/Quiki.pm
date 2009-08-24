@@ -79,7 +79,8 @@ sub run {
         if ($username and $password) {
             $self->_auth($username,$password) and
               $session->param('authenticated',1) and
-                $session->param('username',$username);
+                $session->param('username',$username) and
+				  $session->param('msg',"Login successfull! Welcome $username");
         }
         print redirect("$self->{SCRIPT_NAME}?node=$self->{index}");
     }
@@ -88,7 +89,8 @@ sub run {
     if ($action eq 'logout') {
         $session->param('authenticated') and
           $session->param('authenticated',0) and
-            $session->param('username','');
+            $session->param('username','') and
+			  $session->param('msg','Logout successfull!');
     }
 
     # XXX
@@ -114,9 +116,16 @@ sub run {
     print start_html(-title => "$self->{name}::$node",
                      -style =>
                      {
-                      code => " \@import \"css/quiki.css\";\n \@import \"css/local.css\";"
+                      code => " \@import \"css/quiki.css\";\n \@import \"css/local.css\"; \@import \"css/gritter.css\"; "
                      }
                     );
+
+	# XXX - show message if we have one
+    if ($session->param('msg')) {
+        $self->_show_msg($session->param('msg'));
+        $session->param('msg','');
+    }
+
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
                "$self->{name}::$node"));
 
@@ -176,6 +185,21 @@ sub _auth {
     my $passwd = new Apache::Htpasswd("./passwd");
     $passwd->htCheckPassword($username, $password);
 }
+
+sub _show_msg {
+    my ($selt, $string) = @_;
+print<<"HTML";
+<script type="text/javascript">
+    \$(document).ready(function(){
+            \$.gritter.add({
+                title: 'Info!',
+                text: '$string',
+            });
+    });
+</script>
+HTML
+}
+
 
 =head1 AUTHOR
 
