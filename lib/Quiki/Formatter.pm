@@ -120,6 +120,7 @@ sub _format_verbatim {
     my $chunk = shift;
     my $pre;
     my @c = split /\n/, $chunk;
+
     while (@c && $c[0] =~ /^\s{3}(.*)/) {
         $pre .= $1 . "\n";
         shift @c;
@@ -127,12 +128,7 @@ sub _format_verbatim {
 
     $pre = pre($pre);
 
-    if (@c) {
-        return "$pre\n\n" . _format_chunk($Quiki, join("\n", @c));
-    }
-    else {
-        return $pre;
-    }
+    return $pre . ( @c ? ("\n\n" . _format_chunk($Quiki, join("\n", @c))) : "");
 }
 
 sub _inlines {
