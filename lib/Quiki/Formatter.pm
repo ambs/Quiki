@@ -29,7 +29,7 @@ sub format {
 }
 
 sub _format_list {
-    my $chunk = shift;
+    my ($Quiki, $chunk) = @_;
     my @level = ();
     my $openitem = 0;
     my $list;
@@ -54,7 +54,15 @@ sub _format_list {
         }
         else {
             $list .= "</li>\n" if $openitem;
-            $list .= "<li>$item";
+            if ($type ne $level[-1]) {
+                my $ctype = pop @level;
+                $list .= ($ctype eq "*")?"</ul>":"</ol>";
+                $list .= "\n";
+                push @level, $type;
+                $list .= ($type eq "*")?"<ul>":"<ol>";
+                $list .= "\n";
+            }
+            $list .= "<li>"._unbackslash(_inlines($Quiki, $item));
             $openitem = 1;
             shift @c;
         }
@@ -80,22 +88,10 @@ sub _format_chunk {
     $chunk = _protect($chunk);
 
     if ($chunk =~ /^\s{2}[*-]/) {
-        $chunk = _format_list($chunk);
+        $chunk = _format_list($Quiki, $chunk);
 
     } elsif ($chunk =~ /^\s{3}/) {
-        my $pre;
-        my @c = split /\n/, $chunk;
-        while (@c && $c[0] =~ /^\s{3}(.*)/) {
-            $pre .= $1 . "\n";
-            shift @c;
-        }
-
-        if (@c) {
-            $chunk = pre($pre) . "\n\n" . _format_chunk($Quiki, join("\n", @c));
-        }
-        else {
-            $chunk = pre($pre);
-        }
+        $chunk = _format_verbatim($chunk);
 
     }
     else {
@@ -118,6 +114,21 @@ sub _format_chunk {
         $chunk = _unbackslash($chunk);
     }
     return $chunk;
+}
+
+sub _format_verbatim {
+    my $chunk = shift;
+    my $pre;
+    my @c = split /\n/, $chunk;
+
+    while (@c && $c[0] =~ /^\s{3}(.*)/) {
+        $pre .= $1 . "\n";
+        shift @c;
+    }
+
+    $pre = pre($pre);
+
+    return $pre . ( @c ? ("\n\n" . _format_chunk($Quiki, join("\n", @c))) : "");
 }
 
 sub _inlines {
