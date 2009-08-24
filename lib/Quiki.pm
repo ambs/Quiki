@@ -138,7 +138,8 @@ sub run {
 
 
 	# XXX - print and calc trace
-	my @trace = @{$session->param('trace')};
+    my @trace;
+    $session->param('trace') and @trace=@{$session->param('trace')};
 	push @trace, $node unless $trace[-1] eq $node;
 	@trace > 5 and shift @trace;
 	$session->param('trace',\@trace);
