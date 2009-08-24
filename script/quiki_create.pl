@@ -38,7 +38,7 @@ sub create_files_from_data {
                 close $file;
             }
             my $f = $2;
-            if ($force || !-f $f || $1) {
+            if ($force || !-f "$path/$f" || $1) {
                 print " - $f...";
                 open $file, ">$path/$f" or die;
 
