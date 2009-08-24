@@ -166,7 +166,7 @@ sub run {
               start_form(-method=>'post'),
                 "Username: ", textfield('username','',10),
                   " Password: ", password_field('password','',10),
-                    input(-name => 'action', -value => 'login', -override => 1),
+                    hidden(-name => 'action', -value => 'login', -override => 1),
                       submit('submit', 'login'),
                         end_form;
         }
