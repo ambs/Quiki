@@ -2,7 +2,7 @@ package Quiki::Formatter;
 
 use feature ':5.10';
 
-use CGI ':standard';
+use CGI ':standard -nosticky';
 use URI::Escape;
 
 sub format_page {
