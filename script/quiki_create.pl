@@ -126,6 +126,8 @@ my %conf = (
 Quiki->new(%conf)->run;
 ----css/local.css----
 /* Use this file for your own stylesheet */
+----passwd----
+admin:l/ojCYfGttvQ6
 !!----css/quiki.css----
 /* Use local.css for your custom stylesheet */
 
