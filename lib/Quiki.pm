@@ -97,6 +97,7 @@ sub run {
     if( ($action eq 'create') or !-f "data/content/$node") {
    	`echo 'edit me' > data/content/$node`;
    	`chmod 777 data/content/$node`;
+	$session->param('msg',"New node \"$node\" created.");
     }
 
     # XXX
@@ -105,6 +106,7 @@ sub run {
    	open F, ">data/content/$node" or die "can't open file";
    	print F $text;
    	close F;
+	$session->param('msg',"Content for \"$node\" updated.");
     }
 
     # XXX
