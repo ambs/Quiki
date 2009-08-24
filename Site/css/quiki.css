@@ -1,7 +1,7 @@
 /* Use local.css for your custom stylesheet */
 
 .quiki_body {
-  background-color: #ededed;
+  border: solid 1px #999999;
   padding: 5px;
 }
 
@@ -9,5 +9,11 @@
   margin: 5px;
   padding: 3px;
   background-color: #dcdcdc;
-  border: solid 1px #999999;
+  border: solid 1px #cccccc;
+}
+
+.quiki_nav_bar { 
+  padding: 3px;
+  background-color: wheat;
+  border: solid 1px #990000;
 }
