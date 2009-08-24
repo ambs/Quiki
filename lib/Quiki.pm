@@ -136,6 +136,15 @@ sub run {
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
                "$self->{name}::$node"));
 
+
+	# XXX - print and calc trace
+    my @trace;
+    $session->param('trace') and @trace=@{$session->param('trace')};
+	push @trace, $node unless $trace[-1] eq $node;
+	@trace > 5 and shift @trace;
+	$session->param('trace',\@trace);
+	print 'Trace: ', join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
+
     if ($action eq 'edit') {
         print start_form(-method=>'post'),
           textarea('text',$content,15,80),
