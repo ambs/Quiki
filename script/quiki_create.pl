@@ -13,7 +13,7 @@ while(<DATA>) {
             print "ok!\n";
             close $file;
         }
-        open $file, ">$1" or die;
+        open $file, ">$path/$1" or die;
         print "Creating $1...";
     }
     elsif ($file) {
