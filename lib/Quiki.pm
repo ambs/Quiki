@@ -112,9 +112,10 @@ sub run {
     my $cookie = cookie('QuikiSID' => $session->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
     print start_html( -title => "$self->{name}::$node",
-                      -style => {
-                                 src => 'css/quiki.css'
-                                }
+                      -style =>
+                      {
+                       code => " \@import \"css/quiki.css\";\n \@import \"css/local.css\";\n"
+                      }
                     );
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
                "$self->{name}::$node"));
