@@ -5,6 +5,11 @@ use feature ':5.10';
 use CGI ':standard';
 use URI::Escape;
 
+sub format_page {
+    my ($Quiki, $string) = @_;
+
+    return div({-class=>'quiki_body'}, format($Quiki,$string));
+}
 
 
 # Formatter (format)

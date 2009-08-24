@@ -125,7 +125,7 @@ sub run {
                     end_form;
     }
     else {
-   	print Quiki::Formatter::format($self, $content);
+   	print Quiki::Formatter::format_page($self, $content);
 		# user is authenticated
 		if ($session->param('authenticated')) {
 			print hr,
