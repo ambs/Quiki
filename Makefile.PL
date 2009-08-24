@@ -14,7 +14,6 @@ WriteMakefile(
     EXE_FILES => [ 'script/quiki_create.pl' ],
     PREREQ_PM => {
                   'CGI' => 0,
-                  'CGI::Cookie' => 0,
                   'CGI::Session' => 0,
                   'Apache::Htpasswd' => 0,
                   'Test::More' => 0,

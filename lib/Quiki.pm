@@ -23,20 +23,20 @@ our $VERSION = '0.01';
 
     use Quiki;
 
-    my %conf = (
-               'name' => 'MyQuiki'
-                );
-
+    my %conf = ( name => 'MyQuiki' );
     Quiki->new(%conf)->run;
 
 =head1 EXPORT FUNCTIONS
 
 =head2 new
 
+Creates a new Quiki object.
+
 =head2 run
 
-=cut
+Runs de Quiki.
 
+=cut
 
 
 sub new {
@@ -44,10 +44,9 @@ sub new {
     my $self;
 
     # XXX
-    # Make it local O:-)
     my %conf = (
-                'name' => 'defaultName',
-                'index' => 'index', # index node
+                name  => 'defaultName',
+                index => 'index', # index node
                );
     $self = {%conf, %args};
 
@@ -59,36 +58,41 @@ sub new {
 sub run {
     my $self = shift;
 
+    # XXX -- É diferente fazê-lo aqui ou globalmente?
     use CGI qw/:standard/;
-	use CGI::Session;
+    use CGI::Session;
 
     my $sid = cookie("QuikiSID") || undef;
     my $session = new CGI::Session(undef, $sid, undef);
 
     # XXX
-    my $node = param('node') || $self->{index};
+    my $node   = param('node')   || $self->{index};
     my $action = param('action') || '';
 
-    # XXX
+    # XXX -- temos de proteger mais coisas, possivelmente
     $node =~ s/\s/_/g;
 
-	# XXX
-	if ($action eq 'login') {
-		my $username = param('username') || '';
-		my $password = param('password') || '';
-		if ($username and $password) {
-			$self->auth($username,$password) and $session->param('authenticated',1) and $session->param('username',$username);;
-		}
-		print redirect("$self->{SCRIPT_NAME}?node=$self->{index}");
-	}
-
-	# XXX
-	if ($action eq 'logout') {
-		$session->param('authenticated') and $session->param('authenticated',0) and  $session->param('username','');
-	}
+    # XXX
+    if ($action eq 'login') {
+        my $username = param('username') || '';
+        my $password = param('password') || '';
+        if ($username and $password) {
+            $self->_auth($username,$password) and
+              $session->param('authenticated',1) and
+                $session->param('username',$username);
+        }
+        print redirect("$self->{SCRIPT_NAME}?node=$self->{index}");
+    }
 
     # XXX
-	($action eq 'create') and (-f "data/content/$node") and ($action = '');
+    if ($action eq 'logout') {
+        $session->param('authenticated') and
+          $session->param('authenticated',0) and
+            $session->param('username','');
+    }
+
+    # XXX
+    ($action eq 'create') and (-f "data/content/$node") and ($action = '');
     if( ($action eq 'create') or !-f "data/content/$node") {
    	`echo 'edit me' > data/content/$node`;
    	`chmod 777 data/content/$node`;
@@ -105,7 +109,7 @@ sub run {
     # XXX
     my $content = `cat data/content/$node`;
 
-	my $cookie = cookie('QuikiSID' => $session->id);
+    my $cookie = cookie('QuikiSID' => $session->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
     print start_html("$self->{name}::$node");
     print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
@@ -115,7 +119,7 @@ sub run {
         print start_form(-method=>'post'),
           textarea('text',$content,15,80),
             hidden('node',$node),
-			  "<input type='hidden' name='action' value='save' />",
+              hidden('action','save'),
                 hr,
                   submit('submit', 'save'),
                     end_form;
@@ -145,24 +149,33 @@ sub run {
 		# user is not authenticated
 		else {
 			print hr,
+            print start_form(-method=>'post'),
+              submit('submit', 'logout'),
+                hidden('action','logout'),
+                  end_form;
+        }
+        else {
+            print hr,
               start_form(-method=>'post'),
 				"Username: ", textfield('username','',10),
 				  " Password: ", password_field('password','',10),
 				    "<input type='hidden' name='action' value='login' />",
                       submit('submit', 'login'),
                         end_form;
-		}
+        }
     }
 
-	print end_html;
+    print end_html;
 }
 
-sub auth {
-	my ($selt, $username, $password) = @_;
+sub _auth {
+    my ($selt, $username, $password) = @_;
 
-	use Apache::Htpasswd;
+    use Apache::Htpasswd;
 
-	my $passwd = new Apache::Htpasswd("./passwd");
+    # XXX - a script de criação do Quiki
+    #       deve criar o ficheiro com um utilizador admin
+    my $passwd = new Apache::Htpasswd("./passwd");
     $passwd->htCheckPassword($username, $password);
 }
 
@@ -183,7 +196,6 @@ your bug as I make changes.
 You can find documentation for this module with the perldoc command.
 
     perldoc Quiki
-
 
 You can also look for information at:
 
