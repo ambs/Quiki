@@ -1,0 +1,14 @@
+Site/css/gritter.css                    replace
+Site/css/local.css
+Site/css/quiki.css                      replace
+Site/data/content/index
+Site/images/gritter-bg-tile.png         replace,binary
+Site/images/gritter-bottom.png          replace,binary
+Site/images/gritter-close-ie6.gif       replace,binary
+Site/images/gritter-close.png           replace,binary
+Site/images/gritter-top.png             replace,binary
+Site/index.html                         replace
+Site/js/jquery.gritter.js               replace
+Site/js/jquery.js                       replace
+Site/passwd
+Site/quiki.cgi                          replace
