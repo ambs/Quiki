@@ -8,7 +8,9 @@ t/00-load.t
 t/01-formatter.t
 t/pod-coverage.t
 t/pod.t
-script/quiki_create.pl
+script/quiki_create.PL
+script/quiki_create.template
+Site.lst
 Site/css/gritter.css
 Site/css/local.css
 Site/css/quiki.css
