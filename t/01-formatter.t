@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 29;
+use Test::More tests => 32;
 
 use_ok("Quiki::Formatter");
 
@@ -339,5 +339,61 @@ EOI
 </ul>
 </li>
 </ol>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  - a
+    - b
+      - c
+        - d
+EOI
+<ol>
+<li> a<ol>
+<li> b<ol>
+<li> c<ol>
+<li> d</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  - a
+    * b
+      - c
+        * d
+EOI
+<ol>
+<li> a<ul>
+<li> b<ol>
+<li> c<ul>
+<li> d</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  - a
+  * b
+EOI
+<ol>
+<li> a</li>
+</ol>
+<ul>
+<li> b</li>
+</ul>
 
 EOO

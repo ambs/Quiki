@@ -54,6 +54,14 @@ sub _format_list {
         }
         else {
             $list .= "</li>\n" if $openitem;
+            if ($type ne $level[-1]) {
+                my $ctype = pop @level;
+                $list .= ($ctype eq "*")?"</ul>":"</ol>";
+                $list .= "\n";
+                push @level, $type;
+                $list .= ($type eq "*")?"<ul>":"<ol>";
+                $list .= "\n";
+            }
             $list .= "<li>$item";
             $openitem = 1;
             shift @c;
