@@ -191,7 +191,10 @@ sub run {
       $self->{meta}->{last_updated_in} = `date`;
       Quiki::Meta::set($node, $self->{meta});
    }
-   print "Last edited by ",$self->{meta}->{last_update_by},', in ',$self->{meta}->{last_updated_in} unless($action eq 'edit');
+    unless ($action eq 'edit') {
+        print div({-class=>"quiki_meta"},
+                  "Last edited by ",$self->{meta}{last_update_by},', in ',$self->{meta}{last_updated_in})
+    }
 
     $self->_render_menu_bar($node, $action);
 

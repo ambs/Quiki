@@ -38,3 +38,8 @@
   display: inline;
 }
 
+.quiki_meta { 
+  text-align: right;
+  font-size: small;
+  color: #999999;
+}
