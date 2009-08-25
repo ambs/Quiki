@@ -43,3 +43,9 @@
   font-size: small;
   color: #999999;
 }
+
+#quiki_name { 
+  float: right;
+  font-size: 20px;
+  color: #bb9999;
+}

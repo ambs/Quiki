@@ -144,8 +144,8 @@ sub run {
     }
 
     print start_div({-class=>"quiki_nav_bar"});
-    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"},
-               "$self->{name}::$node"));
+    print h3({-id => 'quiki_name'}, $self->{name});
+    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"}, $node));
 
 
     # XXX - print and calc trace
