@@ -22,13 +22,13 @@
   background-color: #dedede;
   border: solid 1px #bb9999;
   margin-bottom: 5px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .quiki_menu_bar {
   padding: 3px;
   background-color: #dedede;
-  border: solid 1px #cccccc;
+  border: solid 1px #bb9999;
   margin-top: 5px;
 }
 
@@ -59,9 +59,4 @@
   margin: -20px;
 }
 
-input { 
-  border: solid 1px #999999;
-  background-color: #eeeeee;
-  color: #000000;
-}
 
