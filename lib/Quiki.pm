@@ -170,7 +170,7 @@ sub run {
         closedir(DIR);
     }
     else {
-        print Quiki::Formatter::format_page($self, $content);
+        print Quiki::Formatter::format($self, $content);
     }
     print end_div; # end quiki_body <div>
     $self->_render_menu_bar($node, $action);

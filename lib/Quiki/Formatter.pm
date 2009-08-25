@@ -6,13 +6,6 @@ use CGI qw/-nosticky :standard/;
 use URI::Escape;
 use Regexp::Common qw/URI/;
 
-sub format_page {
-    my ($Quiki, $string) = @_;
-
-    return Quiki::Formatter::format($Quiki,$string);
-}
-
-
 # Formatter (format)
 #------------------------------------------------------------
 # Receives a string. Splits in empty lines (LaTeX like).
