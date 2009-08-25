@@ -1,5 +1,7 @@
 package Quiki;
 
+use feature ':5.10';
+
 use Quiki::Formatter;
 # vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
 
@@ -62,8 +64,8 @@ sub run {
     use CGI qw/:standard *div/;
     use CGI::Session;
 
-    my $sid = cookie("QuikiSID") || undef;
-    my $session = new CGI::Session(undef, $sid, undef);
+    $self->{sid} = cookie("QuikiSID") || undef;
+    $self->{session} = new CGI::Session(undef, $self->{sid}, undef);
 
     # XXX
     my $node   = param('node')   || $self->{index};
@@ -78,18 +80,18 @@ sub run {
         my $password = param('password') || '';
         if ($username and $password) {
             $self->_auth($username,$password) and
-              $session->param('authenticated',1) and
-                $session->param('username',$username) and
-				  $session->param('msg',"Login successfull! Welcome $username");
+              $self->{session}->param('authenticated',1) and
+                $self->{session}->param('username',$username) and
+				  $self->{session}->param('msg',"Login successfull! Welcome $username");
         }
     }
 
     # XXX
     if ($action eq 'logout') {
-        $session->param('authenticated') and
-          $session->param('authenticated',0) and
-            $session->param('username','') and
-              $session->param('msg','Logout successfull!');
+        $self->{session}->param('authenticated') and
+          $self->{session}->param('authenticated',0) and
+            $self->{session}->param('username','') and
+              $self->{session}->param('msg','Logout successfull!');
     }
 
     # XXX
@@ -97,7 +99,7 @@ sub run {
     if( ($action eq 'create') or !-f "data/content/$node") {
    	`echo 'edit me' > data/content/$node`;
    	`chmod 777 data/content/$node`;
-	$session->param('msg',"New node \"$node\" created.");
+	$self->{session}->param('msg',"New node \"$node\" created.");
     }
 
     # XXX
@@ -106,13 +108,13 @@ sub run {
    	open F, ">data/content/$node" or die "can't open file";
    	print F $text;
    	close F;
-	$session->param('msg',"Content for \"$node\" updated.");
+	$self->{session}->param('msg',"Content for \"$node\" updated.");
     }
 
     # XXX
     my $content = `cat data/content/$node`;
 
-    my $cookie = cookie('QuikiSID' => $session->id);
+    my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
     print start_html(-title => "$self->{name}::$node",
                      -style =>
@@ -128,9 +130,9 @@ sub run {
                     );
 
     # XXX - show message if we have one
-    if ($session->param('msg')) {
-        $self->_show_msg($session->param('msg'));
-        $session->param('msg','');
+    if ($self->{session}->param('msg')) {
+        $self->_show_msg($self->{session}->param('msg'));
+        $self->{session}->param('msg','');
     }
 
     print start_div({-class=>"quiki_nav_bar"});
@@ -140,62 +142,41 @@ sub run {
 
     # XXX - print and calc trace
     my @trace;
-    $session->param('trace') and @trace=@{$session->param('trace')};
+    $self->{session}->param('trace') and @trace=@{$self->{session}->param('trace')};
     push @trace, $node unless $trace[-1] eq $node;
     @trace > 5 and shift @trace;
-    $session->param('trace',\@trace);
+    $self->{session}->param('trace',\@trace);
     print 'Trace: ', join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
 
-    print end_div; # end nav_bar <div>
+    print end_div, # end nav_bar <div>
+	  start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
         print start_form(-method=>'post'),
           textarea('text',$content,15,80),
             hidden(-name => 'node', -value => $node, -override => 1),
               hidden(-name => 'action', -value => 'save', -override => 1),
-                hr,
-                  submit('submit', 'save'),
-                    end_form;
+                  #submit('submit', 'save'),
+                    #end_form;
     }
+	elsif ($action eq 'index') {
+		opendir(DIR,'data/content/');
+		while((my $f = readdir(DIR))){
+			unless ($f=~/^\./) { print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;  }
+		}
+		closedir(DIR);
+	}
     else {
-   	print Quiki::Formatter::format_page($self, $content);
-        # user is authenticated
-        if ($session->param('authenticated')) {
-            print hr,
-              "Username: ",
-                $session->param('username'),
-                  start_form(-method=>'post'),
-                    hidden('node',$node),
-                      hidden(-name => 'action', -value => 'edit', -override => 1),
-                        submit(-name => 'submit', -value => 'edit', -override => 1),
-                          end_form;
-            print start_form(-method=>'post'),
-              submit('submit', 'new node'),
-                textfield('node','',10),
-                  hidden(-name => 'action', -value => 'create', -override => 1),
-                    end_form;
-            print start_form(-method=>'post'),
-              submit('submit', 'logout'),
-                hidden(-name => 'action', -value => 'logout', -override => 1),
-                  end_form;
-        }
-        # user is not authenticated
-        else {
-            print hr,
-              start_form(-method=>'post'),
-                "Username: ", textfield('username','',10),
-                  " Password: ", password_field('password','',10),
-                    hidden(-name => 'action', -value => 'login', -override => 1),
-                      submit('submit', 'login'),
-                        end_form;
-        }
+		print Quiki::Formatter::format_page($self, $content);
     }
+	print end_div; # end quiki_body <div>
+	$self->_render_menu_bar($node, $action);
 
     print end_html;
 }
 
 sub _auth {
-    my ($selt, $username, $password) = @_;
+    my ($self, $username, $password) = @_;
 
     use Apache::Htpasswd;
 
@@ -206,7 +187,7 @@ sub _auth {
 }
 
 sub _show_msg {
-    my ($selt, $string) = @_;
+    my ($self, $string) = @_;
 print<<"HTML";
 <script type="text/javascript">
     \$(document).ready(function(){
@@ -219,6 +200,55 @@ print<<"HTML";
 HTML
 }
 
+sub _render_menu_bar {
+	my ($self, $node, $action) = @_;
+
+    print start_div({-class=>"quiki_menu_bar"}),
+	  start_div({-class=>"quiki_menu_bar_left"});
+	given($action) {
+		when(!/edit/) { 
+			if ($self->{session}->param('authenticated')) {
+                 print start_form(-method=>'post'),
+                      hidden('node',$node),
+                        hidden(-name => 'action', -value => 'edit', -override => 1),
+                          submit(-name => 'submit', -value => 'edit', -override => 1),
+                            end_form;
+				print start_form(-method=>'post'),
+				  submit('submit', 'new node'),
+					' ',
+					  textfield(-name=>'node', -value=>'<name>', -size=>4, -override => 1),
+						hidden(-name => 'action', -value => 'create', -override => 1),
+						  end_form;
+			}
+		}
+		when(/edit/) {
+			print submit('submit', 'save'),
+			  end_form;
+		}
+	}
+	print end_div,  # end menu_bar_left <div>
+	  start_div({-class=>"quiki_menu_bar_right"});
+	if ($self->{session}->param('authenticated')) {
+		print start_form(-method=>'post'),
+		  submit('submit', 'logout'),
+			hidden(-name => 'action', -value => 'logout', -override => 1),
+			  end_form;
+	}
+	else {
+		print start_form(-method=>'post'),
+		  "Username: ", textfield('username','',6),
+			" Password: ", password_field('password','',6),
+			  hidden(-name => 'action', -value => 'login', -override => 1),
+				submit('submit', 'login'),
+				  end_form;
+	}
+	print start_form(-method=>'post'),
+		hidden(-name => 'action', -value => 'index', -override => 1),
+		  submit(-name => 'submit', -value => 'index', -override => 1),
+			end_form;
+    print end_div, # end menu_bar_right <div>
+      end_div; # end menu_bar <div>
+}
 
 =head1 AUTHOR
 

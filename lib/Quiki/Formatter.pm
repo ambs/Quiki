@@ -9,7 +9,7 @@ use Regexp::Common qw/URI/;
 sub format_page {
     my ($Quiki, $string) = @_;
 
-    return div({-class=>'quiki_body'}, Quiki::Formatter::format($Quiki,$string));
+    return Quiki::Formatter::format($Quiki,$string);
 }
 
 
