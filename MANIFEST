@@ -25,6 +25,7 @@ Site/js/jquery.gritter.js
 Site/js/jquery.js
 Site/passwd
 Site/quiki.cgi
-Site/quiki.confSite/css/textarea.css
+Site/quiki.conf
+Site/css/textarea.css
 Site/images/grippie.png
 Site/js/jquery.textarearesizer.js
