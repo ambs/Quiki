@@ -159,6 +159,8 @@ sub _inlines {
        qr/__ ((?:\\_|[^_]|_[^_])+) __/x         => sub { u(_inlines($Quiki, $1)) },
        ## // foo //
        qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x => sub { i(_inlines($Quiki, $1)) },
+       ## '' foo ''
+       qr/'' ((?:\\'|[^']|'[^'])+) ''/x => sub { tt(_inlines($Quiki, $1)) },
        ## urls que nao sigam aspas
        qr/(?<!")$RE{URI}{-keep}/                => sub { a({-href=>$1}, $1) },
       );

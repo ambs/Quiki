@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 32;
+use Test::More tests => 33;
 
 use_ok("Quiki::Formatter");
 
@@ -128,6 +128,12 @@ is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo \\ bar \[[ zbr \]] ugh \*\*.
 EOI
 <p>foo \ bar [[ zbr ]] ugh **.</p>
+EOO
+
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+foo ''bar'' \'' zbr \'' ugh.
+EOI
+<p>foo <tt>bar</tt> '' zbr '' ugh.</p>
 EOO
 
 is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
