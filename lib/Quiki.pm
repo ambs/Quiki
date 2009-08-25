@@ -205,7 +205,7 @@ HTML
 sub _render_menu_bar {
     my ($self, $node, $action) = @_;
 
-    print (start_div({-class=>"quiki_menu_bar"}),
+    print( start_div({-class=>"quiki_menu_bar"}),
            start_div({-class=>"quiki_menu_bar_left"}));
 
     given($action) {
@@ -225,12 +225,12 @@ sub _render_menu_bar {
             }
         }
         when(/edit/) {
-            print submit('submit', 'cancel'),
-              print submit('submit', 'save'),
+            print submit(-name => 'submit', -value => 'cancel', -override => 1),
+              submit(-name => 'submit', -value => 'save', -override => 1),
                 end_form;
         }
     }
-    print (end_div,  # end menu_bar_left <div>
+    print( end_div,  # end menu_bar_left <div>
            start_div({-class=>"quiki_menu_bar_right"}));
     if ($self->{session}->param('authenticated')) {
         print start_form(-method=>'post'),
