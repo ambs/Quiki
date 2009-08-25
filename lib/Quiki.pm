@@ -119,14 +119,21 @@ sub run {
     print start_html(-title => "$self->{name}::$node",
                      -style =>
                      {
-                      code => " \@import \"css/quiki.css\";\n \@import \"css/local.css\"; \@import \"css/gritter.css\"; "
+                      code => join("\n",
+                                   '@import "css/quiki.css";',
+                                   '@import "css/local.css";',
+                                   '@import "css/gritter.css";',
+                                   '@import "css/textarea.css";')
                      },
                      -script=> [{ -type=>'JAVASCRIPT',
                                   -src=>'js/jquery.js'
                                 },
                                 { -type=>'JAVASCRIPT',
                                   -src=>'js/jquery.gritter.js'
-                                }]
+                                },
+                                { -type=>'JAVASCRIPT',
+                                  -src=>'js/jquery.textarearesizer.js'
+                                },]
                     );
 
     # XXX - show message if we have one
@@ -192,6 +199,11 @@ sub _show_msg {
     my ($self, $string) = @_;
 print<<"HTML";
 <script type="text/javascript">
+    /* jQuery textarea resizer plugin usage */
+    \$(document).ready(function() {
+        \$('textarea.resizable:not(.processed)').TextAreaResizer();
+    });
+
     \$(document).ready(function(){
             \$.gritter.add({
                 title: 'Info!',
