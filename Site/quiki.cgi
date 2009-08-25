@@ -1,11 +1,9 @@
 #!/usr/bin/perl
 
-use lib '### CHANGE ME ###';
+# use lib '/home/smash/playground/Quiki.cron/lib';
 
 use Quiki;
 
-my %conf = (
-           'name' => 'MyQuiki'
-            );
+my $conf = do 'quiki.conf';
 
-Quiki->new(%conf)->run;
+Quiki->new(%$conf)->run;

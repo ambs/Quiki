@@ -12,4 +12,4 @@ js/jquery.gritter.js               replace
 js/jquery.js                       replace
 passwd
 quiki.cgi                          replace
-
+quiki.conf
