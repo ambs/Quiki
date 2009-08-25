@@ -56,7 +56,7 @@ sub _format_list {
                 $list .= ($type eq "*")?"<ul>":"<ol>";
                 $list .= "\n";
             }
-            $list .= "<li>"._unbackslash(_inlines($Quiki, $item));
+            $list .= "<li>"._unbackslash(_expand_entities(_inlines($Quiki, $item)));
             $openitem = 1;
             shift @c;
         }
