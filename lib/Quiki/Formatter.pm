@@ -89,8 +89,9 @@ sub _format_chunk {
 
     }
     else {
-        if ($chunk =~ /^ -{10,} \s* $ /x) {
-            $chunk = "<hr/>";
+        if ($chunk =~ /^ -{10,} \s* (\n|$) /x) {
+            $chunk =~ s/^ -+ \s* //x;
+            $chunk = $chunk ? ('<hr/>' . _format_chunk($Quiki, $chunk)) : '<hr/>';
         }
         elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
             given(length($1)) {

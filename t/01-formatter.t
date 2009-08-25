@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 33;
+use Test::More tests => 34;
 
 use_ok("Quiki::Formatter");
 
@@ -211,6 +211,18 @@ EOI
 <hr/>
 
 <hr/>
+EOO
+
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+------------
+foo bar.
+
+-------------
+------------
+EOI
+<hr/><p>foo bar.</p>
+
+<hr/><hr/>
 EOO
 
 
