@@ -145,7 +145,8 @@ sub run {
 
     print start_div({-class=>"quiki_nav_bar"});
     print h3({-id => 'quiki_name'}, $self->{name});
-    print h3(a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"}, $node));
+    print h3({-id => 'quiki_nodename'},
+             a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"}, $node));
 
 
     # XXX - print and calc trace
@@ -154,7 +155,10 @@ sub run {
     push @trace, $node unless $trace[-1] eq $node;
     @trace > 5 and shift @trace;
     $self->{session}->param('trace',\@trace);
-    print 'Trace: ', join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
+    print div({-id=>'quiki_breadcumbs'},
+              'Your path: ',
+              join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace)
+             );
 
     print end_div, # end nav_bar <div>
       start_div({-class=>"quiki_body"});
