@@ -22,6 +22,28 @@ sub format {
     return $html . "\n";
 }
 
+sub _format_table {
+    my ($Quiki, $chunk) = @_;
+
+    my @c = split /\n/, $chunk;
+    my $table = "<table>\n";
+
+    while (@c && $c[0] =~ /^(\^|\|)/) {
+        $c[0] =~ s/^(.)//;
+        if ($1 eq "^") {
+            $table .= Tr(th([split /\^/, $c[0]])) . "\n";
+        } else {
+            $table .= Tr(td([split /\|/, $c[0]])) . "\n";
+        }
+        shift @c;
+    }
+    $table .= "</table>\n";
+
+    $chunk = $table . (@c ?
+                       _format_chunk($Quiki, join("\n", @c)) :
+                       "");
+}
+
 sub _format_list {
     my ($Quiki, $chunk) = @_;
     my @level = ();
@@ -81,10 +103,14 @@ sub _format_chunk {
     $chunk =~ s/^\n//;
     $chunk = _protect($chunk);
 
-    if ($chunk =~ /^\s{2}[*-]/) {
+    if ($chunk =~ /^(\^|\|)/) {
+        $chunk = _format_table($Quiki, $chunk);
+    }
+    elsif ($chunk =~ /^\s{2}[*-]/) {
         $chunk = _format_list($Quiki, $chunk);
 
-    } elsif ($chunk =~ /^\s{3}/) {
+    }
+    elsif ($chunk =~ /^\s{3}/) {
         $chunk = _format_verbatim($chunk);
 
     }
