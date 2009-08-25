@@ -3,6 +3,7 @@ package Quiki;
 use feature ':5.10';
 
 use Quiki::Formatter;
+use Quiki::Meta;
 # vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
 
 use warnings;
@@ -181,6 +182,16 @@ sub run {
         print Quiki::Formatter::format($self, $content);
     }
     print end_div; # end quiki_body <div>
+
+   # handle meta data
+   $self->{meta} = Quiki::Meta::get($node);
+   if ($action eq 'save') {
+      $self->{meta}->{last_update_by} = $self->{session}->param('username');
+      $self->{meta}->{last_updated_in} = `date`;
+      Quiki::Meta::set($node, $self->{meta});
+   }
+   print "Last edited by ",$self->{meta}->{last_update_by},', in ',$self->{meta}->{last_updated_in} unless($action eq 'edit');
+
     $self->_render_menu_bar($node, $action);
 
     print end_html;
