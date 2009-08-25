@@ -203,55 +203,57 @@ HTML
 }
 
 sub _render_menu_bar {
-	my ($self, $node, $action) = @_;
+    my ($self, $node, $action) = @_;
 
-    print start_div({-class=>"quiki_menu_bar"}),
-	  start_div({-class=>"quiki_menu_bar_left"});
-	given($action) {
-		when(!/edit/) { 
-			if ($self->{session}->param('authenticated')) {
-                 print start_form(-method=>'post'),
-                      hidden('node',$node),
-                        hidden(-name => 'action', -value => 'edit', -override => 1),
-                          submit(-name => 'submit', -value => 'edit', -override => 1),
-                            end_form;
-				print start_form(-method=>'post'),
-				  submit('submit', 'new node'),
-					' ',
-					  textfield(-name=>'node', -value=>'<name>', -size=>4, -override => 1),
-						hidden(-name => 'action', -value => 'create', -override => 1),
-						  end_form;
-			}
-		}
-		when(/edit/) {
-			print submit('submit', 'save'),
-			  end_form;
-		}
-	}
-	print end_div,  # end menu_bar_left <div>
-	  start_div({-class=>"quiki_menu_bar_right"});
-	if ($self->{session}->param('authenticated')) {
-		print start_form(-method=>'post'),
-		  submit('submit', 'logout'),
-			hidden(-name => 'action', -value => 'logout', -override => 1),
-			  end_form;
-	}
-	else {
-		print start_form(-method=>'post'),
-		  "Username: ", textfield('username','',6),
-			" Password: ", password_field('password','',6),
-			  hidden(-name => 'action', -value => 'login', -override => 1),
-				submit('submit', 'login'),
-				  end_form;
-	}
-	print start_form(-method=>'post'),
-		hidden(-name => 'action', -value => 'index', -override => 1),
-		  submit(-name => 'submit', -value => 'index', -override => 1),
-			end_form;
-	print end_div, # end menu_bar_right <div>
-	  start_div({-style=>'clear: both;'}),
-		end_div; # end empty <div>
-		  end_div; # end menu_bar <div>
+    print (start_div({-class=>"quiki_menu_bar"}),
+           start_div({-class=>"quiki_menu_bar_left"}));
+
+    given($action) {
+        when(!/edit/) {
+            if ($self->{session}->param('authenticated')) {
+                print start_form(-method=>'post'),
+                  hidden('node',$node),
+                    hidden(-name => 'action', -value => 'edit', -override => 1),
+                      submit(-name => 'submit', -value => 'edit', -override => 1),
+                        end_form;
+                print start_form(-method=>'post'),
+                  submit('submit', 'new node'),
+                    ' ',
+                      textfield(-name=>'node', -value=>'<name>', -size=>4, -override => 1),
+                        hidden(-name => 'action', -value => 'create', -override => 1),
+                          end_form;
+            }
+        }
+        when(/edit/) {
+            print submit('submit', 'cancel'),
+              print submit('submit', 'save'),
+                end_form;
+        }
+    }
+    print (end_div,  # end menu_bar_left <div>
+           start_div({-class=>"quiki_menu_bar_right"}));
+    if ($self->{session}->param('authenticated')) {
+        print start_form(-method=>'post'),
+          submit('submit', 'logout'),
+            hidden(-name => 'action', -value => 'logout', -override => 1),
+              end_form;
+    }
+    else {
+        print start_form(-method=>'post'),
+          "Username: ", textfield('username','',6),
+            " Password: ", password_field('password','',6),
+              hidden(-name => 'action', -value => 'login', -override => 1),
+                submit('submit', 'login'),
+                  end_form;
+    }
+    print start_form(-method=>'post'),
+      hidden(-name => 'action', -value => 'index', -override => 1),
+        submit(-name => 'submit', -value => 'index', -override => 1),
+          end_form;
+    print end_div, # end menu_bar_right <div>
+      start_div({-style=>'clear: both;'}),
+        end_div; # end empty <div>
+    end_div; # end menu_bar <div>
 }
 
 =head1 AUTHOR
