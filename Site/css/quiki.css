@@ -15,8 +15,9 @@
 .quiki_nav_bar { 
   padding: 3px;
   background-color: #dedede;
-  border: solid 1px #cccccc;
+  border: solid 1px #bb9999;
   margin-bottom: 5px;
+	overflow: hidden;
 }
 
 .quiki_menu_bar {
@@ -46,6 +47,8 @@
 
 #quiki_name { 
   float: right;
-  font-size: 20px;
+	font-weight: bold;
+  font-size: 130px;
   color: #bb9999;
+	margin: -20px;
 }
