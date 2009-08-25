@@ -159,6 +159,7 @@ sub run {
       start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
+        print script("\$(document).ready(function() { \$('textarea.resizable:not(.processed)').TextAreaResizer(); });");
         print start_form(-method=>'post'),
           textarea(-name => 'text',
                    -default => $content,
@@ -199,11 +200,6 @@ sub _show_msg {
     my ($self, $string) = @_;
 print<<"HTML";
 <script type="text/javascript">
-    /* jQuery textarea resizer plugin usage */
-    \$(document).ready(function() {
-        \$('textarea.resizable:not(.processed)').TextAreaResizer();
-    });
-
     \$(document).ready(function(){
             \$.gritter.add({
                 title: 'Info!',
@@ -213,6 +209,7 @@ print<<"HTML";
 </script>
 HTML
 }
+
 
 sub _render_menu_bar {
     my ($self, $node, $action) = @_;
