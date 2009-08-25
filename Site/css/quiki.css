@@ -5,6 +5,11 @@
   padding: 5px;
 }
 
+.quiki_body h1 { 
+  color: #dd7777;
+  border-bottom: solid 1px #dd7777;
+}
+
 .quiki_body pre {
   margin: 5px;
   padding: 3px;
@@ -40,6 +45,7 @@
 }
 
 .quiki_meta { 
+  padding-top: 2px;
   text-align: right;
   font-size: small;
   color: #999999;
@@ -47,8 +53,15 @@
 
 #quiki_name { 
   float: right;
-	font-weight: bold;
+  font-weight: bold;
   font-size: 130px;
   color: #bb9999;
-	margin: -20px;
+  margin: -20px;
 }
+
+input { 
+  border: solid 1px #999999;
+  background-color: #eeeeee;
+  color: #000000;
+}
+

@@ -186,15 +186,17 @@ sub run {
     else {
         print Quiki::Formatter::format($self, $content);
     }
+
+    # handle meta data
+    $self->{meta} = Quiki::Meta::get($node);
+    if ($action eq 'save') {
+        $self->{meta}->{last_update_by} = $self->{session}->param('username');
+        $self->{meta}->{last_updated_in} = `date`;
+        Quiki::Meta::set($node, $self->{meta});
+    }
+
     print end_div; # end quiki_body <div>
 
-   # handle meta data
-   $self->{meta} = Quiki::Meta::get($node);
-   if ($action eq 'save') {
-      $self->{meta}->{last_update_by} = $self->{session}->param('username');
-      $self->{meta}->{last_updated_in} = `date`;
-      Quiki::Meta::set($node, $self->{meta});
-   }
     unless ($action eq 'edit') {
         print div({-class=>"quiki_meta"},
                   "Last edited by ",$self->{meta}{last_update_by},', in ',$self->{meta}{last_updated_in})
@@ -242,10 +244,10 @@ sub _render_menu_bar {
                 print start_form(-method=>'post'),
                   hidden('node',$node),
                     hidden(-name => 'action', -value => 'edit', -override => 1),
-                      submit(-name => 'submit', -value => 'edit this page', -override => 1),
+                      submit(-name => 'submit', -value => 'Edit this page', -override => 1),
                         end_form;
+                print '&nbsp;&nbsp;|&nbsp;&nbsp;';
                 print start_form(-method=>'post'),
-                  '&nbsp;&nbsp;|&nbsp;&nbsp;',
                     submit('submit', 'Create new page'),
                       '&nbsp;',
                         textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
