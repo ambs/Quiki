@@ -103,7 +103,7 @@ sub run {
     }
 
     # XXX
-    if ($action eq 'save') {
+    if ($action eq 'save' && param("submit") eq "save") {
    	my $text = param('text') // '';
    	open F, ">data/content/$node" or die "can't open file";
    	print F $text;
@@ -217,11 +217,12 @@ sub _render_menu_bar {
                       submit(-name => 'submit', -value => 'edit', -override => 1),
                         end_form;
                 print start_form(-method=>'post'),
-                  submit('submit', 'new node'),
-                    ' ',
-                      textfield(-name=>'node', -value=>'<name>', -size=>4, -override => 1),
-                        hidden(-name => 'action', -value => 'create', -override => 1),
-                          end_form;
+                  '&nbsp;&nbsp;&nbsp;&nbsp;',
+                    submit('submit', 'new node'),
+                      '&nbsp;&nbsp;',
+                        textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
+                          hidden(-name => 'action', -value => 'create', -override => 1),
+                            end_form;
             }
         }
         when(/edit/) {
