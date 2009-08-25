@@ -160,7 +160,8 @@ sub run {
       start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
-        print script("\$(document).ready(function() { \$('textarea.resizable:not(.processed)').TextAreaResizer(); });");
+        print script({-type=>'text/javascript'},
+                     q!$(document).ready(function() { $('textarea.resizable:not(.processed)').TextAreaResizer(); });!);
         print start_form(-method=>'post'),
           textarea(-name => 'text',
                    -default => $content,
