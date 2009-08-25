@@ -39,6 +39,10 @@ Quiki::Meta - Quiki meta information handler
 Handles saving and retriving meta information for quiki nodes.
 Updates meta information for a given node.
 
+=head2 set
+
+=head2 get
+
 =head1 SEE ALSO
 
 Quiki, perl(1)
