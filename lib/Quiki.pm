@@ -155,7 +155,7 @@ sub run {
         print start_form(-method=>'post'),
           textarea(-name => 'text',
                    -default => $content,
-                   -class => 'quiki_widetextarea'
+                   -class => 'quiki_widetextarea',
                    -rows => 15, -columns => 80),
                      hidden(-name => 'node', -value => $node, -override => 1),
                        hidden(-name => 'action', -value => 'save', -override => 10);
