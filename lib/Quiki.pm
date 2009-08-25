@@ -246,8 +246,10 @@ sub _render_menu_bar {
 		hidden(-name => 'action', -value => 'index', -override => 1),
 		  submit(-name => 'submit', -value => 'index', -override => 1),
 			end_form;
-    print end_div, # end menu_bar_right <div>
-      end_div; # end menu_bar <div>
+	print end_div, # end menu_bar_right <div>
+	  start_div({-style=>'clear: both;'}),
+		end_div; # end empty <div>
+		  end_div; # end menu_bar <div>
 }
 
 =head1 AUTHOR
