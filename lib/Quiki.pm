@@ -246,10 +246,10 @@ sub _render_menu_bar {
                         end_form;
                 print start_form(-method=>'post'),
                   '&nbsp;&nbsp;|&nbsp;&nbsp;',
-                    submit('submit', 'new node'),
-                      '&nbsp;&nbsp;',
+                    submit('submit', 'Create new page'),
+                      '&nbsp;',
                         textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
-                          hidden(-name => 'action', -value => 'create new page:', -override => 1),
+                          hidden(-name => 'action', -value => 'create', -override => 1),
                             end_form;
             }
         }
@@ -265,10 +265,11 @@ sub _render_menu_bar {
     ## Index button
     print start_form(-method=>'post'),
       hidden(-name => 'action', -value => 'index', -override => 1),
-        submit(-name => 'submit', -value => 'index', -override => 1),
-          end_form;
+        submit(-name => 'submit', -value => 'Index', -override => 1),
+          end_form,
+            "&nbsp;&nbsp;|&nbsp;&nbsp;";
 
-    ## Login+Sigin/Logout buttons
+    ## Login+Sigup/Logout buttons
     if ($self->{session}->param('authenticated')) {
         print start_form(-method=>'post'),
           submit('submit', 'Log out'),
@@ -282,11 +283,12 @@ sub _render_menu_bar {
                   end_form;
         print "&nbsp;&nbsp;|&nbsp;&nbsp;";
         print start_form(-method=>'post'),
-          "Username: ", textfield('username','',6),
-            " Password: ", password_field('password','',6),
-              hidden(-name => 'action', -value => 'login', -override => 1),
-                submit('submit', 'Log in'),
-                  end_form;
+          submit('submit', 'Log in'),
+            "Username: ", textfield('username','',6),
+              " Password: ", password_field('password','',6),
+                "&nbsp;",
+                  hidden(-name => 'action', -value => 'login', -override => 1),
+                    end_form;
     }
 
 
