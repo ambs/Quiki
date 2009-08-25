@@ -149,28 +149,31 @@ sub run {
     print 'Trace: ', join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
 
     print end_div, # end nav_bar <div>
-	  start_div({-class=>"quiki_body"});
+      start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
         print start_form(-method=>'post'),
-          textarea('text',$content,15,80),
-            hidden(-name => 'node', -value => $node, -override => 1),
-              hidden(-name => 'action', -value => 'save', -override => 1),
-                  #submit('submit', 'save'),
-                    #end_form;
+          textarea(-name => 'text',
+                   -default => $content,
+                   -class => 'quiki_widetextarea'
+                   -rows => 15, -columns => 80),
+                     hidden(-name => 'node', -value => $node, -override => 1),
+                       hidden(-name => 'action', -value => 'save', -override => 10);
+        #submit('submit', 'save'),
+        #end_form;
     }
-	elsif ($action eq 'index') {
-		opendir(DIR,'data/content/');
-		while((my $f = readdir(DIR))){
-			unless ($f=~/^\./) { print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;  }
-		}
-		closedir(DIR);
-	}
+    elsif ($action eq 'index') {
+        opendir(DIR,'data/content/');
+        while((my $f = readdir(DIR))){
+            unless ($f=~/^\./) { print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;  }
+        }
+        closedir(DIR);
+    }
     else {
-		print Quiki::Formatter::format_page($self, $content);
+        print Quiki::Formatter::format_page($self, $content);
     }
-	print end_div; # end quiki_body <div>
-	$self->_render_menu_bar($node, $action);
+    print end_div; # end quiki_body <div>
+    $self->_render_menu_bar($node, $action);
 
     print end_html;
 }
@@ -180,8 +183,7 @@ sub _auth {
 
     use Apache::Htpasswd;
 
-    # XXX - a script de criação do Quiki
-    #       deve criar o ficheiro com um utilizador admin
+    # XXX - mais cedo ou mais tarde passar para DBD::SQLite para ter mais info por user
     my $passwd = new Apache::Htpasswd("./passwd");
     $passwd->htCheckPassword($username, $password);
 }
