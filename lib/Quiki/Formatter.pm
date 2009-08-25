@@ -117,12 +117,13 @@ sub _expand_entities {
         s/--/&mdash;/g;
         s/\(c\)/&copy;/g;
         s/\(r\)/&reg;/g;
+        s/&lt;-&gt;/&harr;/g;
+        s/&lt;=&gt;/&hArr;/g;
         s/-&gt;/&rarr;/g;
         s/&lt;-/&larr;/g;
         s/=&gt;/&rArr;/g;
         s/&lt;=/&lArr;/g;
-        s/&lt;-&gt;/&harr;/g;
-        s/&lt;=&gt;/&hArr;/g;
+
     }
     return $string;
 }
