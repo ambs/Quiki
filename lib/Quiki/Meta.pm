@@ -2,7 +2,7 @@ package Quiki::Meta;
 
 use feature ':5.10';
 
-use YAML::XS;
+use YAML::Any;
 
 sub get {
 	my $node = shift;

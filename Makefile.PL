@@ -21,6 +21,7 @@ WriteMakefile(
                   'Apache::Htpasswd' => 0,
                   'Test::More' => 0,
                   'URI::Escape' => 0,
+				  'YAML::Any' => 0,
                   'MIME::Base64' => 0,
                   'Regexp::Common' => '2.122',
     },
