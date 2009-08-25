@@ -10,6 +10,6 @@ div.grippie {
 .resizable-textarea textarea {
   display:block;
   margin-bottom:0pt;
-  width:95%;
+  width:100%;
   height: 20%;
 }
