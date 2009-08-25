@@ -105,9 +105,26 @@ sub _format_chunk {
         else {
             $chunk = p(_inlines($Quiki, $chunk));
         }
+        $chunk = _expand_entities($chunk);
         $chunk = _unbackslash($chunk);
     }
     return $chunk;
+}
+
+sub _expand_entities {
+    my $string = shift;
+    for ($string) {
+        s/--/&mdash;/g;
+        s/\(c\)/&copy;/g;
+        s/\(r\)/&reg;/g;
+        s/->/&rarr;/g;
+        s/<-/&larr;/g;
+        s/=>/&rArr;/g;
+        s/<=/&lArr;/g;
+        s/<->/&harr;/g;
+        s/<=>/&hArr;/g;
+    }
+    return $string;
 }
 
 sub _format_verbatim {
