@@ -1,5 +1,8 @@
 package Quiki::Pages;
 
+use warnings;
+use strict;
+
 use File::Slurp 'slurp';
 
 sub save {
