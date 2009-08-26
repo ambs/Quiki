@@ -10,6 +10,7 @@ images/gritter-close.png           replace,binary
 images/gritter-top.png             replace,binary
 index.html                         replace
 js/jquery.gritter.js               replace
+js/jquery.floatbox.js              replace
 js/jquery.js                       replace
 passwd
 quiki.cgi                          replace

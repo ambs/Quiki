@@ -77,6 +77,7 @@ sub run {
 
     # XXX
     if ($action eq 'login') {
+print STDERR "LOGIN ";
         my $username = param('username') || '';
         my $password = param('password') || '';
         if ($username and $password) {
@@ -133,15 +134,13 @@ sub run {
                                   -src=>'js/jquery.gritter.js'
                                 },
                                 { -type=>'JAVASCRIPT',
+                                  -src=>'js/jquery.floatbox.js'
+                                },
+                                { -type=>'JAVASCRIPT',
                                   -src=>'js/jquery.textarearesizer.js'
                                 },]
                     );
 
-    # XXX - show message if we have one
-    if ($self->{session}->param('msg')) {
-        $self->_show_msg($self->{session}->param('msg'));
-        $self->{session}->param('msg','');
-    }
 
     print start_div({-class=>"quiki_nav_bar"});
     print h3({-id => 'quiki_name'}, $self->{name});
@@ -160,8 +159,37 @@ sub run {
               join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace)
              );
 
-    print end_div, # end nav_bar <div>
-      start_div({-class=>"quiki_body"});
+    print end_div; # end nav_bar <div>
+
+    # XXX - show message if we have one
+    if ($self->{session}->param('msg')) {
+        $self->_show_msg($self->{session}->param('msg'));
+        $self->{session}->param('msg','');
+    }
+
+    if ($action eq 'login_page') {
+print<<'HTML';
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.floatbox({
+			content: "<center><br><form method='post'> Username: <input name='username' type='text'><br /> Psasword: <input name='password' type='password'> <br><br> <input type='hidden' name='action' value='login'><input type='submit' value='login'> </form></center>"
+		});
+	});
+</script>
+<noscript>
+<form method="post">
+Username: <input type='text' name='username'>
+Password: <input type='password' name='password'>
+<input type='hidden' name='action' value='login'>
+<input type='submit' value='log in'>
+</form>
+<br>
+</noscript>
+
+HTML
+   }
+
+	print start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
         print script({-type=>'text/javascript'},
@@ -230,6 +258,7 @@ print<<"HTML";
             });
     });
 </script>
+<noscript><b>Info! $string</b></noscript>
 HTML
 }
 
@@ -288,10 +317,8 @@ sub _render_menu_bar {
         print "&nbsp;&nbsp;|&nbsp;&nbsp;";
         print start_form(-method=>'post'),
           submit('submit', 'Log in'),
-            "Username: ", textfield('username','',6),
-              " Password: ", password_field('password','',6),
-                "&nbsp;",
-                  hidden(-name => 'action', -value => 'login', -override => 1),
+				hidden(-name => 'node', -value => $node, -override => 1),
+				hidden(-name => 'action', -value => 'login_page', -override => 1),
                     end_form;
     }
 

@@ -23,6 +23,7 @@ Site/images/gritter-close.png
 Site/images/gritter-top.png
 Site/index.html
 Site/js/jquery.gritter.js
+Site/js/jquery.floatbox.js
 Site/js/jquery.js
 Site/passwd
 Site/quiki.cgi
