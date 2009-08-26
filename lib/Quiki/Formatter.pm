@@ -26,7 +26,7 @@ sub _format_table {
     my ($Quiki, $chunk) = @_;
 
     my @c = split /\n/, $chunk;
-    my $table = "<table>\n";
+    my $table = "<table class=\"quiki_table\">\n";
 
     while (@c && $c[0] =~ /^(\^|\|)/) {
         $c[0] =~ s/^(.)//;

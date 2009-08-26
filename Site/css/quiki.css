@@ -59,4 +59,10 @@
   margin: -20px;
 }
 
+.quiki_table { 
+  border: solid 1px #999999;
+}
 
+.quiki_table th { 
+  background-color: #eeeeee;
+}
