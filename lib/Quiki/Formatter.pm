@@ -27,13 +27,13 @@ sub _tds {
 
     given ($content) {
         when (/^\S/) {
-            return td({-style=>"text-align: left"}, $content);
+            return td({-style=>"text-align: left"}, _inlines($Quiki, $content));
         }
         when (/\S$/) {
-            return td({-style=>"text-align: right"}, $content);
+            return td({-style=>"text-align: right"}, _inlines($Quiki, $content));
         }
         default {
-            return td({-style=>"text-align: center"}, $content);
+            return td({-style=>"text-align: center"}, _inlines($Quiki, $content));
         }
     }
 }
@@ -47,7 +47,7 @@ sub _format_table {
     while (@c && $c[0] =~ /^(\^|\|)/) {
         $c[0] =~ s/^(.)//;
         if ($1 eq "^") {
-            $table .= Tr(th([split /\^/, $c[0]])) . "\n";
+            $table .= Tr(th([map { _inlines($Quiki, $_) }  split /\^/, $c[0]])) . "\n";
         } else {
             $table .= Tr(join(" ",map { _tds($Quiki, $_) } split /\|/, $c[0])) . "\n";
         }
@@ -94,7 +94,7 @@ sub _format_list {
                 $list .= ($type eq "*")?"<ul>":"<ol>";
                 $list .= "\n";
             }
-            $list .= "<li>"._unbackslash(_expand_entities(_inlines($Quiki, $item)));
+            $list .= "<li>"._unbackslash(_inlines($Quiki, $item));
             $openitem = 1;
             shift @c;
         }
@@ -148,7 +148,6 @@ sub _format_chunk {
         else {
             $chunk = p(_inlines($Quiki, $chunk));
         }
-        $chunk = _expand_entities($chunk);
         $chunk = _unbackslash($chunk);
     }
     return $chunk;
@@ -224,7 +223,8 @@ sub _inlines {
         my $code = shift @inline;
         $chunk =~ s/(?<!\\) $re/ $code->() /xeg;
     }
-    return $chunk;
+
+    return _expand_entities($chunk);
 }
 
 sub _unbackslash {
