@@ -7,6 +7,8 @@ use File::Copy;
 use File::Basename;
 use File::Path qw.make_path.;
 use MIME::Base64;
+use Digest::MD5 'md5_hex';
+use DBI;
 
 our ($force);
 
@@ -19,10 +21,18 @@ create_files_from_data($path);
 
 print "Setting up permissions... ";
 chmod 0755, "$path/quiki.cgi";
+chmod 0777, "$path/data/";
 chmod 0777, "$path/data/content";
 chmod 0777, "$path/data/meta";
 chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/passwd";
+print "done.\n";
+
+print "Creating user database... ";
+my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
+$dbh->do("CREATE TABLE users (username PRIMARY KEY, password);");
+my $sth = $dbh->prepare("INSERT INTO TABLE users VALUES (?, ?);");
+$sth->execute("admin", md5_hex("admin"));
 print "done.\n";
 
 sub create_files_from_data {
