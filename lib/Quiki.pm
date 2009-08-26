@@ -5,6 +5,7 @@ use feature ':5.10';
 use Quiki::Formatter;
 use Quiki::Meta;
 use Quiki::Users;
+use Quiki::Pages;
 
 use warnings;
 use strict;
@@ -99,22 +100,19 @@ sub run {
     # XXX
     ($action eq 'create') and (-f "data/content/$node") and ($action = '');
     if( ($action eq 'create') or !-f "data/content/$node") {
-   	`echo 'edit me' > data/content/$node`;
-   	`chmod 777 data/content/$node`;
+        Quiki::Pages -> save($node, "Edit me!");
 	$self->{session}->param('msg',"New node \"$node\" created.");
     }
 
     # XXX
     if ($action eq 'save' && param("submit") eq "save") {
    	my $text = param('text') // '';
-   	open F, ">data/content/$node" or die "can't open file";
-   	print F $text;
-   	close F;
+        Quiki::Pages->save($node, $text);
 	$self->{session}->param('msg',"Content for \"$node\" updated.");
     }
 
     # XXX
-    my $content = `cat data/content/$node`;
+    my $content = Quiki::Pages->load($node);
 
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
