@@ -1,5 +1,10 @@
 Revision history for Quiki
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+0.01_1    Date/time
+        First version, released on an unsuspecting world full of other wikis.
+        This release features:
+         - installation script
+         - Basic authentication
+         - Basic Wiki formatter
+         - ...
 
