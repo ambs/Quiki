@@ -5,8 +5,14 @@ use File::Slurp 'slurp';
 sub save {
     my ($class, $node, $contents) = @_;
 
+    my $file = "data/content/$node";
+
+    if (-f $file) {
+        ## XXX Save previous version
+    }
+
     #if (defined($contents)) {
-    open O, "> data/content/$node" or die $!;
+    open O, "> $file" or die $!;
     print O $contents;
     close O;
     #}
