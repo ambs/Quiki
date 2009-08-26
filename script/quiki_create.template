@@ -10,7 +10,7 @@ use MIME::Base64;
 use Digest::MD5 'md5_hex';
 use DBI;
 
-our ($force);
+our ($force, $email);
 
 my $path = shift || '.';
 
@@ -28,13 +28,22 @@ chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/passwd";
 print "done.\n";
 
-## XXX -- Sooner or later 
 print "Creating user database... ";
-my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
-$dbh->do("CREATE TABLE users (username PRIMARY KEY, password);");
-my $sth = $dbh->prepare("INSERT INTO users VALUES (?, ?);");
-$sth->execute("admin", md5_hex("admin"));
-print "done.\n";
+if (!-f "$path/data/users.sqlite") {
+    if (!$email) {
+        print "Enter wiki administrator email address: ";
+        chomp($email = <STDIN>);
+    }
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
+    $dbh->do("CREATE TABLE auth (username PRIMARY KEY, password, email);");
+
+    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?, ?, ?);");
+    $sth->execute("admin", md5_hex("admin"), $email);
+    print "done.\n";
+} else {
+    print "skipped.\n";
+}
+
 
 sub create_files_from_data {
     my $path = shift;
