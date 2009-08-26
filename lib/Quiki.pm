@@ -171,7 +171,7 @@ print<<'HTML';
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.floatbox({
-			content: "<div class='floatbox_head'>Login</div><div class='floatbox_body'><form method='post'> Username: <input name='username' type='text'/><br /> Password: <input name='password' type='password'/> <br/><br/> <input type='hidden' name='action' value='login'/><input type='submit' value='login'/> </form></div>"
+			content: "<div class='floatbox_head'>Login</div><div class='floatbox_body'><form method='post'> Username: <input name='username' type='text'/><br /> Password: <input name='password' type='password'/> <br/><br/> <input type='hidden' name='action' value='login'/><input type='submit' value='Log in'/> </form></div>"
 		});
 	});
 </script>
@@ -180,7 +180,7 @@ print<<'HTML';
 Username: <input type='text' name='username'>
 Password: <input type='password' name='password'>
 <input type='hidden' name='action' value='login'>
-<input type='submit' value='log in'>
+<input type='submit' value='Log in'>
 </form>
 <br>
 </noscript>
