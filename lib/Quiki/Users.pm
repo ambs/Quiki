@@ -1,12 +1,15 @@
 package Quiki::Users;
 
+use strict;
+use warnings;
+
 use DBI;
 use Digest::MD5 'md5_hex';
 
 sub auth {
     my ($class, $username, $password) = @_;
 
-    my $database = DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
+    my $dbh = DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
     my $sth = $dbh->prepare("SELECT password FROM auth WHERE username = ?");
     $sth->execute($username);
 
