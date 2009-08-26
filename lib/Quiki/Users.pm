@@ -1,13 +1,22 @@
 package Quiki::Users;
 
-use Apache::Htpasswd;
+use DBI;
+use Digest::MD5 'md5_hex';
 
 sub auth {
     my ($class, $username, $password) = @_;
 
-    # XXX - mais cedo ou mais tarde passar para DBD::SQLite para ter mais info por user
-    my $passwd = new Apache::Htpasswd("./passwd");
-    $passwd->htCheckPassword($username, $password);
+    my $database = DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
+    my $sth = $dbh->prepare("SELECT password FROM auth WHERE username = ?");
+    $sth->execute($username);
+
+    my @row = $sth->fetchrow_array;
+    if (@row) {
+        return (md5_hex($password) eq $row[0]);
+    }
+    else {
+        return 0;
+    }
 }
 
 '\o/';

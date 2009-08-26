@@ -8,13 +8,14 @@ images/gritter-bottom.png          replace,binary
 images/gritter-close-ie6.gif       replace,binary
 images/gritter-close.png           replace,binary
 images/gritter-top.png             replace,binary
+images/grippie.png                 replace,binary
 index.html                         replace
 js/jquery.gritter.js               replace
 js/jquery.floatbox.js              replace
 js/jquery.js                       replace
-passwd
+js/jquery.textarearesizer.js       replace
 quiki.cgi                          replace
 quiki.conf
 css/textarea.css                   replace
-images/grippie.png                 replace,binary
-js/jquery.textarearesizer.js       replace
+
+
