@@ -76,11 +76,11 @@
 }
 
 #floatbox-box { 
-  border: solid 1px #990000;
+  border: solid 1px #550000;
 }
 
 .floatbox_head { 
-  background-color: #990000;
+  background-color: #550000;
   color: #fff;
   font-weight: bold;
   font-size: larger;
@@ -90,9 +90,7 @@
 }
 
 .floatbox_body { 
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
