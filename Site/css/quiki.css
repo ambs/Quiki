@@ -76,8 +76,6 @@
 }
 
 #floatbox-box { 
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
   border: solid 1px #550000;
 }
 
