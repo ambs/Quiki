@@ -1,5 +1,7 @@
 package Quiki::Pages;
 
+use File::Slurp 'slurp';
+
 sub save {
     my ($class, $node, $contents) = @_;
 
@@ -16,7 +18,7 @@ sub save {
 
 sub load {
     my ($class, $node) = @_;
-    return `cat data/content/$node`;
+    return slurp "data/content/$node";
 }
 
 
