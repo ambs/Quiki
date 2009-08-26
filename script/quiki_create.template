@@ -28,10 +28,11 @@ chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/passwd";
 print "done.\n";
 
+## XXX -- Sooner or later 
 print "Creating user database... ";
 my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
 $dbh->do("CREATE TABLE users (username PRIMARY KEY, password);");
-my $sth = $dbh->prepare("INSERT INTO TABLE users VALUES (?, ?);");
+my $sth = $dbh->prepare("INSERT INTO users VALUES (?, ?);");
 $sth->execute("admin", md5_hex("admin"));
 print "done.\n";
 
