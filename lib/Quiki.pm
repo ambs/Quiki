@@ -165,12 +165,13 @@ sub run {
         $self->{session}->param('msg','');
     }
 
+    ## XXX -- tirar isto aqui do meio para uma funcao :D
     if ($action eq 'login_page') {
 print<<'HTML';
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.floatbox({
-			content: "<center><br><form method='post'> Username: <input name='username' type='text'><br /> Psasword: <input name='password' type='password'> <br><br> <input type='hidden' name='action' value='login'><input type='submit' value='login'> </form></center>"
+			content: "<div class='floatbox_head'>Login</div><div style='text-align: center;><br/><form method='post'> Username: <input name='username' type='text'/><br /> Password: <input name='password' type='password'/> <br/><br/> <input type='hidden' name='action' value='login'/><input type='submit' value='login'/> </form></div>"
 		});
 	});
 </script>
@@ -187,7 +188,7 @@ Password: <input type='password' name='password'>
 HTML
    }
 
-	print start_div({-class=>"quiki_body"});
+    print start_div({-class=>"quiki_body"});
 
     if ($action eq 'edit') {
         print script({-type=>'text/javascript'},
@@ -205,7 +206,9 @@ HTML
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
         while((my $f = readdir(DIR))){
-            unless ($f=~/^\./) { print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;  }
+            unless ($f=~/^\./) {
+                print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
+            }
         }
         closedir(DIR);
     }
@@ -217,7 +220,7 @@ HTML
     $self->{meta} = Quiki::Meta::get($node);
     if ($action eq 'save') {
         $self->{meta}->{last_update_by} = $self->{session}->param('username');
-        $self->{meta}->{last_updated_in} = `date`;
+        $self->{meta}->{last_updated_in} = `date`; # XXX
         Quiki::Meta::set($node, $self->{meta});
     }
 
@@ -257,8 +260,8 @@ sub _render_menu_bar {
     print( start_div({-class=>"quiki_menu_bar"}),
            start_div({-class=>"quiki_menu_bar_left"}));
 
-    given($action) {
-        when(!/edit/) {
+    given ($action) {
+        when (!/edit/) {
             if ($self->{session}->param('authenticated')) {
                 print start_form(-method=>'post'),
                   hidden('node',$node),
@@ -274,10 +277,11 @@ sub _render_menu_bar {
                             end_form;
             }
         }
-        when(/edit/) {
-            print submit(-name => 'submit', -value => 'cancel', -override => 1),
-              submit(-name => 'submit', -value => 'save', -override => 1),
-                end_form;
+        when (/edit/) {
+            print submit(-name => 'submit', -value => 'Cancel', -override => 1),
+              '&nbsp;&nbsp;|&nbsp;&nbsp;',
+                submit(-name => 'submit', -value => 'Save', -override => 1),
+                  end_form;
         }
     }
     print( end_div,  # end menu_bar_left <div>
@@ -299,22 +303,22 @@ sub _render_menu_bar {
     }
     else {
         print start_form(-method=>'post'),
-              hidden(-name => 'action', -value => 'signin', -override => 1),
-                submit('submit', 'Sign up'),
-                  end_form;
+          hidden(-name => 'action', -value => 'signin', -override => 1),
+            submit('submit', 'Sign up'),
+              end_form;
         print "&nbsp;&nbsp;|&nbsp;&nbsp;";
         print start_form(-method=>'post'),
           submit('submit', 'Log in'),
-				hidden(-name => 'node', -value => $node, -override => 1),
-				hidden(-name => 'action', -value => 'login_page', -override => 1),
-                    end_form;
+            hidden(-name => 'node', -value => $node, -override => 1),
+              hidden(-name => 'action', -value => 'login_page', -override => 1),
+                end_form;
     }
 
 
     print end_div, # end menu_bar_right <div>
       start_div({-style=>'clear: both;'}),
-        end_div; # end empty <div>
-    end_div; # end menu_bar <div>
+        end_div. # end empty <div>
+          end_div; # end menu_bar <div>
 }
 
 =head1 AUTHOR
