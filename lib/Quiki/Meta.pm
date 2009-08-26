@@ -7,14 +7,14 @@ use YAML::Any;
 sub get {
 	my $node = shift;
 
-	my $file = `cat data/content/$node.meta`;
+	my $file = `cat data/meta/$node`;
 	Load $file;
 }
 
 sub set {
 	my ($node, $meta) = @_;
 
-	open(F, ">data/content/$node.meta");
+	open(F, ">data/meta/$node");
 	print F Dump($meta);
 	close(F);
 }

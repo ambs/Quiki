@@ -20,6 +20,7 @@ create_files_from_data($path);
 print "Setting up permissions... ";
 chmod 0755, "$path/quiki.cgi";
 chmod 0777, "$path/data/content";
+chmod 0777, "$path/data/meta";
 chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/passwd";
 print "done.\n";

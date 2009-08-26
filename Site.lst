@@ -2,6 +2,7 @@ css/gritter.css                    replace
 css/local.css
 css/quiki.css                      replace
 data/content/index                 
+data/meta/index                 
 images/gritter-bg-tile.png         replace,binary
 images/gritter-bottom.png          replace,binary
 images/gritter-close-ie6.gif       replace,binary
