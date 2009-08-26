@@ -3,13 +3,14 @@ package Quiki::Pages;
 sub save {
     my ($class, $node, $contents) = @_;
 
-    if (!-f "data/content/$node") {
-        `echo "x" > data/content/$node`;
-        `chmod 777 data/content/$node`;
-    }
+    #if (defined($contents)) {
     open O, "> data/content/$node" or die $!;
     print O $contents;
     close O;
+    #}
+    #else {
+    #    unlink "data/contents/$node"
+    #}
 
 }
 
