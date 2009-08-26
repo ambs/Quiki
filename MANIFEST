@@ -32,3 +32,4 @@ Site/css/textarea.css
 Site/images/grippie.png
 Site/js/jquery.textarearesizer.js
 lib/Quiki/Meta.pm
+lib/Quiki/Users.pm

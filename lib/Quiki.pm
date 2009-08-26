@@ -4,7 +4,7 @@ use feature ':5.10';
 
 use Quiki::Formatter;
 use Quiki::Meta;
-# vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
+use Quiki::Users;
 
 use warnings;
 use strict;
@@ -77,14 +77,14 @@ sub run {
 
     # XXX
     if ($action eq 'login') {
-print STDERR "LOGIN ";
+        print STDERR "LOGIN ";
         my $username = param('username') || '';
         my $password = param('password') || '';
         if ($username and $password) {
-            $self->_auth($username,$password) and
-              $self->{session}->param('authenticated',1) and
-                $self->{session}->param('username',$username) and
-				  $self->{session}->param('msg',"Login successfull! Welcome $username");
+            Quiki::Users->auth($username,$password) and
+                $self->{session}->param('authenticated',1) and
+                  $self->{session}->param('username',$username) and
+                    $self->{session}->param('msg',"Login successfull! Welcome $username");
         }
     }
 
@@ -235,16 +235,6 @@ HTML
     $self->_render_menu_bar($node, $action);
 
     print end_html;
-}
-
-sub _auth {
-    my ($self, $username, $password) = @_;
-
-    use Apache::Htpasswd;
-
-    # XXX - mais cedo ou mais tarde passar para DBD::SQLite para ter mais info por user
-    my $passwd = new Apache::Htpasswd("./passwd");
-    $passwd->htCheckPassword($username, $password);
 }
 
 sub _show_msg {
