@@ -105,7 +105,7 @@ sub run {
     }
 
     # XXX
-    if ($action eq 'save' && param("submit") eq "save") {
+    if ($action eq 'save' && param("submit") eq "Save") {
    	my $text = param('text') // '';
         Quiki::Pages->save($node, $text);
 	$self->{session}->param('msg',"Content for \"$node\" updated.");
