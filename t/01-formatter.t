@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 37;
+use Test::More tests => 38;
 
 use_ok("Quiki::Formatter");
 
@@ -420,7 +420,7 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 EOI
-<table>
+<table class="quiki_table">
 <tr><th> a </th> <th> b </th> <th> c </th></tr>
 </table>
 
@@ -430,8 +430,8 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 | a | b | c |
 EOI
-<table>
-<tr><td> a </td> <td> b </td> <td> c </td></tr>
+<table class="quiki_table">
+<tr><td style="text-align: center"> a </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
 </table>
 
 EOO
@@ -441,9 +441,21 @@ is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 | a | b | c |
 EOI
-<table>
+<table class="quiki_table">
 <tr><th> a </th> <th> b </th> <th> c </th></tr>
-<tr><td> a </td> <td> b </td> <td> c </td></tr>
+<tr><td style="text-align: center"> a </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
+</table>
+
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+^ a ^ b ^ c ^
+| a |b | c|
+EOI
+<table class="quiki_table">
+<tr><th> a </th> <th> b </th> <th> c </th></tr>
+<tr><td style="text-align: center"> a </td> <td style="text-align: left">b </td> <td style="text-align: right"> c</td></tr>
 </table>
 
 EOO

@@ -22,6 +22,22 @@ sub format {
     return $html . "\n";
 }
 
+sub _tds {
+    my ($Quiki, $content) = @_;
+
+    given ($content) {
+        when (/^\S/) {
+            return td({-style=>"text-align: left"}, $content);
+        }
+        when (/\S$/) {
+            return td({-style=>"text-align: right"}, $content);
+        }
+        default {
+            return td({-style=>"text-align: center"}, $content);
+        }
+    }
+}
+
 sub _format_table {
     my ($Quiki, $chunk) = @_;
 
@@ -33,7 +49,7 @@ sub _format_table {
         if ($1 eq "^") {
             $table .= Tr(th([split /\^/, $c[0]])) . "\n";
         } else {
-            $table .= Tr(td([split /\|/, $c[0]])) . "\n";
+            $table .= Tr(join(" ",map { _tds($Quiki, $_) } split /\|/, $c[0])) . "\n";
         }
         shift @c;
     }
