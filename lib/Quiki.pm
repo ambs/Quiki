@@ -190,7 +190,23 @@ HTML
 
     print start_div({-class=>"quiki_body"});
 
+	my $preview = 0;
+    if ($action eq 'save' && param("submit") eq "Preview") {
+		$preview = 1;
+		$action = 'edit';
+	}
+
     if ($action eq 'edit') {
+		if ($preview) {
+        	my $text = param('text') // '';
+    		print start_div({-class=>"quiki_preview"}),
+			  h4('Preview'),
+				hr,
+				  Quiki::Formatter::format($self, $text),
+					hr,
+					  end_div; # end quicki_preview <div>
+		}
+
         print script({-type=>'text/javascript'},
                      q!$(document).ready(function() { $('textarea.resizable:not(.processed)').TextAreaResizer(); });!);
         print start_form(-method=>'post'),
@@ -279,6 +295,8 @@ sub _render_menu_bar {
         }
         when (/edit/) {
             print submit(-name => 'submit', -value => 'Cancel', -override => 1),
+              '&nbsp;&nbsp;|&nbsp;&nbsp;',
+                submit(-name => 'submit', -value => 'Preview', -override => 1),
               '&nbsp;&nbsp;|&nbsp;&nbsp;',
                 submit(-name => 'submit', -value => 'Save', -override => 1),
                   end_form;

@@ -5,6 +5,12 @@
   padding: 5px;
 }
 
+.quiki_preview {
+  border: solid 1px #999999;
+  background-color: #ffff66;
+  padding: 5px;
+}
+
 .quiki_body h1 { 
   color: #dd7777;
   border-bottom: solid 1px #dd7777;
