@@ -246,16 +246,15 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-		print div({-class=>"quiki_meta"}),
-		  "Last edited by ",$self->{meta}{last_update_by},', in ',$self->{meta}{last_updated_in},
-			br,
-			  "REVISION: last: $self->{meta}{rev} current: $self->{rev} others: ";
-		for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
-			print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
-		}
-		print end_div; # end quiki_meta <div>
+        print div({-class=>"quiki_meta"}),
+          "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}",
+            br,
+              "REVISION: last: $self->{meta}{rev} current: $self->{rev} others: ";
+        for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
+            print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
+        }
+        print end_div; # end quiki_meta <div>
     }
-
 
     print end_div; # end quiki_body <div>
 
