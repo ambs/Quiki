@@ -7,6 +7,9 @@ use Quiki::Meta;
 use Quiki::Users;
 use Quiki::Pages;
 
+use CGI qw/:standard *div/;
+use CGI::Session;
+
 use warnings;
 use strict;
 
@@ -61,10 +64,6 @@ sub new {
 
 sub run {
     my $self = shift;
-
-    # XXX -- É diferente fazê-lo aqui ou globalmente?
-    use CGI qw/:standard *div/;
-    use CGI::Session;
 
     $self->{sid} = cookie("QuikiSID") || undef;
     $self->{session} = new CGI::Session(undef, $self->{sid}, undef);
@@ -248,7 +247,6 @@ print<<"HTML";
 <noscript><b>Info! $string</b></noscript>
 HTML
 }
-
 
 sub _render_menu_bar {
     my ($self, $node, $action) = @_;
