@@ -102,6 +102,6 @@
 }
 
 .floatbox-closebt { 
-  float: right;
-  
+  display: block;
+  float: right;  
 }
