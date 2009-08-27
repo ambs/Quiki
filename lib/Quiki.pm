@@ -179,6 +179,9 @@ sub run {
         $preview = 1;
         $action = 'edit';
     }
+    if ($action eq 'save' && param("submit") eq "Cancel") {
+        Quiki::Pages->unlock($node);
+    }
 
     if ($action eq 'edit' && ($preview || !Quiki::Pages->locked($node))) {
         if ($preview) {
