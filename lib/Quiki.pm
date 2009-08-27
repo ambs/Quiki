@@ -319,6 +319,7 @@ sub _render_menu_bar {
           end_div; # end menu_bar <div>
 }
 
+
 sub _register_box {
     my $box = div({-class => 'floatbox_head'}, "Register");
     $box .= div({-class => 'floatbox_body'},
@@ -329,6 +330,8 @@ sub _register_box {
                 hidden(-name=>'action', -value=>'register', -override => 1),
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
+
+    $box =~ s/"/\\"/g;
 
     my $noscript = noscript(start_form({-method => "post"}),
                             "Username: ", textfield(-name => "username"),
@@ -352,6 +355,8 @@ sub _login_box {
                 hidden(-name=>'action', -value=>'login', -override => 1),
                 submit(-name=>'submit', -value=>'Log in'),
                 end_form());
+
+    $box =~ s/"/\\"/g;
 
     my $noscript = noscript(start_form({-method => "post"}),
                             "Username: ", textfield(-name => "username"),
