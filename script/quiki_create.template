@@ -40,11 +40,13 @@ print "Setting up permissions... ";
 chmod 0755, "$path/quiki.cgi";
 chmod 07777, "$path/data/"; # +t u+s g+s
 chmod 0777, "$path/data/content";
-chmod 0777, "$path/data/meta";
 (!-d "$path/data/locks") and mkdir "$path/data/locks";
+(!-d "$path/data/meta") and mkdir "$path/data/meta";
+(!-d "$path/data/revs") and mkdir "$path/data/revs";
 chmod 0777, "$path/data/locks";
+chmod 0777, "$path/data/meta";
+chmod 0777, "$path/data/revs";
 chmod 0777, "$path/data/content/index";
-chmod 0777, "$path/data/meta/index";
 chmod 0777, "$path/data/users.sqlite";
 print "done.\n";
 

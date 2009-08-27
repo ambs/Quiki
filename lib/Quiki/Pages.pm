@@ -4,6 +4,8 @@ use warnings;
 use strict;
 
 use File::Slurp 'slurp';
+use Text::Patch;
+use Text::Diff;
 
 sub unlock {
     my ($class, $node) = @_;
@@ -15,7 +17,7 @@ sub locked {
     if (-f "data/locks/$node") {
         if (-M "data/locks/$node" < 0.01) {
             if ($user) {
-                return (slurp("data/locks/$node") ne $user);
+                return (slurp("data/locks/$node") eq $user);
             }
             else {
                 return 1;
@@ -61,9 +63,58 @@ sub load {
     return slurp "data/content/$node";
 }
 
+sub check_in {
+    my ($class, $Quiki, $node, $contents) = @_;
+
+    # XXX nasty check, needed for diff
+    $contents .= "\n" unless ($contents =~ m/\n$/);
+
+    my $rev = $Quiki->{meta}{rev};
+
+    if ($rev > 0) {
+        my $current = slurp "data/content/$node";
+        my $diff = diff(\$contents, \$current, { STYLE=>'Unified' });
+
+        open F, ">data/revs/$node.$rev" or die $!;
+        print F $diff;
+        close F;
+    }
+
+    my $file = "data/content/$node";
+
+    if (-f $file) {
+        ## XXX Save previous version
+    }
+
+    #if (defined($contents)) {
+    $Quiki->{meta}{rev}++;
+    open O, "> $file" or die $!;
+    print O $contents;
+    close O;
+    #}
+    #else {
+    #    unlink "data/contents/$node"
+    #}
+}
+
+sub check_out {
+    my ($class, $Quiki, $node, $rev) = @_;
+print STDERR "VOU MOSTRAR $rev, ULTIMA ".$Quiki->{meta}{rev};
+
+    my $cur_rev  = $Quiki->{meta}{rev};
+    my $content = slurp "data/content/$node";
+
+    while ($rev < $cur_rev--) {
+        my $patch = slurp "data/revs/$node.$cur_rev";
+
+        $content = patch($content, $patch, {STYLE=>'Unified'});
+    }
+
+    return $content;
+}
+
 
 '\o/';
-
 
 =head1 NAME
 
@@ -91,6 +142,10 @@ Handles Quiki pages
 =head2 unlock
 
 =head2 locked
+
+=head2 check_in
+
+=head2 check_out
 
 =head1 SEE ALSO
 

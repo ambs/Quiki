@@ -72,6 +72,8 @@ sub run {
     my $node   = param('node')   || $self->{index};
     my $action = param('action') || '';
 
+    $self->{meta} = Quiki::Meta::get($node);
+
     # XXX -- temos de proteger mais coisas, possivelmente
     $node =~ s/\s/_/g;
 
@@ -99,7 +101,8 @@ sub run {
     # XXX
     ($action eq 'create') and (-f "data/content/$node") and ($action = '');
     if( ($action eq 'create') or !-f "data/content/$node") {
-        Quiki::Pages -> save($node, "Edit me!");
+        #Quiki::Pages -> save($node, "Edit me!");
+        Quiki::Pages->check_in($self, $node, "Edit me!");
 	$self->{session}->param('msg',"New node \"$node\" created.");
     }
 
@@ -112,7 +115,8 @@ sub run {
     if ($action eq 'save' && param("submit") eq "Save") {
         if (Quiki::Pages->locked($node, $self->{session}->param('username'))) {
             my $text = param('text') // '';
-            Quiki::Pages->save($node, $text);
+            #Quiki::Pages->save($node, $text);
+            Quiki::Pages->check_in($self, $node, $text);
             Quiki::Pages->unlock($node);
             $self->{session}->param('msg',"Content for \"$node\" updated.");
         } else {
@@ -120,8 +124,14 @@ sub run {
         }
     }
 
+	# save meta data
+	Quiki::Meta::set($node, $self->{meta});
+
+
     # XXX
-    my $content = Quiki::Pages->load($node);
+	$self->{rev} = param('rev') || $self->{meta}{rev};
+	my $content = Quiki::Pages->check_out($self,$node,$self->{rev});
+
 
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
@@ -229,16 +239,21 @@ sub run {
     }
 
     # handle meta data
-    $self->{meta} = Quiki::Meta::get($node);
     if ($action eq 'save') {
         $self->{meta}->{last_update_by} = $self->{session}->param('username');
         $self->{meta}->{last_updated_in} = `date`; # XXX -- more legible?
-        Quiki::Meta::set($node, $self->{meta});
+        chomp $self->{meta}->{last_updated_in};
     }
 
     unless ($action eq 'edit') {
-        print div({-class=>"quiki_meta"},
-                  "Last edited by ",$self->{meta}{last_update_by},', in ',$self->{meta}{last_updated_in})
+		print div({-class=>"quiki_meta"}),
+		  "Last edited by ",$self->{meta}{last_update_by},', in ',$self->{meta}{last_updated_in},
+			br,
+			  "REVISION: last: $self->{meta}{rev} current: $self->{rev} others: ";
+		for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
+			print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
+		}
+		print end_div; # end quiki_meta <div>
     }
 
 
@@ -276,9 +291,15 @@ sub _render_menu_bar {
             if ($self->{session}->param('authenticated')) {
                 print start_form(-method=>'post'),
                   hidden('node',$node),
-                    hidden(-name => 'action', -value => 'edit', -override => 1),
-                      submit(-name => 'submit', -value => 'Edit this page', -override => 1),
-                        end_form;
+                    hidden(-name => 'action', -value => 'edit', -override => 1);
+			if ($self->{rev} == $self->{meta}{rev}) {
+				print submit(-name => 'submit', -value => 'Edit this page', -override => 1);
+			}
+			else {
+				print submit(-name => 'submit', -value => 'Edit this page', -disabled=>'yes', -override => 1);
+
+			}
+				print end_form;
                 print '&nbsp;&nbsp;|&nbsp;&nbsp;';
                 print start_form(-method=>'post'),
                     submit('submit', 'Create new page'),
