@@ -22,7 +22,7 @@ create_files_from_data($path);
 print "Creating user database... ";
 if (!-f "$path/data/users.sqlite") {
     if (!$email) {
-        print "Enter wiki administrator email address: ";
+        print "\n  Enter wiki administrator email address: ";
         chomp($email = <STDIN>);
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
@@ -41,6 +41,8 @@ chmod 0755, "$path/quiki.cgi";
 chmod 07777, "$path/data/"; # +t u+s g+s
 chmod 0777, "$path/data/content";
 chmod 0777, "$path/data/meta";
+(!-d "$path/data/locks") and mkdir "$path/data/locks";
+chmod 0777, "$path/data/locks";
 chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/data/meta/index";
 chmod 0777, "$path/data/users.sqlite";

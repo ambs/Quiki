@@ -5,6 +5,41 @@ use strict;
 
 use File::Slurp 'slurp';
 
+sub unlock {
+    my ($class, $node) = @_;
+    unlink "data/locks/$node" if -f "data/locks/$node";
+}
+
+sub locked {
+    my ($class, $node, $user) = @_;
+    if (-f "data/locks/$node") {
+        if (-M "data/locks/$node" < 0.01) {
+            if ($user) {
+                return (slurp("data/locks/$node") eq $user);
+            }
+            else {
+                return 1;
+            }
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
+
+sub lock {
+    my ($class, $node, $user) = @_;
+
+    return undef if locked("",$node);
+
+    open LOCK, "> data/locks/$node" or die;
+    print LOCK $user;
+    close LOCK;
+
+    return 1;
+}
+
 sub save {
     my ($class, $node, $contents) = @_;
 
@@ -54,6 +89,12 @@ Handles Quiki pages
 =head2 load
 
 =head2 save
+
+=head2 lock
+
+=head2 unlock
+
+=head2 locked
 
 =head1 SEE ALSO
 

@@ -105,9 +105,14 @@ sub run {
 
     # XXX
     if ($action eq 'save' && param("submit") eq "Save") {
-   	my $text = param('text') // '';
-        Quiki::Pages->save($node, $text);
-	$self->{session}->param('msg',"Content for \"$node\" updated.");
+        if (Quiki::Pages->locked($node, $self->{session}->param('username'))) {
+            my $text = param('text') // '';
+            Quiki::Pages->save($node, $text);
+            Quiki::Pages->unlock($node);
+            $self->{session}->param('msg',"Content for \"$node\" updated.");
+        } else {
+            $self->{session}->param('msg',"You took too much time! You lost your lock.");
+        }
     }
 
     # XXX
@@ -175,7 +180,7 @@ sub run {
         $action = 'edit';
     }
 
-    if ($action eq 'edit') {
+    if ($action eq 'edit' && ($preview || !Quiki::Pages->locked($node))) {
         if ($preview) {
             my $text = param('text') // '';
             print start_div({-class=>"quiki_preview"}),
@@ -184,6 +189,9 @@ sub run {
                   Quiki::Formatter::format($self, $text),
                       hr,
                         end_div; # end quicki_preview <div>
+        }
+        else {
+            Quiki::Pages->lock($node, $self->{session}->param('username'));
         }
 
         print script({-type=>'text/javascript'},
@@ -200,7 +208,7 @@ sub run {
     }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
-        while((my $f = readdir(DIR))){
+        while ((my $f = readdir(DIR))) {
             unless ($f=~/^\./) {
                 print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
             }
@@ -215,7 +223,7 @@ sub run {
     $self->{meta} = Quiki::Meta::get($node);
     if ($action eq 'save') {
         $self->{meta}->{last_update_by} = $self->{session}->param('username');
-        $self->{meta}->{last_updated_in} = `date`; # XXX
+        $self->{meta}->{last_updated_in} = `date`; # XXX -- more legible?
         Quiki::Meta::set($node, $self->{meta});
     }
 
@@ -323,8 +331,7 @@ sub _register_box {
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
                 "Username: ", textfield(-name => "username"), br,
-                "Password: ", textfield(-name => "password"), br,
-                "E-mail: ", textfield(-name => "password"), br, br,
+                "E-mail: ", textfield(-name => "email"), br, br,
                 hidden(-name=>'action', -value=>'register', -override => 1),
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
