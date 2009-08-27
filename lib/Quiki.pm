@@ -322,19 +322,21 @@ sub _render_menu_bar {
 sub _register_box {
     my $box = div({-class => 'floatbox_head'}, "Register");
     $box .= div({-class => 'floatbox_body'},
-                form({-method => "post"},
-                     "Username: ", textfield(-name => "username"), br,
-                     "Password: ", textfield(-name => "password"), br,
-                     "E-mail: ", textfield(-name => "password"), br, br,
-                     hidden(-name=>'action', -value=>'register', -override => 1),
-                     submit(-name=>'submit', -value=>'Register')));
+                start_form({-method => "post"}),
+                "Username: ", textfield(-name => "username"), br,
+                "Password: ", textfield(-name => "password"), br,
+                "E-mail: ", textfield(-name => "password"), br, br,
+                hidden(-name=>'action', -value=>'register', -override => 1),
+                submit(-name=>'submit', -value=>'Register'),
+                end_form());
 
-    my $noscript = noscript(form({-method => "post"},
-                                 "Username: ", textfield(-name => "username"),
-                                 "Password: ", password_field(-name => "password"),
-                                 "E-mail: ", textfield(-name => "password"),
-                                 hidden(-name=>'action', -value=>'register', -override => 1),
-                                 submit(-name=>'submit', -value=>'Register')));
+    my $noscript = noscript(start_form({-method => "post"}),
+                            "Username: ", textfield(-name => "username"),
+                            "Password: ", password_field(-name => "password"),
+                            "E-mail: ", textfield(-name => "password"),
+                            hidden(-name=>'action', -value=>'register', -override => 1),
+                            submit(-name=>'submit', -value=>'Register'),
+                            end_form());
 
     return script({-type=>"text/javascript"},
                   "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
@@ -344,17 +346,19 @@ sub _register_box {
 sub _login_box {
     my $box = div({-class => 'floatbox_head'}, "Log in");
     $box .= div({-class => 'floatbox_body'},
-                form({-method => "post"},
-                     "Username: ", textfield(-name => "username"), br,
-                     "Password: ", textfield(-name => "password"), br, br,
-                     hidden(-name=>'action', -value=>'login', -override => 1),
-                     submit(-name=>'submit', -value=>'Log in')));
+                start_form({-method => "post"}),
+                "Username: ", textfield(-name => "username"), br,
+                "Password: ", textfield(-name => "password"), br, br,
+                hidden(-name=>'action', -value=>'login', -override => 1),
+                submit(-name=>'submit', -value=>'Log in'),
+                end_form());
 
-    my $noscript = noscript(form({-method => "post"},
-                                 "Username: ", textfield(-name => "username"),
-                                 "Password: ", password_field(-name => "password"),
-                                 hidden(-name=>'action', -value=>'login', -override => 1),
-                                 submit(-name=>'submit', -value=>'Log in')));
+    my $noscript = noscript(start_form({-method => "post"}),
+                            "Username: ", textfield(-name => "username"),
+                            "Password: ", password_field(-name => "password"),
+                            hidden(-name=>'action', -value=>'login', -override => 1),
+                            submit(-name=>'submit', -value=>'Log in'),
+                            end_form());
 
     return script({-type=>"text/javascript"},
                   "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
