@@ -12,7 +12,6 @@ sub get {
 }
 
 sub set {
-print STDERR "SAVE";
 	my ($node, $meta) = @_;
 
 	open(F, ">data/meta/$node") or die $!;

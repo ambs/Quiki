@@ -1,15 +1,16 @@
 #!/usr/bin/perl
 
 use Test::More tests => 3;
+use File::Slurp 'slurp';
+use File::Path qw.make_path.;
 
 use_ok("Quiki::Meta");
 
-mkdir 'data/';
-mkdir 'data/meta/';
+make_path 'data/meta/';
 my $t = {'one'=>1,'two'=>2,'three'=>3};
 Quiki::Meta::set('test',$t);
 
-is(`cat data/meta/test`, <<'EOO');
+is(slurp("data/meta/test"), <<'EOO');
 ---
 one: 1
 three: 3
