@@ -129,16 +129,16 @@ sub run {
                                    '@import "css/gritter.css";',
                                    '@import "css/textarea.css";')
                      },
-                     -script=> [{ -type=>'JAVASCRIPT',
+                     -script=> [{ -type=>'javascript',
                                   -src=>'js/jquery.js'
                                 },
-                                { -type=>'JAVASCRIPT',
+                                { -type=>'javascript',
                                   -src=>'js/jquery.gritter.js'
                                 },
-                                { -type=>'JAVASCRIPT',
+                                { -type=>'javascript',
                                   -src=>'js/jquery.floatbox.js'
                                 },
-                                { -type=>'JAVASCRIPT',
+                                { -type=>'javascript',
                                   -src=>'js/jquery.textarearesizer.js'
                                 },]
                     );
@@ -200,7 +200,7 @@ sub run {
           textarea(-name => 'text',
                    -default => $content,
                    -class => 'resizable',
-                   -rows => 15, -columns => 80),
+                   -rows => 30, -columns => 80),
                      hidden(-name => 'node', -value => $node, -override => 1),
                        hidden(-name => 'action', -value => 'save', -override => 10);
         #submit('submit', 'save'),
