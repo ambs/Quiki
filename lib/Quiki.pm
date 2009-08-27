@@ -332,6 +332,7 @@ sub _register_box {
                 end_form());
 
     $box =~ s/"/\\"/g;
+    $box =~ s/\n/ /g;
 
     my $noscript = noscript(start_form({-method => "post"}),
                             "Username: ", textfield(-name => "username"),
@@ -357,6 +358,7 @@ sub _login_box {
                 end_form());
 
     $box =~ s/"/\\"/g;
+    $box =~ s/\n/ /g;
 
     my $noscript = noscript(start_form({-method => "post"}),
                             "Username: ", textfield(-name => "username"),
