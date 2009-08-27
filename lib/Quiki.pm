@@ -165,47 +165,27 @@ sub run {
         $self->{session}->param('msg','');
     }
 
-    ## XXX -- tirar isto aqui do meio para uma funcao :D
-    if ($action eq 'login_page') {
-print<<'HTML';
-<script type="text/javascript">
-	$(document).ready(function(){
-		$.floatbox({
-			content: "<div class='floatbox_head'>Login</div><div class='floatbox_body'><form method='post'> Username: <input name='username' type='text'/><br /> Password: <input name='password' type='password'/> <br/><br/> <input type='hidden' name='action' value='login'/><input type='submit' value='Log in'/> </form></div>"
-		});
-	});
-</script>
-<noscript>
-<form method="post">
-Username: <input type='text' name='username'>
-Password: <input type='password' name='password'>
-<input type='hidden' name='action' value='login'>
-<input type='submit' value='Log in'>
-</form>
-<br>
-</noscript>
-
-HTML
-   }
+    ($action eq 'login_page') and print _login_box();
+    ($action eq "register_page") and print _register_box();
 
     print start_div({-class=>"quiki_body"});
 
-	my $preview = 0;
+    my $preview = 0;
     if ($action eq 'save' && param("submit") eq "Preview") {
-		$preview = 1;
-		$action = 'edit';
-	}
+        $preview = 1;
+        $action = 'edit';
+    }
 
     if ($action eq 'edit') {
-		if ($preview) {
-        	my $text = param('text') // '';
-    		print start_div({-class=>"quiki_preview"}),
-			  h4('Preview'),
-				hr,
-				  Quiki::Formatter::format($self, $text),
-					hr,
-					  end_div; # end quicki_preview <div>
-		}
+        if ($preview) {
+            my $text = param('text') // '';
+            print start_div({-class=>"quiki_preview"}),
+              h4('Preview'),
+                hr,
+                  Quiki::Formatter::format($self, $text),
+                      hr,
+                        end_div; # end quicki_preview <div>
+        }
 
         print script({-type=>'text/javascript'},
                      q!$(document).ready(function() { $('textarea.resizable:not(.processed)').TextAreaResizer(); });!);
@@ -321,7 +301,7 @@ sub _render_menu_bar {
     }
     else {
         print start_form(-method=>'post'),
-          hidden(-name => 'action', -value => 'signin', -override => 1),
+          hidden(-name => 'action', -value => 'register_page', -override => 1),
             submit('submit', 'Sign up'),
               end_form;
         print "&nbsp;&nbsp;|&nbsp;&nbsp;";
@@ -338,6 +318,31 @@ sub _render_menu_bar {
         end_div. # end empty <div>
           end_div; # end menu_bar <div>
 }
+
+sub _register_box {
+    return "";
+}
+
+sub _login_box {
+    my $box = div({-class => 'floatbox_head'}, "Login");
+    $box .= div({-class => 'floatbox_body'},
+                form({-method => "post"},
+                     "Username: ", textfield(-name => "username"), br,
+                     "Password: ", textfield(-name => "password"), br, br,
+                     hidden(-name=>'action', -value=>'login', -override => 1),
+                     submit(-name=>'submit', -value=>'Log in')));
+
+    my $noscript = noscript(form({-method => "post"},
+                                 "Username: ", textfield(-name => "username"),
+                                 "Password: ", password_field(-name => "password"),
+                                 hidden(-name=>'action', -value=>'login', -override => 1),
+                                 submit(-name=>'submit', -value=>'Log in')));
+
+    return script({-type=>"text/javascript"},
+                  "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
+                    $noscript;
+}
+
 
 =head1 AUTHOR
 
