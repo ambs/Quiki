@@ -357,8 +357,8 @@ sub _login_box {
     my $box = div({-class => 'floatbox_head'}, "Log in");
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
-                label({-for => "username"}, "Username: "), textfield(-name => "username"), br,
-                label({-for => "password"}, "Password: "), textfield(-name => "password"), br, br,
+                table(Tr(td(["Username: ", textfield(-name => "username")])),
+                      Tr(td(["Password: ", textfield(-name => "password")]))), br, br,
                 hidden(-name=>'action', -value=>'login', -override => 1),
                 submit(-name=>'submit', -value=>'Log in'),
                 end_form());
