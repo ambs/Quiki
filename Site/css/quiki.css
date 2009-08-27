@@ -100,3 +100,8 @@
   margin-bottom: 20px;
   text-align: center;
 }
+
+.floatbox-closebt { 
+  float: right;
+  
+}

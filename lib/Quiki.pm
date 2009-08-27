@@ -339,8 +339,9 @@ sub _register_box {
     my $box = div({-class => 'floatbox_head'}, "Register");
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
-                "Username: ", textfield(-name => "username"), br,
-                "E-mail: ", textfield(-name => "email"), br, br,
+                table({-style=>"margin-left: auto; margin-right: auto"},
+                      Tr(td(["Username: ", textfield(-name => "username")])),
+                      Tr(td(["E-mail: ", textfield(-name => "email")]))), br, br,
                 hidden(-name=>'action', -value=>'register', -override => 1),
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
@@ -357,8 +358,9 @@ sub _login_box {
     my $box = div({-class => 'floatbox_head'}, "Log in");
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
-                table(Tr(td(["Username: ", textfield(-name => "username")])),
-                      Tr(td(["Password: ", textfield(-name => "password")]))), br, br,
+                table({-style=>"margin-left: auto; margin-right: auto"},
+                      Tr(td(["Username: ", textfield(-name => "username")])),
+                      Tr(td(["Password: ", password_field(-name => "password")]))), br, br,
                 hidden(-name=>'action', -value=>'login', -override => 1),
                 submit(-name=>'submit', -value=>'Log in'),
                 end_form());
