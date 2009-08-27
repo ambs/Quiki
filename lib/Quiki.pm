@@ -219,6 +219,7 @@ sub run {
         closedir(DIR);
     }
     else {
+        $action = "";
         print Quiki::Formatter::format($self, $content);
     }
 
