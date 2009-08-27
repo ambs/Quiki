@@ -31,13 +31,9 @@ sub locked {
 sub lock {
     my ($class, $node, $user) = @_;
 
-    return undef if locked("",$node);
-
     open LOCK, "> data/locks/$node" or die;
     print LOCK $user;
     close LOCK;
-
-    return 1;
 }
 
 sub save {
