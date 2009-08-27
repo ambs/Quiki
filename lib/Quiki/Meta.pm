@@ -12,9 +12,10 @@ sub get {
 }
 
 sub set {
+print STDERR "SAVE";
 	my ($node, $meta) = @_;
 
-	open(F, ">data/meta/$node");
+	open(F, ">data/meta/$node") or die $!;
 	print F Dump($meta);
 	close(F);
 }

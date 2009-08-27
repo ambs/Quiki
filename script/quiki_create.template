@@ -42,6 +42,7 @@ chmod 07777, "$path/data/"; # +t u+s g+s
 chmod 0777, "$path/data/content";
 chmod 0777, "$path/data/meta";
 chmod 0777, "$path/data/content/index";
+chmod 0777, "$path/data/meta/index";
 chmod 0777, "$path/data/users.sqlite";
 print "done.\n";
 
