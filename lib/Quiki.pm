@@ -103,6 +103,11 @@ sub run {
 	$self->{session}->param('msg',"New node \"$node\" created.");
     }
 
+    if ($action eq "edit" && Quiki::Pages->locked($node, $self->{session}->param('username'))) {
+        $action = "";
+        $self->{session}->param('msg',"Sorry but someone else is currently editing this node!");
+    }
+
     # XXX
     if ($action eq 'save' && param("submit") eq "Save") {
         if (Quiki::Pages->locked($node, $self->{session}->param('username'))) {
@@ -183,7 +188,8 @@ sub run {
         Quiki::Pages->unlock($node);
     }
 
-    if ($action eq 'edit' && ($preview || !Quiki::Pages->locked($node))) {
+    if ($action eq 'edit' && 
+        ($preview || !Quiki::Pages->locked($node, $self->{session}->param('username')))) {
         if ($preview) {
             my $text = param('text') // '';
             print start_div({-class=>"quiki_preview"}),
@@ -219,7 +225,6 @@ sub run {
         closedir(DIR);
     }
     else {
-        $action = "";
         print Quiki::Formatter::format($self, $content);
     }
 
