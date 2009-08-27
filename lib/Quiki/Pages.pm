@@ -15,7 +15,7 @@ sub locked {
     if (-f "data/locks/$node") {
         if (-M "data/locks/$node" < 0.01) {
             if ($user) {
-                return (slurp("data/locks/$node") eq $user);
+                return (slurp("data/locks/$node") ne $user);
             }
             else {
                 return 1;
