@@ -85,7 +85,7 @@ sub run {
             Quiki::Users->auth($username,$password) and
                 $self->{session}->param('authenticated',1) and
                   $self->{session}->param('username',$username) and
-                    $self->{session}->param('msg',"Login successfull! Welcome $username");
+                    $self->{session}->param('msg',"Login successfull! Welcome $username!");
         }
     }
 
@@ -331,17 +331,9 @@ sub _register_box {
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
 
+    my $noscript = noscript($box);
     $box =~ s/"/\\"/g;
     $box =~ s/\n/ /g;
-
-    my $noscript = noscript(start_form({-method => "post"}),
-                            "Username: ", textfield(-name => "username"),
-                            "Password: ", password_field(-name => "password"),
-                            "E-mail: ", textfield(-name => "password"),
-                            hidden(-name=>'action', -value=>'register', -override => 1),
-                            submit(-name=>'submit', -value=>'Register'),
-                            end_form());
-
     return script({-type=>"text/javascript"},
                   "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
                     $noscript;
@@ -357,16 +349,9 @@ sub _login_box {
                 submit(-name=>'submit', -value=>'Log in'),
                 end_form());
 
+    my $noscript = noscript($box);
     $box =~ s/"/\\"/g;
     $box =~ s/\n/ /g;
-
-    my $noscript = noscript(start_form({-method => "post"}),
-                            "Username: ", textfield(-name => "username"),
-                            "Password: ", password_field(-name => "password"),
-                            hidden(-name=>'action', -value=>'login', -override => 1),
-                            submit(-name=>'submit', -value=>'Log in'),
-                            end_form());
-
     return script({-type=>"text/javascript"},
                   "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
                     $noscript;
