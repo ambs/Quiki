@@ -165,8 +165,8 @@ sub run {
         $self->{session}->param('msg','');
     }
 
-    ($action eq 'login_page') and print _login_box();
-    ($action eq "register_page") and print _register_box();
+    print _login_box() if $action eq 'login_page';
+    print _register_box() if $action eq "register_page";
 
     print start_div({-class=>"quiki_body"});
 
