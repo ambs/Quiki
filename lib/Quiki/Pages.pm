@@ -99,7 +99,6 @@ sub check_in {
 
 sub check_out {
     my ($class, $Quiki, $node, $rev) = @_;
-print STDERR "VOU MOSTRAR $rev, ULTIMA ".$Quiki->{meta}{rev};
 
     my $cur_rev  = $Quiki->{meta}{rev};
     my $content = slurp "data/content/$node";
