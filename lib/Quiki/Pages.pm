@@ -82,12 +82,8 @@ sub check_in {
 
     my $file = "data/content/$node";
 
-    if (-f $file) {
-        ## XXX Save previous version
-    }
-
     #if (defined($contents)) {
-    $Quiki->{meta}{rev}++;
+    $Quiki->{meta}{rev}++ unless ($contents =~ m/^Edit me!/);
     open O, "> $file" or die $!;
     print O $contents;
     close O;
