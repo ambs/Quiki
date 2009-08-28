@@ -58,7 +58,7 @@ sub new {
     $self = {%conf, %args};
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
-    $self->{SERVER_NAME} = $ENv{SERVER_NAME};
+    $self->{SERVER_NAME} = $ENV{SERVER_NAME};
 
     return bless $self, $class;
 }
