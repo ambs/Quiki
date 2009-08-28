@@ -16,12 +16,13 @@ sub _connect {
 }
 
 sub create {
-    my ($class, $username, $email) = @_;
+    my ($class, $quiki, $username, $email) = @_;
     my $password = Text::Password::Pronounceable->generate(6, 10);
     my $dbh = _connect;
     my $sth = $dbh->prepare("INSERT INTO auth VALUES (?,?,?);");
     $sth->execute($username, md5_hex($password), $email);
 
+    my $servername = "http://$quiki->{SERVER_NAME}$quiki->{SCRIPT_NAME}";
 
     my $from = 'admin@quiki.perl-hackers.net';
 
@@ -34,7 +35,7 @@ sub create {
                                         body => <<"EOEMAIL");
 Hello, $username.
 
-Your password for Quiki is: $password
+Your password for $quiki->{name} at $servername is: $password
 Thank you.
 EOEMAIL
     sendmail($message);

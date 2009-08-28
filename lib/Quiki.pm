@@ -58,6 +58,7 @@ sub new {
     $self = {%conf, %args};
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
+    $self->{SERVER_NAME} = $ENv{SERVER_NAME};
 
     return bless $self, $class;
 }
@@ -87,7 +88,7 @@ sub run {
                                         "User name already in use. Please try again!");
             }
             else {
-                Quiki::Users->create($username, $email);
+                Quiki::Users->create($self, $username, $email);
                 $self->{session}->param('msg',
                                         "You are registered! You should receive an e-mail with your password soon.");
             }
@@ -147,13 +148,13 @@ sub run {
         }
     }
 
-	# save meta data
-	Quiki::Meta::set($node, $self->{meta});
+    # save meta data
+    Quiki::Meta::set($node, $self->{meta});
 
 
     # XXX
-	$self->{rev} = param('rev') || $self->{meta}{rev};
-	my $content = Quiki::Pages->check_out($self,$node,$self->{rev});
+    $self->{rev} = param('rev') || $self->{meta}{rev};
+    my $content = Quiki::Pages->check_out($self,$node,$self->{rev});
 
 
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
