@@ -24,7 +24,7 @@ sub create {
 
     my $servername = "http://$quiki->{SERVER_NAME}$quiki->{SCRIPT_NAME}";
 
-    my $from = 'admin@quiki.perl-hackers.net';
+    my $from = "admin\@$quiki->{SERVER_NAME}";
 
     my $message = Email::Simple->create
       (
