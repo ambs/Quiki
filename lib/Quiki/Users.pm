@@ -23,13 +23,11 @@ sub create {
 
 
     my $from = 'admin@quiki.perl-hackers.net';
-    my $message = Email::Simple->create(
-                                      header => [
-                                                 To => $email,
-                                                 From => $from,
-                                                 Subject => "$username registration",
-                                                ],
-                                      body => <<"EOEMAIL");
+    my $message = Email::Simple->new;
+    $message->header_set(To => $email,
+                         From => $from,
+                         Subject => "$username registration");
+    $message->body_set(<<"EOEMAIL");
 Hello, $username.
 
 Your password for Quiki is: $password
