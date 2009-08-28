@@ -250,7 +250,7 @@ sub run {
           "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}",
             br;
 
-        if ($self->{meta}{rev}-1) {
+        if ($self->{meta}{rev} && $self->{meta}{rev}-1) {
             print "REVISION: last: $self->{meta}{rev} current: $self->{rev} others: ";
             for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
                 print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
