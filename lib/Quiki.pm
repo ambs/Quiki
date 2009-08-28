@@ -156,10 +156,14 @@ sub run {
     $self->{rev} = param('rev') || $self->{meta}{rev};
     my $content = Quiki::Pages->check_out($self,$node,$self->{rev});
 
+    my $title = "$self->{name}: ".
+      ( $self->{session}->param('authenticaded') ?
+        $self->{session}->param('username') :
+        "guest" ). "\@$node";
 
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
-    print start_html(-title => "$self->{name}::$node",
+    print start_html(-title => $title,
                      -style =>
                      {
                       code => join("\n",
