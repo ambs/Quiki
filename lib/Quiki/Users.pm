@@ -3,6 +3,7 @@ package Quiki::Users;
 use Text::Password::Pronounceable;
 use Email::Sender::Simple 'sendmail';
 use Email::Simple;
+use Email::Simple::Creator;
 
 use strict;
 use warnings;
@@ -15,22 +16,27 @@ sub _connect {
 }
 
 sub create {
-    my ($class, $username, $email) = @_;
+    my ($class, $quiki, $username, $email) = @_;
     my $password = Text::Password::Pronounceable->generate(6, 10);
     my $dbh = _connect;
     my $sth = $dbh->prepare("INSERT INTO auth VALUES (?,?,?);");
     $sth->execute($username, md5_hex($password), $email);
 
+    my $servername = "http://$quiki->{SERVER_NAME}$quiki->{SCRIPT_NAME}";
 
-    my $from = 'admin@quiki.perl-hackers.net';
-    my $message = Email::Simple->new;
-    $message->header_set(To => $email,
-                         From => $from,
-                         Subject => "$username registration");
-    $message->body_set(<<"EOEMAIL");
+    my $from = "admin\@$quiki->{SERVER_NAME}";
+
+    my $message = Email::Simple->create
+      (
+       header => [
+                  To => $email,
+                  From => $from,
+                  Subject => "Your registration at $quiki->{name}",
+                 ],
+       body => <<"EOEMAIL");
 Hello, $username.
 
-Your password for Quiki is: $password
+Your password for $quiki->{name} at $servername is: $password
 Thank you.
 EOEMAIL
     sendmail($message);
