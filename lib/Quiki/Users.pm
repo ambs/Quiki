@@ -1,5 +1,9 @@
 package Quiki::Users;
 
+use Text::Password::Pronounceable;
+use Email::Sender::Simple 'sendmail';
+use Email::Simple;
+
 use strict;
 use warnings;
 
@@ -8,6 +12,30 @@ use Digest::MD5 'md5_hex';
 
 sub _connect {
     return DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
+}
+
+sub create {
+    my ($class, $username, $email) = @_;
+    my $password = Text::Password::Pronounceable->generate(6, 10);
+    my $dbh = _connect;
+    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?,?,?);");
+    $sth->execute($username, md5_hex($password), $email);
+
+
+    my $from = 'admin@quiki.perl-hackers.net';
+    my $message = Email::Simple->create(
+                                      header => [
+                                                 To => $email,
+                                                 From => $from,
+                                                 Subject => "$username registration",
+                                                ],
+                                      body => <<"EOEMAIL");
+Hello, $username.
+
+Your password for Quiki is: $password
+Thank you.
+EOEMAIL
+    sendmail($message);
 }
 
 sub exists {
@@ -60,6 +88,8 @@ Handles Quiki users and permissions.
 =head2 auth
 
 =head2 exists
+
+=head2 create
 
 =head1 SEE ALSO
 

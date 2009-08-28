@@ -78,8 +78,28 @@ sub run {
     $node =~ s/\s/_/g;
 
     # XXX
+    if ($action eq 'register') {
+        my $username = param('username') || '';
+        my $email    = param('email') || '';
+        if ($username and $email and $email =~ m/\@/) { # XXX -- fix regexp :D
+            if (Quiki::Users->exists($username)) {
+                $self->{session}->param('msg',
+                                        "User name already in use. Please try again!");
+            }
+            else {
+                Quiki::Users->create($username, $email);
+                $self->{session}->param('msg',
+                                        "You are registered! You should receive an e-mail with your password soon.");
+            }
+        }
+        else {
+            $self->{session}->param('msg',
+                                    "Sign up failed! Perhaps you forgot to fill in the form?");
+        }
+    }
+
+    # XXX
     if ($action eq 'login') {
-        print STDERR "LOGIN ";
         my $username = param('username') || '';
         my $password = param('password') || '';
         if ($username and $password) {
@@ -87,6 +107,9 @@ sub run {
                 $self->{session}->param('authenticated',1) and
                   $self->{session}->param('username',$username) and
                     $self->{session}->param('msg',"Login successfull! Welcome $username!");
+        }
+        else {
+            $self->{session}->param('msg',"Login failed!");
         }
     }
 
