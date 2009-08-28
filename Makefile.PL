@@ -31,6 +31,7 @@ WriteMakefile(
                   'Text::Password::Pronounceable' => '0.28',
                   'Text::Patch' => 0,
                   'Text::Diff' => 0,
+                  'Email::Simple::Creator' => 0,
 
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },

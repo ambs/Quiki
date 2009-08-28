@@ -3,6 +3,7 @@ package Quiki::Users;
 use Text::Password::Pronounceable;
 use Email::Sender::Simple 'sendmail';
 use Email::Simple;
+use Email::Simple::Creator;
 
 use strict;
 use warnings;
@@ -23,11 +24,14 @@ sub create {
 
 
     my $from = 'admin@quiki.perl-hackers.net';
-    my $message = Email::Simple->new;
-    $message->header_set(To => $email,
-                         From => $from,
-                         Subject => "$username registration");
-    $message->body_set(<<"EOEMAIL");
+
+    my $message = Email::Simple->create(
+                                        header => [
+                                                   To => $email,
+                                                   From => $from,
+                                                   Subject => "$username registration"
+                                                  ],
+                                        body => <<"EOEMAIL");
 Hello, $username.
 
 Your password for Quiki is: $password
