@@ -358,8 +358,13 @@ sub _render_menu_bar {
           end_form,
             "&nbsp;&nbsp;|&nbsp;&nbsp;";
 
-    ## Login+Sigup/Logout buttons
+    ## Login+Sigup/Profile+Logout buttons
     if ($self->{session}->param('authenticated')) {
+        print start_form(-method=>'post'),
+          submit('submit', 'Edit Profile'),
+            hidden(-name => 'action', -value => 'profile', -override => 1),
+              end_form;
+        print "&nbsp;&nbsp;|&nbsp;&nbsp;";
         print start_form(-method=>'post'),
           submit('submit', 'Log out'),
             hidden(-name => 'action', -value => 'logout', -override => 1),
