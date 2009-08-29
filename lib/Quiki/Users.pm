@@ -20,7 +20,7 @@ sub email {
     my $dbh = _connect;
     my $sth = $dbh->prepare("SELECT email FROM auth WHERE username = ?;");
     $sth->execute($username);
-    my @row = $dbh->fetchrow_arrow;
+    my @row = $dbh->fetchrow_array;
 
     return @row ? $row[0] : undef ;
 }
