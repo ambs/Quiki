@@ -79,7 +79,16 @@ sub run {
     $node =~ s/\s/_/g;
 
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
-                $self->{session}->param('msg', "Profile Saved.");
+        if (param("password1") && (param("password1") ne param("password2"))) {
+            $self->{session}->param('msg', "Passwords do not match. Try again!");
+        }
+        else {
+            my %data;
+            $data{password} = param("password1") if param("password1");
+            $data{email}    = param("email")     if param("email");
+            Quiki::Users->update($self->{session}->param("username"), %data);
+            $self->{session}->param('msg', "Profile Saved.");
+        }
     }
 
     # XXX

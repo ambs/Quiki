@@ -15,6 +15,24 @@ sub _connect {
     return DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
 }
 
+sub update {
+    my ($class, $username, %info) = @_;
+    my @valid_fields = qw.password email.;
+
+    $info{password} = md5_hex($info{password}) if exists($info{password});
+
+    my @sql;
+    for my $key (keys %info) {
+        if ($key ~~ [@valid_fields]) {
+            push @sql, "$key = '$info{$key}'"
+        }
+    }
+
+    my $dbh = _connect;
+    my $sth = $dbh->prepare("UPDATE auth SET ".join(", ",@sql)." WHERE username = ?");
+    $sth->execute($username);
+}
+
 sub email {
     my ($class, $username) = @_;
     my $dbh = _connect;
@@ -106,6 +124,8 @@ Handles Quiki users and permissions.
 =head2 create
 
 =head2 email
+
+=head2 update
 
 =head1 SEE ALSO
 
