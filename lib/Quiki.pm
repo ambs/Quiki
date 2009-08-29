@@ -78,8 +78,12 @@ sub run {
     # XXX -- temos de proteger mais coisas, possivelmente
     $node =~ s/\s/_/g;
 
+    if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
+                $self->{session}->param('msg', "Profile Saved.");
+    }
+
     # XXX
-    if ($action eq 'register') {
+    if ($action eq 'register' && param('submit') eq "Register") {
         my $username = param('username') || '';
         my $email    = param('email') || '';
         if ($username and $email and $email =~ m/\@/) { # XXX -- fix regexp :D
@@ -410,9 +414,12 @@ sub _profile_box {
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
                 table({-style=>"margin-left: auto; margin-right: auto"},
-                      Tr(td(["E-mail: ", textfield(-name => "email")])),
-                      Tr(td(["New Password: ", password_field(-name => "new_password1")])),
-                      Tr(td(["Retype Password: ", password_field(-name => "new_password2")]))),
+                      Tr(td({-style=>"text-align: right"}, "E-mail: "),
+                         td(textfield(-name => "email"))),
+                      Tr(td({-style=>"text-align: right"}, "New Password: "),
+                         td(password_field(-name => "new_password1"))),
+                      Tr(td(["Retype Password: ", 
+                             password_field(-name => "new_password2")]))),
                 br, br,
                 hidden(-name=>'action', -value => 'save_profile', -override => 1),
                 submit(-name=>'submit', -value => 'Cancel'),
@@ -431,6 +438,8 @@ sub _register_box {
                       Tr(td(["Username: ", textfield(-name => "username")])),
                       Tr(td(["E-mail: ", textfield(-name => "email")]))), br, br,
                 hidden(-name=>'action', -value=>'register', -override => 1),
+                submit(-name=>'submit', -value => 'Cancel'),
+                "&nbsp;&nbsp;",
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
     return _float_box($box);
