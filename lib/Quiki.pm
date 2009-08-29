@@ -272,7 +272,8 @@ sub run {
     }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
-        while ((my $f = readdir(DIR))) {
+        my @pages = sort readdir(DIR);
+        for my $f (@pages) {
             unless ($f=~/^\./) {
                 print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
             }
