@@ -105,6 +105,8 @@ Handles Quiki users and permissions.
 
 =head2 create
 
+=head2 email
+
 =head1 SEE ALSO
 
 Quiki, perl(1)
