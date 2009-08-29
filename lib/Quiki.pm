@@ -219,9 +219,9 @@ sub run {
     print end_div; # end nav_bar <div>
 
     # Treat boxes.
-    print _profile_box()  if $action eq 'profile_page';
-    print _login_box()    if $action eq 'login_page';
-    print _register_box() if $action eq "register_page";
+    print $self->_profile_box()  if $action eq 'profile_page';
+    print _login_box()           if $action eq 'login_page';
+    print _register_box()        if $action eq "register_page";
 
     print start_div({-class=>"quiki_body"});
 
@@ -410,16 +410,17 @@ sub _float_box {
 }
 
 sub _profile_box {
+    my $self = shift;
     my $box =  div({-class => 'floatbox_head'}, "Edit Profile");
     $box .= div({-class => 'floatbox_body'},
                 start_form({-method => "post"}),
                 table({-style=>"margin-left: auto; margin-right: auto"},
                       Tr(td({-style=>"text-align: right"}, "E-mail: "),
                          td(textfield(-name => "email",
-                                     -value => Quiki::Users->email($self->{session}->param("username")))),
+                                      -value => Quiki::Users->email($self->{session}->param("username"))))),
                       Tr(td({-style=>"text-align: right"}, "New Password: "),
                          td(password_field(-name => "new_password1"))),
-                      Tr(td(["Retype Password: ", 
+                      Tr(td(["Retype Password: ",
                              password_field(-name => "new_password2")]))),
                 br, br,
                 hidden(-name=>'action', -value => 'save_profile', -override => 1),
