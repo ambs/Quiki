@@ -15,6 +15,16 @@ sub _connect {
     return DBI->connect("dbi:SQLite:dbname=data/users.sqlite","","");
 }
 
+sub email {
+    my ($class, $username) = @_;
+    my $dbh = _connect;
+    my $sth = $dbh->prepare("SELECT email FROM auth WHERE username = ?;");
+    $sth->execute($username);
+    my @row = $dbh->fetchrow_arrow;
+
+    return @row ? $row[0] : undef ;
+}
+
 sub create {
     my ($class, $quiki, $username, $email) = @_;
     my $password = Text::Password::Pronounceable->generate(6, 10);
