@@ -187,18 +187,26 @@ sub run {
                     );
 
 
+    # XXX - show message if we have one
+    if ($self->{session}->param('msg')) {
+        $self->_show_msg($self->{session}->param('msg'));
+        $self->{session}->param('msg','');
+    }
+
+    # Start nav_bar
     print start_div({-class=>"quiki_nav_bar"});
     print h3({-id => 'quiki_name'}, $self->{name});
     print h3({-id => 'quiki_nodename'},
              a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"}, $node));
 
-
     # XXX - print and calc trace
     my @trace;
-    $self->{session}->param('trace') and @trace=@{$self->{session}->param('trace')};
-    push @trace, $node unless $trace[-1] eq $node;
-    @trace > 5 and shift @trace;
-    $self->{session}->param('trace',\@trace);
+    $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
+    unless ($trace[-1] eq $node) {
+        push @trace, $node;
+        @trace > 5 and shift @trace;
+        $self->{session}->param('trace',\@trace);
+    }
     print div({-id=>'quiki_breadcumbs'},
               'Your path: ',
               join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace)
@@ -206,13 +214,9 @@ sub run {
 
     print end_div; # end nav_bar <div>
 
-    # XXX - show message if we have one
-    if ($self->{session}->param('msg')) {
-        $self->_show_msg($self->{session}->param('msg'));
-        $self->{session}->param('msg','');
-    }
-
-    print _login_box() if $action eq 'login_page';
+    # Treat boxes.
+    print _profile_box()  if $action eq 'profile_page';
+    print _login_box()    if $action eq 'login_page';
     print _register_box() if $action eq "register_page";
 
     print start_div({-class=>"quiki_body"});
@@ -322,30 +326,31 @@ sub _render_menu_bar {
                 print start_form(-method=>'post'),
                   hidden('node',$node),
                     hidden(-name => 'action', -value => 'edit', -override => 1);
-			if ($self->{rev} == $self->{meta}{rev}) {
-				print submit(-name => 'submit', -value => 'Edit this page', -override => 1);
-			}
-			else {
-				print submit(-name => 'submit', -value => 'Edit this page', -disabled=>'yes', -override => 1);
-
-			}
-				print end_form;
+                if ($self->{rev} == $self->{meta}{rev}) {
+                    print submit(-name => 'submit', -value => 'Edit this page', -override => 1);
+                }
+                else {
+                    print submit(-name => 'submit', -value => 'Edit this page',
+                                 -disabled=>'yes', -override => 1);
+                }
+                print end_form;
                 print '&nbsp;&nbsp;|&nbsp;&nbsp;';
                 print start_form(-method=>'post'),
-                    submit('submit', 'Create new page'),
-                      '&nbsp;',
-                        textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
-                          hidden(-name => 'action', -value => 'create', -override => 1),
-                            end_form;
+                  submit('submit', 'Create new page'),
+                    '&nbsp;',
+                      textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
+                        hidden(-name => 'action', -value => 'create', -override => 1),
+                          end_form;
             }
         }
+
         when (/edit/) {
             print submit(-name => 'submit', -value => 'Cancel', -override => 1),
               '&nbsp;&nbsp;|&nbsp;&nbsp;',
                 submit(-name => 'submit', -value => 'Preview', -override => 1),
-              '&nbsp;&nbsp;|&nbsp;&nbsp;',
-                submit(-name => 'submit', -value => 'Save', -override => 1),
-                  end_form;
+                  '&nbsp;&nbsp;|&nbsp;&nbsp;',
+                    submit(-name => 'submit', -value => 'Save', -override => 1),
+                      end_form;
         }
     }
     print( end_div,  # end menu_bar_left <div>
@@ -362,7 +367,7 @@ sub _render_menu_bar {
     if ($self->{session}->param('authenticated')) {
         print start_form(-method=>'post'),
           submit('submit', 'Edit Profile'),
-            hidden(-name => 'action', -value => 'profile', -override => 1),
+            hidden(-name => 'action', -value => 'profile_page', -override => 1),
               end_form;
         print "&nbsp;&nbsp;|&nbsp;&nbsp;";
         print start_form(-method=>'post'),
@@ -390,6 +395,33 @@ sub _render_menu_bar {
           end_div; # end menu_bar <div>
 }
 
+sub _float_box {
+    my $html = shift;
+    my $noscript = noscript($html);
+    $html =~ s/"/\\"/g;
+    $html =~ s/\n/ /g;
+    return script({-type=>"text/javascript"},
+                  "\$(document).ready(function(){ \$.floatbox({ content: \"$html\" }); });") .
+                    $noscript;
+}
+
+sub _profile_box {
+    my $box =  div({-class => 'floatbox_head'}, "Edit Profile");
+    $box .= div({-class => 'floatbox_body'},
+                start_form({-method => "post"}),
+                table({-style=>"margin-left: auto; margin-right: auto"},
+                      Tr(td(["E-mail: ", textfield(-name => "email")])),
+                      Tr(td(["New Password: ", password_field(-name => "new_password1")])),
+                      Tr(td(["Retype Password: ", password_field(-name => "new_password2")]))),
+                br, br,
+                hidden(-name=>'action', -value => 'save_profile', -override => 1),
+                submit(-name=>'submit', -value => 'Cancel'),
+                "&nbsp;&nbsp;",
+                submit(-name=>'submit', -value => 'Save Profile'),
+                end_form());
+    return _float_box($box);
+
+}
 
 sub _register_box {
     my $box = div({-class => 'floatbox_head'}, "Register");
@@ -401,13 +433,7 @@ sub _register_box {
                 hidden(-name=>'action', -value=>'register', -override => 1),
                 submit(-name=>'submit', -value=>'Register'),
                 end_form());
-
-    my $noscript = noscript($box);
-    $box =~ s/"/\\"/g;
-    $box =~ s/\n/ /g;
-    return script({-type=>"text/javascript"},
-                  "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
-                    $noscript;
+    return _float_box($box);
 }
 
 sub _login_box {
@@ -420,13 +446,7 @@ sub _login_box {
                 hidden(-name=>'action', -value=>'login', -override => 1),
                 submit(-name=>'submit', -value=>'Log in'),
                 end_form());
-
-    my $noscript = noscript($box);
-    $box =~ s/"/\\"/g;
-    $box =~ s/\n/ /g;
-    return script({-type=>"text/javascript"},
-                  "\$(document).ready(function(){ \$.floatbox({ content: \"$box\" }); });") .
-                    $noscript;
+    return _float_box($box);
 }
 
 
