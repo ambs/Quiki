@@ -142,14 +142,14 @@ sub run {
 	$self->{session}->param('msg',"New node \"$node\" created.");
     }
 
-    if ($action eq "edit" && Quiki::Pages->locked($node, $self->{session}->id)) {
+    if ($action eq "edit" && Quiki::Pages->locked($node, $self->{sid})) {
         $action = "";
         $self->{session}->param('msg',"Sorry but someone else is currently editing this node!");
     }
 
     # XXX
     if ($action eq 'save' && param("submit") eq "Save") {
-        if (Quiki::Pages->locked($node, $self->{session}->id)) {
+        if (Quiki::Pages->locked($node, $self->{sid})) {
             my $text = param('text') // '';
             #Quiki::Pages->save($node, $text);
             Quiki::Pages->check_in($self, $node, $text);
@@ -243,7 +243,7 @@ sub run {
     }
 
     if ($action eq 'edit' && 
-        ($preview || !Quiki::Pages->locked($node, $self->{session}->id))) {
+        ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
         if ($preview) {
             my $text = param('text') // '';
             print start_div({-class=>"quiki_preview"}),
@@ -254,7 +254,7 @@ sub run {
                         end_div; # end quicki_preview <div>
         }
         else {
-            Quiki::Pages->lock($node, $self->{session}->id);
+            Quiki::Pages->lock($node, $self->{sid});
         }
 
         print script({-type=>'text/javascript'},
