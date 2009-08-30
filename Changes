@@ -3,14 +3,14 @@ Revision history for Quiki
 0.01_1    Date/time
         First version, released on an unsuspecting world full of other wikis.
         This release features:
-         - installation script
-         - Basic authentication
-         - Basic Wiki formatter
-           - paragraphs, bolds, italics, typewritter, hard-rules
-           - internal and external links and named links
-           - ordered and bulleted lists at multiple depths
-           - tables with alignment properties
-           - verbatim zones
-         - Basic control version
-         - Basic lock mechanism
-
+         - installation script;
+         - Basic authentication;
+         - Basic Wiki formatter:
+           - paragraphs, bolds, italics, typewritter, hard-rules;
+           - internal and external links and named links;
+           - ordered and bulleted lists at multiple depths;
+           - tables with alignment properties;
+           - verbatim zones;
+         - Basic control version;
+         - Basic lock mechanism;
+         - Password and email change option;
