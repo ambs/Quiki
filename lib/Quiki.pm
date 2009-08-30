@@ -79,13 +79,13 @@ sub run {
     $node =~ s/\s/_/g;
 
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
-        if (param("password1") && (param("password1") ne param("password2"))) {
+        if (param("new_password1") && (param("new_password1") ne param("new_password2"))) {
             $self->{session}->param('msg', "Passwords do not match. Try again!");
         }
         else {
             my %data;
-            $data{password} = param("password1") if param("password1");
-            $data{email}    = param("email")     if param("email");
+            $data{password} = param("new_password1") if param("new_password1");
+            $data{email}    = param("email")         if param("email");
             Quiki::Users->update($self->{session}->param("username"), %data);
             $self->{session}->param('msg', "Profile Saved.");
         }
@@ -116,11 +116,10 @@ sub run {
     if ($action eq 'login') {
         my $username = param('username') || '';
         my $password = param('password') || '';
-        if ($username and $password) {
-            Quiki::Users->auth($username,$password) and
-                $self->{session}->param('authenticated',1) and
-                  $self->{session}->param('username',$username) and
-                    $self->{session}->param('msg',"Login successfull! Welcome $username!");
+        if ($username and $password and Quiki::Users->auth($username,$password)) {
+            $self->{session}->param('authenticated',1) and
+              $self->{session}->param('username',$username) and
+                $self->{session}->param('msg',"Login successfull! Welcome $username!");
         }
         else {
             $self->{session}->param('msg',"Login failed!");
