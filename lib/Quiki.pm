@@ -285,6 +285,13 @@ sub run {
         }
         closedir(DIR);
     }
+    elsif ($action eq 'diff') {
+		my $target = param('target') || 0;
+		$content = Quiki::Pages->calc_diff($self,$node,$self->{rev},$target);
+		print "<pre>",
+			$content,
+				"</pre>";
+	}
     else {
         print Quiki::Formatter::format($self, $content);
     }
@@ -307,7 +314,18 @@ sub run {
                 print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
             }
         }
-        print ")", end_div; # end quiki_meta <div>
+        print ")", 
+		  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
+			hidden(-name => 'node', -value => $node, -override => 1),
+			  hidden(-name => 'action', -value => 'diff', -override => 1),
+				submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
+				  "<select name='target'>";
+		for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+			print "<option value='$i'>revision $i</option>";
+		}
+		print "</select>",
+		  end_form,
+			end_div; # end quiki_meta <div>
     }
 
     print end_div; # end quiki_body <div>

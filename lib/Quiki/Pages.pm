@@ -108,6 +108,14 @@ sub check_out {
     return $content;
 }
 
+sub calc_diff {
+    my ($class, $Quiki, $node, $rev, $target) = @_;
+
+	my $one = Quiki::Pages->check_out($Quiki, $node, $rev);
+	my $two = Quiki::Pages->check_out($Quiki, $node, $target);
+
+	diff(\$one, \$two, { STYLE=>'Unified' });
+}
 
 '\o/';
 
