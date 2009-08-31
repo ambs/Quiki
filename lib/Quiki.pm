@@ -160,13 +160,19 @@ sub run {
         }
     }
 
+    # XXX
+	my $content;
+   	$self->{rev} = param('rev') || $self->{meta}{rev};
+	if ($action eq 'rollback') {
+    	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
+        Quiki::Pages->check_in($self, $node, $content);
+	}
+	else {
+    	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
+	}
+
     # save meta data
     Quiki::Meta::set($node, $self->{meta});
-
-
-    # XXX
-    $self->{rev} = param('rev') || $self->{meta}{rev};
-    my $content = Quiki::Pages->check_out($self,$node,$self->{rev});
 
     my $title = "$self->{name}: ".
       ( $self->{session}->param('authenticaded') ?
@@ -284,7 +290,7 @@ sub run {
     }
 
     # handle meta data
-    if ($action eq 'save') {
+    if ($action eq 'save' or $action eq 'rollback') {
         $self->{meta}->{last_update_by} = $self->{session}->param('username');
         $self->{meta}->{last_updated_in} = `date`; # XXX -- more legible?
         chomp $self->{meta}->{last_updated_in};
@@ -296,12 +302,12 @@ sub run {
             br;
 
         if ($self->{meta}{rev}) {
-            print "REVISION: last: $self->{meta}{rev} current: $self->{rev} others: ";
-            for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
+            print "REVISION: $self->{meta}{rev} (";
+            for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
                 print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
             }
         }
-        print end_div; # end quiki_meta <div>
+        print ")", end_div; # end quiki_meta <div>
     }
 
     print end_div; # end quiki_body <div>
@@ -336,15 +342,16 @@ sub _render_menu_bar {
     given ($action) {
         when (!/edit/) {
             if ($self->{session}->param('authenticated')) {
-                print start_form(-method=>'post'),
-                  hidden('node',$node),
-                    hidden(-name => 'action', -value => 'edit', -override => 1);
+                print start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
+                  hidden('node',$node);
                 if ($self->{rev} == $self->{meta}{rev}) {
-                    print submit(-name => 'submit', -value => 'Edit this page', -override => 1);
+                    print hidden(-name => 'action', -value => 'edit', -override => 1),
+					  submit(-name => 'submit', -value => 'Edit this page', -override => 1);
                 }
                 else {
-                    print submit(-name => 'submit', -value => 'Edit this page',
-                                 -disabled=>'yes', -override => 1);
+                    print hidden(-name => 'action', -value => 'rollback', -override => 1),
+					  hidden(-name => 'rev', -value => $self->{rev}, -override => 1),
+						submit(-name => 'submit', -value => 'Rollback to this version', -override => 1);
                 }
                 print end_form;
                 print '&nbsp;&nbsp;|&nbsp;&nbsp;';
