@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 38;
+use Test::More tests => 39;
 
 use_ok("Quiki::Formatter");
 
@@ -458,4 +458,12 @@ EOI
 <tr><td style="text-align: center"> a </td> <td style="text-align: left">b </td> <td style="text-align: right"> c</td></tr>
 </table>
 
+EOO
+is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+======foo======
+hello world
+EOI
+<h1>foo</h1>
+
+<p>hello world</p>
 EOO

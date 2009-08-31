@@ -135,15 +135,18 @@ sub _format_chunk {
             $chunk =~ s/^ -+ \s* //x;
             $chunk = $chunk ? ('<hr/>' . _format_chunk($Quiki, $chunk)) : '<hr/>';
         }
-        elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*$/x) {
-            given(length($1)) {
-                when (1) { $chunk = h6(_inlines($Quiki, $2)) }
-                when (2) { $chunk = h5(_inlines($Quiki, $2)) }
-                when (3) { $chunk = h4(_inlines($Quiki, $2)) }
-                when (4) { $chunk = h3(_inlines($Quiki, $2)) }
-                when (5) { $chunk = h2(_inlines($Quiki, $2)) }
-                when (6) { $chunk = h1(_inlines($Quiki, $2)) }
+        elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*($|\n)/x) {
+            my ($delim, $title) = ($1, $2);
+            $chunk =~ s/.*($|\n)//;
+            given(length($delim)) {
+                when (1) { $title = h6(_inlines($Quiki, $title)) }
+                when (2) { $title = h5(_inlines($Quiki, $title)) }
+                when (3) { $title = h4(_inlines($Quiki, $title)) }
+                when (4) { $title = h3(_inlines($Quiki, $title)) }
+                when (5) { $title = h2(_inlines($Quiki, $title)) }
+                when (6) { $title = h1(_inlines($Quiki, $title)) }
             }
+            $chunk = $chunk ? ($title . "\n\n"  . _format_chunk($Quiki, $chunk)) : $title;
         }
         else {
             $chunk = p(_inlines($Quiki, $chunk));
