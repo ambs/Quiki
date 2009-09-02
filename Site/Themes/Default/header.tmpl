@@ -1,0 +1,35 @@
+<!DOCTYPE html
+	  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+  <head>
+    <title><tmpl_var WIKINAME/>: <TMPL_VAR USERNAME/>@<TMPL_VAR WIKINODE/></title>
+    <style type="text/css">
+      <!--/* <![CDATA[ */
+                       @import "css/quiki.css";
+                       @import "css/local.css";
+                       @import "css/gritter.css";
+                       @import "css/textarea.css";
+                       /* ]]> */-->
+    </style>
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.gritter.js" type="text/javascript"></script>
+    <script src="js/jquery.floatbox.js" type="text/javascript"></script>
+    <script src="js/jquery.textarearesizer.js" type="text/javascript"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+
+  <body>
+
+    <!-- NAVIGATION BAR AT THE TOP -->
+    <div class="quiki_nav_bar">
+      <h3 id="quiki_name"><tmpl_var WIKINAME/></h3>
+      <h3 id="quiki_nodename">
+        <a href="<tmpl_var WIKISCRIPT/>/quiki.cgi?node=<tmpl_var MAINNODE/>"><tmpl_var WIKINODE/></a>
+      </h3>
+      <div id="quiki_breadcumbs">
+        Your path:  <tmpl_var BREADCUMBS/>
+      </div>
+    </div>
+    <div class="quiki_body">
+
