@@ -180,7 +180,7 @@ sub run {
 
     my @trace;
     $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
-    unless ($trace[-1] eq $node) {
+    if (@trace && $trace[-1] ne $node) {
         push @trace, $node;
         @trace > 5 and shift @trace;
         $self->{session}->param('trace',\@trace);
@@ -189,7 +189,8 @@ sub run {
 
 
     my $theme = $self->{theme} || 'Default';
-    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl");
+    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl",
+                                            case_sensitive => 1);
     $template->param(WIKINAME => $self->{name},
                      USERNAME => ($self->{session}->param('authenticated')?
                                   $self->{session}->param('username'):"guest"),
