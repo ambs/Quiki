@@ -11,6 +11,6 @@ Revision history for Quiki
            - ordered and bulleted lists at multiple depths;
            - tables with alignment properties;
            - verbatim zones;
-         - Basic control version;
+         - Basic control version with rollback and diff utils;
          - Basic lock mechanism;
          - Password and email change option;
