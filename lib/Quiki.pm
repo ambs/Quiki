@@ -162,15 +162,15 @@ sub run {
     }
 
     # XXX
-	my $content;
-   	$self->{rev} = param('rev') || $self->{meta}{rev};
-	if ($action eq 'rollback') {
-    	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
+    my $content;
+    $self->{rev} = param('rev') || $self->{meta}{rev};
+    if ($action eq 'rollback') {
+        $content = Quiki::Pages->check_out($self,$node,$self->{rev});
         Quiki::Pages->check_in($self, $node, $content);
-	}
-	else {
+    }
+    else {
     	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
-	}
+    }
 
     # save meta data
     Quiki::Meta::set($node, $self->{meta});
@@ -188,27 +188,6 @@ sub run {
     my $breadcumbs = join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
 
 
-    my $theme = $self->{theme} || 'Default';
-    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl",
-                                            case_sensitive => 1);
-    $template->param(WIKINAME => $self->{name},
-                     USERNAME => ($self->{session}->param('authenticated')?
-                                  $self->{session}->param('username'):"guest"),
-                     WIKINODE => $node,
-                     WIKISCRIPT => $self->{SCRIPT_NAME},
-                     MAINNODE => $self->{index},
-                     BREADCUMBS => $breadcumbs);
-
-
-    $template->output(print_to => \*STDOUT);
-
-    # Treat boxes.
-    print $self->_profile_box()  if $action eq 'profile_page';
-    print _login_box()           if $action eq 'login_page';
-    print _register_box()        if $action eq "register_page";
-
-    print start_div({-class=>"quiki_body"});
-
     my $preview = 0;
     if ($action eq 'save' && param("submit") eq "Preview") {
         $preview = 1;
@@ -217,6 +196,23 @@ sub run {
     if ($action eq 'save' && param("submit") eq "Cancel") {
         Quiki::Pages->unlock($node);
     }
+
+    my $theme = $self->{theme} || 'Default';
+    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl",
+                                            case_sensitive => 1);
+    $template->param(WIKINAME    => $self->{name},
+                     USERNAME    => ($self->{session}->param('authenticated')?
+                                     $self->{session}->param('username'):"guest"),
+                     WIKINODE    => $node,
+                     WIKISCRIPT  => $self->{SCRIPT_NAME},
+                     MAINNODE    => $self->{index},
+                     BREADCUMBS  => $breadcumbs,
+                     PROFILEBOX  => ($action eq 'profile_page')?$self->_profile_box():"",
+                     LOGINBOX    => ($action eq 'login_page') ? _login_box():"",
+                     REGISTERBOX => ($action eq 'register_page') ? _register_box():"",
+                    );
+    $template->output(print_to => \*STDOUT);
+
 
     if ($action eq 'edit' && 
         ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
