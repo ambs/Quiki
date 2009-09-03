@@ -30,6 +30,7 @@ Site/quiki.conf
 Site/css/textarea.css
 Site/images/grippie.png
 Site/js/jquery.textarearesizer.js
+Site/Themes/Default/header.tmpl
 lib/Quiki/Meta.pm
 lib/Quiki/Users.pm
 lib/Quiki/Pages.pm
