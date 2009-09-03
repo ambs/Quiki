@@ -111,10 +111,10 @@ sub check_out {
 sub calc_diff {
     my ($class, $Quiki, $node, $rev, $target) = @_;
 
-	my $one = Quiki::Pages->check_out($Quiki, $node, $rev);
-	my $two = Quiki::Pages->check_out($Quiki, $node, $target);
+    my $one = Quiki::Pages->check_out($Quiki, $node, $rev);
+    my $two = Quiki::Pages->check_out($Quiki, $node, $target);
 
-	diff(\$one, \$two, { STYLE=>'Unified' });
+    diff(\$one, \$two, { STYLE=>'Unified' });
 }
 
 '\o/';
@@ -149,6 +149,8 @@ Handles Quiki pages
 =head2 check_in
 
 =head2 check_out
+
+=head2 calc_diff
 
 =head1 SEE ALSO
 

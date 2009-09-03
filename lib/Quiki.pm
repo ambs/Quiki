@@ -9,6 +9,7 @@ use Quiki::Pages;
 
 use CGI qw/:standard *div/;
 use CGI::Session;
+use HTML::Template::Pro;
 
 use warnings;
 use strict;
@@ -174,50 +175,9 @@ sub run {
     # save meta data
     Quiki::Meta::set($node, $self->{meta});
 
-    my $title = "$self->{name}: ".
-      ( $self->{session}->param('authenticaded') ?
-        $self->{session}->param('username') :
-        "guest" ). "\@$node";
-
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
-    print start_html(-title => $title,
-                     -style =>
-                     {
-                      code => join("\n",
-                                   '@import "css/quiki.css";',
-                                   '@import "css/local.css";',
-                                   '@import "css/gritter.css";',
-                                   '@import "css/textarea.css";')
-                     },
-                     -script=> [{ -type=>'javascript',
-                                  -src=>'js/jquery.js'
-                                },
-                                { -type=>'javascript',
-                                  -src=>'js/jquery.gritter.js'
-                                },
-                                { -type=>'javascript',
-                                  -src=>'js/jquery.floatbox.js'
-                                },
-                                { -type=>'javascript',
-                                  -src=>'js/jquery.textarearesizer.js'
-                                },]
-                    );
 
-
-    # XXX - show message if we have one
-    if ($self->{session}->param('msg')) {
-        $self->_show_msg($self->{session}->param('msg'));
-        $self->{session}->param('msg','');
-    }
-
-    # Start nav_bar
-    print start_div({-class=>"quiki_nav_bar"});
-    print h3({-id => 'quiki_name'}, $self->{name});
-    print h3({-id => 'quiki_nodename'},
-             a({href=>"$self->{SCRIPT_NAME}?node=$self->{index}"}, $node));
-
-    # XXX - print and calc trace
     my @trace;
     $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
     unless ($trace[-1] eq $node) {
@@ -225,12 +185,21 @@ sub run {
         @trace > 5 and shift @trace;
         $self->{session}->param('trace',\@trace);
     }
-    print div({-id=>'quiki_breadcumbs'},
-              'Your path: ',
-              join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace)
-             );
+    my $breadcumbs = join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
 
-    print end_div; # end nav_bar <div>
+
+    my $theme = $self->{theme} || 'Default';
+    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl");
+    $template->param(WIKINAME => $self->{name},
+                     USERNAME => ($self->{session}->param('authenticated')?
+                                  $self->{session}->param('username'):"guest"),
+                     WIKINODE => $node,
+                     WIKISCRIPT => $self->{SCRIPT_NAME},
+                     MAINNODE => $self->{index},
+                     BREADCUMBS => $breadcumbs);
+
+
+    $template->output(print_to => \*STDOUT);
 
     # Treat boxes.
     print $self->_profile_box()  if $action eq 'profile_page';
