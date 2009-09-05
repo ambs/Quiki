@@ -102,10 +102,20 @@ Quiki::Users - Quiki pages manager
 
   use Quiki::Pages;
 
-  # authenticate user
-  my $contents = Quiki::Pages -> load($node);
+  # lock a node
+  Quiki::Pages->lock($node, $self->{sid});
 
-  Quiki::Pages -> save($node, $contents);
+  # unlock a node
+  Quiki::Pages->unlock($node);
+
+  # verify lock status
+  $locked = Quiki::Pages->locked($node, $self->{sid}))
+
+  # check in new content
+  Quiki::Pages->check_in($self, $node, $content);
+
+  # retrieve content
+  $content = Quiki::Pages->check_out($self,$node,$rev);
 
 =head1 DESCRIPTION
 
