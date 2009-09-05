@@ -38,31 +38,6 @@ sub lock {
     close LOCK;
 }
 
-sub save {
-    my ($class, $node, $contents) = @_;
-
-    my $file = "data/content/$node";
-
-    if (-f $file) {
-        ## XXX Save previous version
-    }
-
-    #if (defined($contents)) {
-    open O, "> $file" or die $!;
-    print O $contents;
-    close O;
-    #}
-    #else {
-    #    unlink "data/contents/$node"
-    #}
-
-}
-
-sub load {
-    my ($class, $node) = @_;
-    return slurp "data/content/$node";
-}
-
 sub check_in {
     my ($class, $Quiki, $node, $contents) = @_;
 
@@ -125,7 +100,7 @@ Quiki::Users - Quiki pages manager
 
 =head1 SYNOPSIS
 
-  use Quiki::Users;
+  use Quiki::Pages;
 
   # authenticate user
   my $contents = Quiki::Pages -> load($node);
@@ -134,23 +109,36 @@ Quiki::Users - Quiki pages manager
 
 =head1 DESCRIPTION
 
-Handles Quiki pages
-
-=head2 load
-
-=head2 save
+This module is handles the needed operations to maintain the pages
+information. It is used to gain and free locks to edit pages, and 
+implements a simple revision system for page's content.
 
 =head2 lock
 
+This function is used to gain a lock to edit a given page.
+
 =head2 unlock
+
+This function is used to free a lock to edit a given page.
 
 =head2 locked
 
+This function is used to verify if exists lock to a given page.
+
 =head2 check_in
+
+This function is used to update new content to a page. It creates
+a diff file and increments the revision number.
 
 =head2 check_out
 
+This function returns the content for a given page and revision
+number.
+
 =head2 calc_diff
+
+This function calculates the diff between any two given revisions for
+a page.
 
 =head1 SEE ALSO
 
