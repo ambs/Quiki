@@ -590,6 +590,40 @@ put the content at the center, with spaces both sides, to get center alignment: 
 
 =back
 
+=head1 QUIKI DEPLOYMENT
+
+=over 4
+
+=item 1
+
+Install the Quiki Perl module
+
+    $ cpan Quiki
+
+=item 2
+
+Use the quiki_create Perl script
+
+    $ mkdir /home/quiki
+    $ quiki_create /var/www/html/myquiki
+
+=item 3
+
+Configure your Apache accordingly.
+
+Sample VirtualHost for Apache2:
+
+      <VirtualHost *:80>
+         ServerName quiki.server.com
+         DocumentRoot /home/quiki/
+         ServerAdmin admin@quiki.server.com
+         DirectoryIndex index.html
+       
+         <Directory /home/quiki>
+            Options +ExecCGI
+            AddHandler cgi-script .cgi
+         </Directory>
+      </VirtualHost>
 
 =head1 AUTHOR
 
