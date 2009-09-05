@@ -41,12 +41,18 @@ Quiki::Meta - Quiki meta information handler
 
 =head1 DESCRIPTION
 
-Handles saving and retriving meta information for quiki nodes.
-Updates meta information for a given node.
+Handles saving and retriving meta information for quiki nodes. Meta
+information is stored in simple text files and uses the YAML format.
 
 =head2 set
 
+This function updates the meta information in the file for a given page.
+It uses the meta information in the current Quicki object.
+
 =head2 get
+
+This function retrives the meta information from the file for a given
+node.
 
 =head1 SEE ALSO
 
