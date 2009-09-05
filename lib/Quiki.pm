@@ -461,9 +461,145 @@ sub _login_box {
 }
 
 
+=head1 SYNTAX
+
+Quiki wiki syntax is very similar to other wiki, and especially
+similar with dokuwiki syntax.
+
+=over 4
+
+=item *
+
+To force a paragraph give a blank line;
+
+=item *
+
+To refer to another node use: C<[[NodeName]]> or C<[[NodeName|Node Description]]>;
+
+=item *
+
+To link the Internet use just the URL and it should be highlighted
+
+=item *
+
+You can also create named links with: C<[[URL|URL Description]]>
+
+=item * Basic formatting:
+
+=over 4
+
+=item *
+
+Bolds: C<**bold**>;
+
+=item *
+
+Italics: C<//italic//>;
+
+=item *
+
+Underlines: C<__underline__>;
+
+=item *
+
+Typewriter: C<< ''typewriter'' >>;
+
+=back
+
+=item *
+
+Six levels of headings:
+
+=over 4
+
+=item *
+
+Stronger: C<====== title ======>
+
+=item *
+
+Weaker: C<= title =>
+
+=back
+
+=item *
+
+Hard rules are obtained with ten or more dashes: C<--------------->
+
+=item *
+
+Code/verbatim zones are blocks with all lines indented three spaces.
+
+=item * Lists:
+
+=over 4
+
+=item *
+
+Ordered lists as a dash C<->
+
+=item *
+
+Unordered lists as an asterisk C<*>
+
+=item *
+
+Each item with two spaces before the mark
+
+=item *
+
+Deeper levels have multiples of two spaces indentation
+
+=back
+
+=item *
+
+Tables:
+
+=over 4
+
+=item *
+
+Table headers separated by a carret character ^. Note that no space should exist in the beginning of the line.
+
+=item *
+
+Table rows separated by a pipe character |. Note that no space should exist in the beginning of the line.
+
+=item *
+
+Each cell (not header) will be formatted accordingly with the ascii alignment:
+
+=over 4
+
+=item *
+
+put the content at the left without spaces, to get left alignment: C<< |foo | >>
+
+=item *
+
+put the content at the right without spaces, to get right alignment: C<< | foo| >>
+
+=item *
+
+put the content at the center, with spaces both sides, to get center alignment: C<< | foo | >>
+
+=back
+
+=back
+
+=back
+
+
 =head1 AUTHOR
 
-Alberto Simoes and Nuno Carvalho, C<< <ambs at cpan.org and smash@cpan.org> >>
+=over 4
+
+=item * Alberto Simoes, C<< <ambs at cpan.org> >>
+
+=item * Nuno Carvalho, C<< <smash at cpan.org >>
+
+=back
 
 =head1 BUGS
 
