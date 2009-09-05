@@ -10,7 +10,7 @@ open T, "script/quiki_create.template" or die $!;
 while(<T>) { print $_ }
 close T;
 
-open L, "Site.lst" or die;
+open L, "site.lst" or die;
 while(<L>) {
     chomp;
     next unless $_;
@@ -27,11 +27,11 @@ while(<L>) {
     if ($props{binary}) {
         local $/;
         undef $/;
-        open I, "Site/".$name or die $!;
+        open I, "site/".$name or die $!;
         print encode_base64(<I>);
         close I;
     } else {
-        open I, "Site/".$name or die $!;
+        open I, "site/".$name or die $!;
         while(<I>) { print $_ };
         print "\n"; # just in case
         close I;
