@@ -198,7 +198,7 @@ sub run {
     }
 
     my $theme = $self->{theme} || 'Default';
-    my $template = HTML::Template::Pro->new(filename => "Themes/$theme/header.tmpl",
+    my $template = HTML::Template::Pro->new(filename => "themes/$theme/header.tmpl",
                                             case_sensitive => 1);
     $template->param(WIKINAME    => $self->{name},
                      USERNAME    => ($self->{session}->param('authenticated')?
