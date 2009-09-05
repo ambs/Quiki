@@ -115,17 +115,27 @@ Quiki::Users - Quiki users manager
 
 =head1 DESCRIPTION
 
-Handles Quiki users and permissions.
+Handles Quiki users management and permissions.
 
 =head2 auth
 
+This function verifies an user credentials given an username and a password.
+
 =head2 exists
+
+This function verifies if a username already exists.
 
 =head2 create
 
+This function creates a new user given an username and an e-mail address.
+
 =head2 email
 
+This function retrieves the e-mail address for a given username.
+
 =head2 update
+
+This function is used to update user's information.
 
 =head1 SEE ALSO
 
