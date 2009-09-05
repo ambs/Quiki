@@ -16,6 +16,6 @@ js/jquery.textarearesizer.js       replace
 quiki.cgi                          replace
 quiki.conf
 css/textarea.css                   replace
-Themes/Default/header.tmpl         replace
+themes/default/header.tmpl         replace
 
 
