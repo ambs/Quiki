@@ -61,6 +61,8 @@ sub new {
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
     $self->{SERVER_NAME} = $ENV{SERVER_NAME};
+    $self->{DOCROOT} = $self->{SERVER_NAME} . "/" . $ENV{SCRIPT_NAME};
+    $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
     return bless $self, $class;
 }
@@ -213,7 +215,7 @@ sub run {
                      LAST_REV    => (($self->{rev} || 0) == ($self->{meta}{rev} || 0)),
                      REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
-                     DOCROOT     => "./",
+                     DOCROOT     => $self->{DOCROOT},
                      PREVIEW     => $preview,
                      GRAVATAR    => gravatar_url(email => $self->{session}->param('email')),
                     );
