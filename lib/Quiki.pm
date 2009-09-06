@@ -210,7 +210,7 @@ sub run {
                      MAINNODE    => $self->{index},
                      ACTION      => $action,
                      AUTHENTICATED => $self->{session}->param('authenticated'),
-                     LAST_REV    => (($self->{rev} || 0) == ($self->{meta}{rev} || 0),
+                     LAST_REV    => (($self->{rev} || 0) == ($self->{meta}{rev} || 0)),
                      REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => "./",
