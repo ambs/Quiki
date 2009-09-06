@@ -28,6 +28,7 @@ site/js/jquery.js
 site/quiki.cgi
 site/quiki.conf
 site/css/textarea.css
+site/css/default_theme.css
 site/images/grippie.png
 site/js/jquery.textarearesizer.js
 site/themes/default/header.tmpl
@@ -40,6 +41,7 @@ site/themes/default/nav_bar.tmpl
 site/themes/default/profile_page.tmpl
 site/themes/default/register_page.tmpl
 site/themes/default/wrapper.tmpl
+site/themes/default/meta.tmpl
 lib/Quiki/Meta.pm
 lib/Quiki/Users.pm
 lib/Quiki/Pages.pm

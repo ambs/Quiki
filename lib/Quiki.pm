@@ -255,12 +255,13 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-		my $META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in} <> Revision: $self->{meta}{rev} <> Older: ";
+		my $L_META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}";
+
+		my $R_META = "Revision: $self->{meta}{rev} <> Older: ";
 
         if ($self->{meta}{rev}) {
-            print "REVISION: $self->{meta}{rev} (";
             for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-                $META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
+                $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
         }
         #print ")", 
@@ -276,7 +277,8 @@ sub run {
 		#  end_form,
 		#	end_div; # end quiki_meta <div>
 
-		$template->param(META=>$META);
+		$template->param(L_META=>$L_META);
+		$template->param(R_META=>$R_META);
     }
 
 	if ($self->{session}->param('msg')) {
