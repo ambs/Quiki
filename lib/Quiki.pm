@@ -61,7 +61,9 @@ sub new {
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
     $self->{SERVER_NAME} = $ENV{SERVER_NAME};
-    $self->{DOCROOT} = $self->{SERVER_NAME} . "/" . $ENV{SCRIPT_NAME};
+    my $protocol = "http://";
+    # XXX Support https?
+    $self->{DOCROOT} = $protocol . $self->{SERVER_NAME} . $ENV{SCRIPT_NAME};
     $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
     return bless $self, $class;
