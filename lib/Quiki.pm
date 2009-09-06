@@ -239,11 +239,11 @@ sub run {
         #closedir(DIR);
     #}
     elsif ($action eq 'diff') {
-		my $target = param('target') || 0;
-		$template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$self->{rev},$target));
-	}
+        my $target = param('target') || 0;
+        $template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$self->{rev},$target));
+    }
     else {
-		$template->param(CONTENT=>Quiki::Formatter::format($self, $content));
+        $template->param(CONTENT=>Quiki::Formatter::format($self, $content));
     }
 
 
@@ -255,9 +255,8 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-		my $L_META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}";
-
-		my $R_META = "Revision: $self->{meta}{rev} <> Older: ";
+        my $L_META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}";
+        my $R_META = "Revision: $self->{meta}{rev} <> Older: ";
 
         if ($self->{meta}{rev}) {
             for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
@@ -265,26 +264,25 @@ sub run {
             }
         }
         #print ")", 
-		#  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
-		#	hidden(-name => 'node', -value => $node, -override => 1),
-		#	  hidden(-name => 'action', -value => 'diff', -override => 1),
-		#		submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
-		#		  "<select name='target'>";
-		#for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-		#	 print "<option value='$i'>revision $i</option>";
-		#}
-		#print "</select>",
-		#  end_form,
-		#	end_div; # end quiki_meta <div>
-
-		$template->param(L_META=>$L_META);
-		$template->param(R_META=>$R_META);
+        #  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
+        #	hidden(-name => 'node', -value => $node, -override => 1),
+        #	  hidden(-name => 'action', -value => 'diff', -override => 1),
+        #		submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
+        #		  "<select name='target'>";
+        #for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+        #	 print "<option value='$i'>revision $i</option>";
+        #}
+        #print "</select>",
+        #  end_form,
+        #	end_div; # end quiki_meta <div>
+        $template->param(L_META=>$L_META);
+        $template->param(R_META=>$R_META);
     }
 
-	if ($self->{session}->param('msg')) {
-		$template->param(MSG=>$self->{session}->param('msg'));
-		$self->{session}->param('msg','');
-	}
+    if ($self->{session}->param('msg')) {
+        $template->param(MSG=>$self->{session}->param('msg'));
+        $self->{session}->param('msg','');
+    }
 
     $template->output(print_to => \*STDOUT);
 }
