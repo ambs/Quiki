@@ -202,12 +202,14 @@ sub run {
         Quiki::Pages->unlock($node);
     }
 
+    my $username = ($self->{session}->param('authenticated')?
+                    $self->{session}->param('username'):"guest");
+    my $email    = Quiki::Users->email($username);
     my $theme = $self->{theme} || 'default';
     my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl",
                                             case_sensitive => 1);
     $template->param(WIKINAME    => $self->{name},
-                     USERNAME    => ($self->{session}->param('authenticated')?
-                                     $self->{session}->param('username'):"guest"),
+                     USERNAME    => $username,
                      WIKINODE    => $node,
                      WIKISCRIPT  => $self->{SCRIPT_NAME},
                      MAINNODE    => $self->{index},
@@ -218,8 +220,8 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
                      PREVIEW     => $preview,
-                     EMAIL       => Quiki::Users->email($username),
-                     GRAVATAR    => gravatar_url(email => Quiki::Users->email($username))
+                     EMAIL       => $email,
+                     GRAVATAR    => gravatar_url(email => $email),
                     );
 
     if ($action eq 'edit' && 
@@ -526,3 +528,4 @@ See http://dev.perl.org/licenses/ for more information.
 =cut
 
 42; # End of Quiki
+
