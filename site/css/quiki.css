@@ -57,6 +57,14 @@
   color: #999999;
 }
 
+.quiki_meta_left { 
+  float: left;
+}
+
+.quiki_meta_right {
+  float: right;
+}
+
 #quiki_name { 
   float: right;
   font-weight: bold;
@@ -110,3 +118,4 @@
 
 #floatbox-closebt a { color: #999999; text-decoration: none; }
 #floatbox-closebt a:hover { color: #990000; }
+
