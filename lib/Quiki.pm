@@ -210,6 +210,7 @@ sub run {
                      PROFILEBOX  => ($action eq 'profile_page')?$self->_profile_box():"",
                      LOGINBOX    => ($action eq 'login_page') ? _login_box():"",
                      REGISTERBOX => ($action eq 'register_page') ? _register_box():"",
+                     DOCROOT     => "../",
                     );
     $template->output(print_to => \*STDOUT);
 
