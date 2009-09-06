@@ -605,7 +605,7 @@ Install the Quiki Perl module
 
 Use the quiki_create Perl script
 
-    $ mkdir /home/quiki
+    $ mkdir /var/www/html/myquiki
     $ quiki_create /var/www/html/myquiki
 
 =item 3
@@ -616,11 +616,11 @@ Sample VirtualHost for Apache2:
 
       <VirtualHost *:80>
          ServerName quiki.server.com
-         DocumentRoot /home/quiki/
+         DocumentRoot /var/www/html/myquiki
          ServerAdmin admin@quiki.server.com
          DirectoryIndex index.html
        
-         <Directory /home/quiki>
+         <Directory /var/www/html/myquiki>
             Options +ExecCGI
             AddHandler cgi-script .cgi
          </Directory>
