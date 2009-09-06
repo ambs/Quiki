@@ -10,6 +10,7 @@ use Quiki::Pages;
 use CGI qw/:standard *div/;
 use CGI::Session;
 use HTML::Template::Pro;
+use Gravatar::URL;
 
 use warnings;
 use strict;
@@ -95,7 +96,7 @@ sub run {
     # XXX
     if ($action eq 'register' && param('submit') eq "Register") {
         my $username = param('username') || '';
-        my $email    = param('email') || '';
+        my $email    = param('email')    || '';
         if ($username and $email and $email =~ m/\@/) { # XXX -- fix regexp :D
             if (Quiki::Users->exists($username)) {
                 $self->{session}->param('msg',
@@ -120,7 +121,8 @@ sub run {
         if ($username and $password and Quiki::Users->auth($username,$password)) {
             $self->{session}->param('authenticated',1) and
               $self->{session}->param('username',$username) and
-                $self->{session}->param('msg',"Login successfull! Welcome $username!");
+                $self->{session}->param('email', Quiki::Users->email($username)) and
+                  $self->{session}->param('msg',"Login successfull! Welcome $username!");
         }
         else {
             $self->{session}->param('msg',"Login failed!");
@@ -213,6 +215,7 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => "./",
                      PREVIEW     => $preview,
+                     GRAVATAR    => gravatar_url(email => $self->{session}->param('email')),
                     );
 
 
