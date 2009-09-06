@@ -2,26 +2,27 @@ package Quiki::Meta;
 
 use feature ':5.10';
 
+use File::Slurp 'slurp';
 use YAML::Any;
 
 sub get {
-	my $node = shift;
+    my $node = shift;
 
     unless (-f "data/meta/$node") {
         my $meta = {'last_update_by'=>'_','last_updated_in'=>'_','rev'=>0};
         set($node, $meta);
     }
 
-	my $file = `cat data/meta/$node`;
-	Load $file;
+    my $file = slurp "data/meta/$node";
+    Load $file;
 }
 
 sub set {
-	my ($node, $meta) = @_;
+    my ($node, $meta) = @_;
 
-	open(F, ">data/meta/$node") or die $!;
-	print F Dump($meta);
-	close(F);
+    open(F, ">data/meta/$node") or die $!;
+    print F Dump($meta);
+    close(F);
 }
 
 
