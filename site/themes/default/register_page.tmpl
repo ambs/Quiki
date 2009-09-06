@@ -1,0 +1,19 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.floatbox({ content: "<div class=\"floatbox_head\">Register</div><div class=\"floatbox_body\"><form method=\"post\" action=\"/quiki.smash/quiki.cgi\" enctype=\"multipart/form-data\">  <table style=\"margin-left: auto; margin-right: auto\"><tr><td>Username: </td> <td><input type=\"text\" name=\"username\"  /></td></tr> <tr><td>E-mail: </td> <td><input type=\"text\" name=\"email\"  /></td></tr></table> <br /> <br /> <input type=\"hidden\" name=\"action\" value=\"register\"  /> <input type=\"submit\" name=\"submit\" value=\"Cancel\" /> &nbsp;&nbsp; <input type=\"submit\" name=\"submit\" value=\"Register\" /> </form></div>" });
+	});</script>
+<noscript>
+	<div class="floatbox_head">Register</div>
+	<div class="floatbox_body">
+		<form method="post" action="/quiki.smash/quiki.cgi" enctype="multipart/form-data">
+		<table style="margin-left: auto; margin-right: auto">
+			<tr><td>Username: </td><td><input type="text" name="username" /></td></tr>
+			<tr><td>E-mail: </td> <td><input type="text" name="email" /></td></tr>
+		</table>
+		<br /><br /><input type="hidden" name="action" value="register" />
+		<input type="submit" name="submit" value="Cancel" />
+		&nbsp;&nbsp;
+		<input type="submit" name="submit" value="Register" />
+		</form>
+	</div>
+</noscript>

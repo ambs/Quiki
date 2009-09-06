@@ -1,0 +1,74 @@
+<!-- MENU BAR AT THE BOTTOM -->
+<div class="quiki_menu_bar">
+	<div class="quiki_menu_bar_left">
+		<TMPL_IF EXPR="ACTION eq 'edit'">
+			<input type="submit" name="submit" value="Cancel" />
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<input type="submit" name="submit" value="Preview" />
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<input type="submit" name="submit" value="Save" />
+			</form>
+		<TMPL_ELSE>
+			<TMPL_IF NAME="AUTHENTICATED">
+				<TMPL_IF NAME="LAST_REV">
+					<form method="post" enctype="multipart/form-data">
+					<input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+					<input type="hidden" name="action" value="edit" />
+					<input type="submit" name="submit" value="Edit this page" />
+					</form>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+					<form method="post" enctype="multipart/form-data">
+					<input type="submit" name="submit" value="Create new page" />
+					&nbsp;
+					<input type="text" name="node" value="&lt;name&gt;" size="8" />
+					<input type="hidden" name="action" value="create" />
+					</form>
+				<TMPL_ELSE>
+					<form method="post" enctype="multipart/form-data">
+					<input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+					<input type="hidden" name="action" value="rollback" />
+					<input type="hidden" name="rev" value="<TMPL_VAR REV>" />
+					<input type="submit" name="submit" value="Rollback to this version" />
+					</form>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+					<form method="post" enctype="multipart/form-data">
+					<input type="submit" name="submit" value="Create new page" />
+					&nbsp;
+					<input type="text" name="node" value="&lt;name&gt;" size="8" />
+					<input type="hidden" name="action" value="create" />
+					</form>
+				</TMPL_IF>
+			</TMPL_IF>
+		</TMPL_IF>
+	</div>
+	<div class="quiki_menu_bar_right">
+		<form method="post" enctype="multipart/form-data">
+		<input type="hidden" name="action" value="index" />
+		<input type="submit" name="submit" value="Index" />
+		</form>
+		&nbsp;&nbsp;|&nbsp;&nbsp;
+		<TMPL_IF NAME="AUTHENTICATED">
+			<form method="post" enctype="multipart/form-data">
+			<input type="submit" name="submit" value="Edit Profile" />
+			<input type="hidden" name="action" value="profile_page" />
+			</form>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<form method="post" enctype="multipart/form-data">
+			<input type="submit" name="submit" value="Log out" />
+			<input type="hidden" name="action" value="logout" />
+			</form>
+		<TMPL_ELSE>
+			<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="action" value="register_page"  />
+			<input type="submit" name="submit" value="Sign up" />
+			</form>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<form method="post" enctype="multipart/form-data">
+			<input type="submit" name="submit" value="Log in" />
+			<input type="hidden" name="node" value="index"  />
+			<input type="hidden" name="action" value="login_page"  />
+			</form>
+		</TMPL_IF>
+	</div>
+<div style="clear: both;"></div>
+</div>

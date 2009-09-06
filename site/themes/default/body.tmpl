@@ -1,0 +1,38 @@
+<tmpl_include name='nav_bar.tmpl'>
+
+<tmpl_if name='MSG'>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.gritter.add({
+				title: 'Info!',
+				text: '<tmpl_var MSG>',
+			});
+		});
+	</script>
+	<noscript>
+		<b>Info! <tmpl_var MSG></b>
+	</noscript>
+</tmpl_if>
+
+<tmpl_if expr="ACTION eq 'login_page'">
+	<tmpl_include name='login_page.tmpl'>
+<tmpl_elsif expr="ACTION eq 'register_page'">
+	<tmpl_include name='register_page.tmpl'>
+<tmpl_elsif expr="ACTION eq 'profile_page'">
+	<tmpl_include name='profile_page.tmpl'>
+</tmpl_if>
+
+<tmpl_if expr="ACTION eq 'diff'">
+	<pre><tmpl_var CONTENT></pre>
+<tmpl_elsif expr="ACTION eq 'edit'">
+	<tmpl_include name='edit.tmpl'>
+<tmpl_else>
+	<div class="quiki_body">
+		<tmpl_var CONTENT>
+	</div>
+	<div class="quiki_meta">
+		<tmpl_var META>
+	</div>
+</tmpl_if>
+
+<tmpl_include name='menu_bar.tmpl'>

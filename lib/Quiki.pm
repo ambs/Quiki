@@ -198,7 +198,7 @@ sub run {
     }
 
     my $theme = $self->{theme} || 'default';
-    my $template = HTML::Template::Pro->new(filename => "themes/$theme/header.tmpl",
+    my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl",
                                             case_sensitive => 1);
     $template->param(WIKINAME    => $self->{name},
                      USERNAME    => ($self->{session}->param('authenticated')?
@@ -206,62 +206,46 @@ sub run {
                      WIKINODE    => $node,
                      WIKISCRIPT  => $self->{SCRIPT_NAME},
                      MAINNODE    => $self->{index},
+                     ACTION      => $action,
+                     AUTHENTICATED => $self->{session}->param('authenticated'),
+                     LAST_REV    => ($self->{rev} == $self->{meta}{rev}),
+                     REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
-                     PROFILEBOX  => ($action eq 'profile_page')?$self->_profile_box():"",
-                     LOGINBOX    => ($action eq 'login_page') ? _login_box():"",
-                     REGISTERBOX => ($action eq 'register_page') ? _register_box():"",
-                     DOCROOT     => "../",
+                     DOCROOT     => "./",
+                     PREVIEW     => $preview,
                     );
-    $template->output(print_to => \*STDOUT);
 
 
     if ($action eq 'edit' && 
         ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
         if ($preview) {
             my $text = param('text') // '';
-            print start_div({-class=>"quiki_preview"}),
-              h4('Preview'),
-                hr,
-                  Quiki::Formatter::format($self, $text),
-                      hr,
-                        end_div; # end quicki_preview <div>
+			$template->param(CONTENT=>Quiki::Formatter::format($self, $text));
         }
         else {
             Quiki::Pages->lock($node, $self->{sid});
         }
 
-        print script({-type=>'text/javascript'},
-                     q!$(document).ready(function() { $('textarea.resizable:not(.processed)').TextAreaResizer(); });!);
-        print start_form(-method=>'post'),
-          textarea(-name => 'text',
-                   -default => $content,
-                   -class => 'resizable',
-                   -rows => 30, -columns => 80),
-                     hidden(-name => 'node', -value => $node, -override => 1),
-                       hidden(-name => 'action', -value => 'save', -override => 10);
-        #submit('submit', 'save'),
-        #end_form;
+		$template->param(TEXT=>$content);
     }
-    elsif ($action eq 'index') {
-        opendir(DIR,'data/content/');
-        my @pages = sort readdir(DIR);
-        for my $f (@pages) {
-            unless ($f=~/^\./) {
-                print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
-            }
-        }
-        closedir(DIR);
-    }
+    #elsif ($action eq 'index') {
+        #opendir(DIR,'data/content/');
+        #my @pages = sort readdir(DIR);
+        #for my $f (@pages) {
+            #unless ($f=~/^\./) {
+                #print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
+            #}
+        #}
+        #closedir(DIR);
+    #}
     elsif ($action eq 'diff') {
 		my $target = param('target') || 0;
-		$content = Quiki::Pages->calc_diff($self,$node,$self->{rev},$target);
-		print "<pre>",
-			$content,
-				"</pre>";
+		$template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$self->{rev},$target));
 	}
     else {
-        print Quiki::Formatter::format($self, $content);
+		$template->param(CONTENT=>Quiki::Formatter::format($self, $content));
     }
+
 
     # handle meta data
     if ($action eq 'save' or $action eq 'rollback') {
@@ -271,196 +255,37 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-        print div({-class=>"quiki_meta"}),
-          "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}",
-            br;
+		my $META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in} <> Revision: $self->{meta}{rev} <> Older: ";
 
         if ($self->{meta}{rev}) {
             print "REVISION: $self->{meta}{rev} (";
             for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-                print a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i), ' ';
+                $META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
         }
-        print ")", 
-		  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
-			hidden(-name => 'node', -value => $node, -override => 1),
-			  hidden(-name => 'action', -value => 'diff', -override => 1),
-				submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
-				  "<select name='target'>";
-		for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-			print "<option value='$i'>revision $i</option>";
-		}
-		print "</select>",
-		  end_form,
-			end_div; # end quiki_meta <div>
+        #print ")", 
+		#  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
+		#	hidden(-name => 'node', -value => $node, -override => 1),
+		#	  hidden(-name => 'action', -value => 'diff', -override => 1),
+		#		submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
+		#		  "<select name='target'>";
+		#for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+		#	 print "<option value='$i'>revision $i</option>";
+		#}
+		#print "</select>",
+		#  end_form,
+		#	end_div; # end quiki_meta <div>
+
+		$template->param(META=>$META);
     }
 
-    print end_div; # end quiki_body <div>
+	if ($self->{session}->param('msg')) {
+		$template->param(MSG=>$self->{session}->param('msg'));
+		$self->{session}->param('msg','');
+	}
 
-
-    $self->_render_menu_bar($node, $action);
-
-    print end_html;
+    $template->output(print_to => \*STDOUT);
 }
-
-sub _show_msg {
-    my ($self, $string) = @_;
-print<<"HTML";
-<script type="text/javascript">
-    \$(document).ready(function(){
-            \$.gritter.add({
-                title: 'Info!',
-                text: '$string',
-            });
-    });
-</script>
-<noscript><b>Info! $string</b></noscript>
-HTML
-}
-
-sub _render_menu_bar {
-    my ($self, $node, $action) = @_;
-
-    print( start_div({-class=>"quiki_menu_bar"}),
-           start_div({-class=>"quiki_menu_bar_left"}));
-
-    given ($action) {
-        when (!/edit/) {
-            if ($self->{session}->param('authenticated')) {
-                print start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
-                  hidden('node',$node);
-                if ($self->{rev} == $self->{meta}{rev}) {
-                    print hidden(-name => 'action', -value => 'edit', -override => 1),
-					  submit(-name => 'submit', -value => 'Edit this page', -override => 1);
-                }
-                else {
-                    print hidden(-name => 'action', -value => 'rollback', -override => 1),
-					  hidden(-name => 'rev', -value => $self->{rev}, -override => 1),
-						submit(-name => 'submit', -value => 'Rollback to this version', -override => 1);
-                }
-                print end_form;
-                print '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                print start_form(-method=>'post'),
-                  submit('submit', 'Create new page'),
-                    '&nbsp;',
-                      textfield(-name=>'node', -value=>'<name>', -size=>8, -override => 1),
-                        hidden(-name => 'action', -value => 'create', -override => 1),
-                          end_form;
-            }
-        }
-
-        when (/edit/) {
-            print submit(-name => 'submit', -value => 'Cancel', -override => 1),
-              '&nbsp;&nbsp;|&nbsp;&nbsp;',
-                submit(-name => 'submit', -value => 'Preview', -override => 1),
-                  '&nbsp;&nbsp;|&nbsp;&nbsp;',
-                    submit(-name => 'submit', -value => 'Save', -override => 1),
-                      end_form;
-        }
-    }
-    print( end_div,  # end menu_bar_left <div>
-           start_div({-class=>"quiki_menu_bar_right"}));
-
-    ## Index button
-    print start_form(-method=>'post'),
-      hidden(-name => 'action', -value => 'index', -override => 1),
-        submit(-name => 'submit', -value => 'Index', -override => 1),
-          end_form,
-            "&nbsp;&nbsp;|&nbsp;&nbsp;";
-
-    ## Login+Sigup/Profile+Logout buttons
-    if ($self->{session}->param('authenticated')) {
-        print start_form(-method=>'post'),
-          submit('submit', 'Edit Profile'),
-            hidden(-name => 'action', -value => 'profile_page', -override => 1),
-              end_form;
-        print "&nbsp;&nbsp;|&nbsp;&nbsp;";
-        print start_form(-method=>'post'),
-          submit('submit', 'Log out'),
-            hidden(-name => 'action', -value => 'logout', -override => 1),
-              end_form;
-    }
-    else {
-        print start_form(-method=>'post'),
-          hidden(-name => 'action', -value => 'register_page', -override => 1),
-            submit('submit', 'Sign up'),
-              end_form;
-        print "&nbsp;&nbsp;|&nbsp;&nbsp;";
-        print start_form(-method=>'post'),
-          submit('submit', 'Log in'),
-            hidden(-name => 'node', -value => $node, -override => 1),
-              hidden(-name => 'action', -value => 'login_page', -override => 1),
-                end_form;
-    }
-
-
-    print end_div, # end menu_bar_right <div>
-      start_div({-style=>'clear: both;'}),
-        end_div. # end empty <div>
-          end_div; # end menu_bar <div>
-}
-
-sub _float_box {
-    my $html = shift;
-    my $noscript = noscript($html);
-    $html =~ s/"/\\"/g;
-    $html =~ s/\n/ /g;
-    return script({-type=>"text/javascript"},
-                  "\$(document).ready(function(){ \$.floatbox({ content: \"$html\" }); });") .
-                    $noscript;
-}
-
-sub _profile_box {
-    my $self = shift;
-    my $box =  div({-class => 'floatbox_head'}, "Edit Profile");
-    $box .= div({-class => 'floatbox_body'},
-                start_form({-method => "post"}),
-                table({-style=>"margin-left: auto; margin-right: auto"},
-                      Tr(td({-style=>"text-align: right"}, "E-mail: "),
-                         td(textfield(-name => "email",
-                                      -value => Quiki::Users->email($self->{session}->param("username"))))),
-                      Tr(td({-style=>"text-align: right"}, "New Password: "),
-                         td(password_field(-name => "new_password1"))),
-                      Tr(td(["Retype Password: ",
-                             password_field(-name => "new_password2")]))),
-                br, br,
-                hidden(-name=>'action', -value => 'save_profile', -override => 1),
-                submit(-name=>'submit', -value => 'Cancel'),
-                "&nbsp;&nbsp;",
-                submit(-name=>'submit', -value => 'Save Profile'),
-                end_form());
-    return _float_box($box);
-
-}
-
-sub _register_box {
-    my $box = div({-class => 'floatbox_head'}, "Register");
-    $box .= div({-class => 'floatbox_body'},
-                start_form({-method => "post"}),
-                table({-style=>"margin-left: auto; margin-right: auto"},
-                      Tr(td(["Username: ", textfield(-name => "username")])),
-                      Tr(td(["E-mail: ", textfield(-name => "email")]))), br, br,
-                hidden(-name=>'action', -value=>'register', -override => 1),
-                submit(-name=>'submit', -value => 'Cancel'),
-                "&nbsp;&nbsp;",
-                submit(-name=>'submit', -value=>'Register'),
-                end_form());
-    return _float_box($box);
-}
-
-sub _login_box {
-    my $box = div({-class => 'floatbox_head'}, "Log in");
-    $box .= div({-class => 'floatbox_body'},
-                start_form({-method => "post"}),
-                table({-style=>"margin-left: auto; margin-right: auto"},
-                      Tr(td(["Username: ", textfield(-name => "username")])),
-                      Tr(td(["Password: ", password_field(-name => "password")]))), br, br,
-                hidden(-name=>'action', -value=>'login', -override => 1),
-                submit(-name=>'submit', -value=>'Log in'),
-                end_form());
-    return _float_box($box);
-}
-
 
 =head1 SYNTAX
 

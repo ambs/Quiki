@@ -17,5 +17,14 @@ quiki.cgi                          replace
 quiki.conf
 css/textarea.css                   replace
 themes/default/header.tmpl         replace
+themes/default/body.tmpl           replace
+themes/default/edit.tmpl           replace
+themes/default/login_page.tmpl     replace
+themes/default/main.tmpl           replace
+themes/default/menu_bar.tmpl       replace
+themes/default/nav_bar.tmpl        replace
+themes/default/profile_page.tmpl   replace
+themes/default/register_page.tmpl  replace
+themes/default/wrapper.tmpl         replace
 
 
