@@ -219,6 +219,7 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
                      PREVIEW     => $preview,
+                     EMAIL       => $self->{session}->param('email'),
                      GRAVATAR    => gravatar_url(email => $self->{session}->param('email')),
                     );
 
