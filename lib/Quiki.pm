@@ -272,8 +272,8 @@ sub run {
         my $R_META = sprintf("Revision: %s <> Older: ",
                              $self->{meta}{rev} || "");
 
-        if ($self->{meta}{rev}) {
-            for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+        if ($self->{meta}{rev} > 1) {
+            for my $i ( $self->{meta}{rev} - 1 .. 0) {
                 $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
         }
