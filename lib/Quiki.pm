@@ -273,7 +273,7 @@ sub run {
                              $self->{meta}{rev} || "");
 
         if ($self->{meta}{rev} > 1) {
-            for my $i ( $self->{meta}{rev} - 1 .. 0) {
+            for my $i ( $self->{meta}{rev} - 1 .. 0 ) {
                 $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
         }
