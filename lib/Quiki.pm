@@ -626,6 +626,8 @@ Sample VirtualHost for Apache2:
          </Directory>
       </VirtualHost>
 
+=back
+
 =head1 AUTHOR
 
 =over 4
