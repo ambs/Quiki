@@ -220,9 +220,12 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
                      PREVIEW     => $preview,
-                     EMAIL       => $email,
-                     GRAVATAR    => gravatar_url(email => $email),
                     );
+
+    if ($action eq 'profile_page') {
+        $template->param(EMAIL       => $email,
+                         GRAVATAR    => gravatar_url(email => $email));
+    }
 
     if ($action eq 'edit' && 
         ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
