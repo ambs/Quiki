@@ -44,7 +44,7 @@ sub check_in {
     # XXX nasty check, needed for diff
     $contents .= "\n" unless ($contents =~ m/\n$/);
 
-    my $rev = $Quiki->{meta}{rev};
+    my $rev = $Quiki->{meta}{rev} || 0;
 
     if ($rev > 0) {
         my $current = slurp "data/content/$node";
