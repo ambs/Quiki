@@ -39,6 +39,7 @@ site/themes/default/main.tmpl
 site/themes/default/menu_bar.tmpl
 site/themes/default/nav_bar.tmpl
 site/themes/default/profile_page.tmpl
+site/themes/default/my_profile_page.tmpl
 site/themes/default/register_page.tmpl
 site/themes/default/wrapper.tmpl
 site/themes/default/meta.tmpl

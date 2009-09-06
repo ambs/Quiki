@@ -119,3 +119,10 @@
 #floatbox-closebt a { color: #999999; text-decoration: none; }
 #floatbox-closebt a:hover { color: #990000; }
 
+#quiki_popup { 
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 25%;
+  height: 25%;
+}

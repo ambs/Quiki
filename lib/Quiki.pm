@@ -56,14 +56,15 @@ sub new {
     my %conf = (
                 name  => 'defaultName',
                 index => 'index', # index node
+                protocol => 'http', # support https?
                );
     $self = {%conf, %args};
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
     $self->{SERVER_NAME} = $ENV{SERVER_NAME};
-    my $protocol = "http://";
-    # XXX Support https?
-    $self->{DOCROOT} = $protocol . $self->{SERVER_NAME} . $ENV{SCRIPT_NAME};
+
+    $self->{DOCROOT} = sprintf("%s://%s%s",
+                               $self->{protocol}, $self->{SERVER_NAME}, $ENV{SCRIPT_NAME});
     $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
     return bless $self, $class;
@@ -205,9 +206,9 @@ sub run {
     my $username = ($self->{session}->param('authenticated')?
                     $self->{session}->param('username'):"guest");
     my $email    = Quiki::Users->email($username);
-    my $theme = $self->{theme} || 'default';
-    my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl",
-                                            case_sensitive => 1);
+    my $theme    = $self->{theme} || 'default';
+
+    my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl");
     $template->param(WIKINAME    => $self->{name},
                      USERNAME    => $username,
                      WIKINODE    => $node,
