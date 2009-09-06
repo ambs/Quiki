@@ -258,8 +258,11 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-        my $L_META = "Last edited by $self->{meta}{last_update_by}, in $self->{meta}{last_updated_in}";
-        my $R_META = "Revision: $self->{meta}{rev} <> Older: ";
+        my $L_META = sprintf("Last edited by %s, in %s",
+                             $self->{meta}{last_update_by}  || "",
+                             $self->{meta}{last_updated_in} || "");
+        my $R_META = sprintf("Revision: %s <> Older: ",
+                             $self->{meta}{rev} || "");
 
         if ($self->{meta}{rev}) {
             for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
