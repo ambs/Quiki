@@ -125,8 +125,7 @@ sub run {
         if ($username and $password and Quiki::Users->auth($username,$password)) {
             $self->{session}->param('authenticated',1) and
               $self->{session}->param('username',$username) and
-                $self->{session}->param('email', Quiki::Users->email($username)) and
-                  $self->{session}->param('msg',"Login successfull! Welcome $username!");
+                $self->{session}->param('msg',"Login successfull! Welcome $username!");
         }
         else {
             $self->{session}->param('msg',"Login failed!");
@@ -219,10 +218,9 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
                      PREVIEW     => $preview,
-                     EMAIL       => $self->{session}->param('email'),
-                     GRAVATAR    => gravatar_url(email => $self->{session}->param('email')),
+                     EMAIL       => Quiki::Users->email($username),
+                     GRAVATAR    => gravatar_url(email => Quiki::Users->email($username))
                     );
-
 
     if ($action eq 'edit' && 
         ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
@@ -234,7 +232,7 @@ sub run {
             Quiki::Pages->lock($node, $self->{sid});
         }
 
-		$template->param(TEXT=>$content);
+        $template->param(TEXT=>$content);
     }
     #elsif ($action eq 'index') {
         #opendir(DIR,'data/content/');
