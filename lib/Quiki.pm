@@ -197,7 +197,7 @@ sub run {
         Quiki::Pages->unlock($node);
     }
 
-    my $theme = $self->{theme} || 'Default';
+    my $theme = $self->{theme} || 'default';
     my $template = HTML::Template::Pro->new(filename => "themes/$theme/header.tmpl",
                                             case_sensitive => 1);
     $template->param(WIKINAME    => $self->{name},
