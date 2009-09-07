@@ -28,6 +28,7 @@ themes/default/profile_page.tmpl   replace
 themes/default/register_page.tmpl  replace
 themes/default/wrapper.tmpl        replace
 themes/default/meta.tmpl           replace
+themes/default/upload_page.tmpl    replace
 themes/default/index.tmpl          replace
 
 

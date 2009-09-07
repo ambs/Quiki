@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
   <tmpl_include name='./header.tmpl'>
     <body>
-      <tmpl_if expr="ACTION eq 'login_page' or ACTION eq 'register_page' or ACTION eq 'profile_page'">
+      <tmpl_if expr="ACTION eq 'login_page' or ACTION eq 'register_page' or ACTION eq 'profile_page' or ACTION eq 'attach'">
         <div id="modalPage">
           <div class="modalBackground">
           </div>
@@ -15,6 +15,8 @@
 	      <tmpl_include name='register_page.tmpl'>
             <tmpl_elsif expr="ACTION eq 'profile_page'">
 	      <tmpl_include name='profile_page.tmpl'>
+            <tmpl_elsif expr="ACTION eq attach'">
+	      <tmpl_include name='upload_page.tmpl'>
            </tmpl_if>
          </div>
        </div>
