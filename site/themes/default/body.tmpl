@@ -20,6 +20,8 @@
 	<pre><tmpl_var CONTENT></pre>
 <tmpl_elsif expr="ACTION eq 'edit'">
 	<tmpl_include name='edit.tmpl'>
+<tmpl_elsif expr="ACTION eq 'index'">
+	<tmpl_include name='index.tmpl'>
 <tmpl_else>
 	<div class="quiki_body">
 		<tmpl_var CONTENT>
