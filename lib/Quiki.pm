@@ -100,6 +100,32 @@ sub run {
     }
 
     # XXX
+    if ($action eq "upload") {
+        my $count = 0;
+        for (1..3) {
+            if (param("filename$_") && param("name$_")) {
+                my $id = param("name$_");
+                my $path = "data/attach/$node";
+                (! -f $path) and mkdir $path and chown 0777, $path;
+                open OUT, ">", "$path/$id" or die "Can't create out file: $!";
+                my $filename = param("filename$_");
+                my ($buffer, $bytesread);
+                while ($bytesread = read($filename, $buffer, 1024)) {
+                    print OUT $buffer
+                }
+                close OUT;
+                $count++;
+                if (param("description$_")) {
+                    open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
+                    print OUT param("description$_");
+                    close OUT;
+                }
+            }
+        }
+        $self->{session}->param('msg', "$count file(s) uploaded.");
+    }
+
+    # XXX
     if ($action eq 'register' && param('submit') eq "Register") {
         my $username = param('username') || '';
         my $email    = param('email')    || '';

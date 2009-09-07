@@ -43,7 +43,7 @@ chmod 0777, "$path/data/content";
 chmod 0777, "$path/data/content/index";
 chmod 0777, "$path/data/users.sqlite";
 
-my @dirs = qw.locks meta revs images.;
+my @dirs = qw.locks meta revs attach.;
 for my $d (@dirs) {
     (!-d "$path/data/$d")  and mkdir "$path/data/$d";
     chmod 0777, "$path/data/$d";

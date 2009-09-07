@@ -18,7 +18,6 @@ function updateField(filefield, number) {
     if (! name.value && filefield.value) {
         var temp = filefield.value;
         temp = temp.replace(/.*[\\\/]/, "");
-        temp = temp.replace(/\..*$/, "");
         name.value = temp;
     }
 }
