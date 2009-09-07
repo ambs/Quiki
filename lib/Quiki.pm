@@ -21,11 +21,11 @@ Quiki - A lightweight Wiki in Perl
 
 =head1 VERSION
 
-Version 0.01_1
+Version 0.01_2
 
 =cut
 
-our $VERSION = '0.01_1';
+our $VERSION = '0.01_2';
 
 
 =head1 SYNOPSIS
