@@ -80,10 +80,11 @@ sub run {
     my $node   = param('node')   || $self->{index};
     my $action = param('action') || '';
 
-    $self->{meta} = Quiki::Meta::get($node);
-
     # XXX -- temos de proteger mais coisas, possivelmente
     $node =~ s/\s/_/g;
+
+    $self->{meta} = Quiki::Meta::get($node);
+
 
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
         if (param("new_password1") && (param("new_password1") ne param("new_password2"))) {
@@ -260,8 +261,8 @@ sub run {
 
     # handle meta data
     if ($action eq 'save' or $action eq 'rollback') {
-        $self->{meta}->{last_update_by} = $self->{session}->param('username');
-        $self->{meta}->{last_updated_in} = `date`; # XXX -- more legible?
+        $self->{meta}{last_update_by} = $self->{session}->param('username');
+        $self->{meta}{last_updated_in} = `date`; # XXX -- more legible?
         chomp $self->{meta}->{last_updated_in};
     }
 

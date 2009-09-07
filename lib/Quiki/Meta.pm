@@ -2,8 +2,7 @@ package Quiki::Meta;
 
 use feature ':5.10';
 
-use File::Slurp 'slurp';
-use YAML::Any;
+use YAML::Any qw.LoadFile Dump.;
 
 sub get {
     my $node = shift;
@@ -13,8 +12,7 @@ sub get {
         set($node, $meta);
     }
 
-    my $file = slurp "data/meta/$node";
-    Load $file;
+    LoadFile "data/meta/$node";
 }
 
 sub set {
