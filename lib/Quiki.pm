@@ -272,22 +272,19 @@ sub run {
                              $self->{meta}{rev} || "");
 
         if ($self->{meta}{rev} > 1) {
-            for my $i ( $self->{meta}{rev} - 1 .. 0 ) {
+			for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
                 $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
+        	$R_META .= start_form(-method=>'post',-action=>$self->{SCRIPT_NAME},-style=>'display: inline;');
+        	$R_META .= hidden(-name => 'node', -value => $node, -override => 1);
+        	$R_META .= hidden(-name => 'action', -value => 'diff', -override => 1);
+       		$R_META .= submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1);
+        	$R_META .= "<select name='target'>";
+        	for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
+        	 	$R_META .= "<option value='$i'>revision $i</option>";
+        	}
         }
-        #print ")", 
-        #  start_form(-method=>'post',-action=>$self->{SCRIPT_NAME}),
-        #	hidden(-name => 'node', -value => $node, -override => 1),
-        #	  hidden(-name => 'action', -value => 'diff', -override => 1),
-        #		submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1),
-        #		  "<select name='target'>";
-        #for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-        #	 print "<option value='$i'>revision $i</option>";
-        #}
-        #print "</select>",
-        #  end_form,
-        #	end_div; # end quiki_meta <div>
+        $R_META .= "</select></form>";
         $template->param(L_META=>$L_META);
         $template->param(R_META=>$R_META);
     }
