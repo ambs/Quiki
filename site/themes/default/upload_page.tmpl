@@ -5,7 +5,18 @@
   <div class="modal_body">
     <form method="post" enctype="multipart/form-data">
       <table style="margin-left: auto; margin-right: auto">
-        <tr><td>Filename: </td> <td><input type="file"     name="filename1"  /></td></tr>
+        <tr><th>Filename </th><th>Description</th></tr>
+        <tr>
+          <td><input type="file" name="filename1"  /></td>
+          <td><input name="description1" size="50"/></td></tr>
+        <tr>
+          <td><input type="file" name="filename2"  /></td>
+          <td><input name="description2" size="50"/></td>
+        </tr>
+        <tr>
+          <td><input type="file" name="filename3"  /></td>
+          <td><input name="description3" size="50"/></td>
+        </tr>
       </table>
       <br /> <br />
       <input type="hidden" name="action" value="upload"  />
