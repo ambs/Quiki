@@ -241,9 +241,9 @@ sub run {
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
         my @pages;
-        for my $f (sort readdir(DIR)) {
+        for my $f (sort { lc($a) <=> lc($b) } readdir(DIR)) {
             unless ($f=~/^\./) {
-				push @pages, {'link'=>a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f)};
+                push @pages, { link => a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f)};
             }
         }
         closedir(DIR);
