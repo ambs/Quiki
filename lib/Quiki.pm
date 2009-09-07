@@ -238,16 +238,17 @@ sub run {
 
         $template->param(TEXT=>$content);
     }
-    #elsif ($action eq 'index') {
-        #opendir(DIR,'data/content/');
-        #my @pages = sort readdir(DIR);
-        #for my $f (@pages) {
-            #unless ($f=~/^\./) {
-                #print a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f), br;
-            #}
-        #}
-        #closedir(DIR);
-    #}
+    elsif ($action eq 'index') {
+        opendir(DIR,'data/content/');
+        my @pages;
+        for my $f (sort readdir(DIR)) {
+            unless ($f=~/^\./) {
+				push @pages, {'link'=>a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f)};
+            }
+        }
+        closedir(DIR);
+        $template->param(PAGES=>\@pages);
+    }
     elsif ($action eq 'diff') {
         my $target = param('target') || 0;
         $template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$self->{rev},$target));

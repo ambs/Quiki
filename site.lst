@@ -25,9 +25,10 @@ themes/default/main.tmpl           replace
 themes/default/menu_bar.tmpl       replace
 themes/default/nav_bar.tmpl        replace
 themes/default/profile_page.tmpl   replace
-themes/default/my_profile_page.tmpl   replace
+themes/default/my_profile_page.tmpl replace
 themes/default/register_page.tmpl  replace
-themes/default/wrapper.tmpl         replace
-themes/default/meta.tmpl         replace
+themes/default/wrapper.tmpl        replace
+themes/default/meta.tmpl           replace
+themes/default/index.tmpl          replace
 
 
