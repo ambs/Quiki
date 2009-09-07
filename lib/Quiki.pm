@@ -178,8 +178,6 @@ sub run {
     	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
     }
 
-    # save meta data
-    Quiki::Meta::set($node, $self->{meta});
 
     my $cookie = cookie('QuikiSID' => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
@@ -298,6 +296,9 @@ sub run {
         $template->param(MSG=>$self->{session}->param('msg'));
         $self->{session}->param('msg','');
     }
+
+    # save meta data
+    Quiki::Meta::set($node, $self->{meta});
 
     $template->output(print_to => \*STDOUT);
 }
