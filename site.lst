@@ -10,8 +10,8 @@ images/gritter-top.png             replace,binary
 images/grippie.png                 replace,binary
 index.html                         replace
 js/jquery.gritter.js               replace
-js/jquery.floatbox.js              replace
 js/jquery.js                       replace
+js/quiki.js                        replace
 js/jquery.textarearesizer.js       replace
 quiki.cgi                          replace
 quiki.conf
@@ -25,7 +25,6 @@ themes/default/main.tmpl           replace
 themes/default/menu_bar.tmpl       replace
 themes/default/nav_bar.tmpl        replace
 themes/default/profile_page.tmpl   replace
-themes/default/my_profile_page.tmpl   replace
 themes/default/register_page.tmpl  replace
 themes/default/wrapper.tmpl         replace
 themes/default/meta.tmpl         replace

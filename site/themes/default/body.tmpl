@@ -1,3 +1,5 @@
+
+
 <tmpl_include name='nav_bar.tmpl'>
 
 <tmpl_if name='MSG'>
@@ -14,14 +16,6 @@
 	</noscript>
 </tmpl_if>
 
-<tmpl_if expr="ACTION eq 'login_page'">
-	<tmpl_include name='login_page.tmpl'>
-<tmpl_elsif expr="ACTION eq 'register_page'">
-	<tmpl_include name='register_page.tmpl'>
-<tmpl_elsif expr="ACTION eq 'profile_page'">
-	<tmpl_include name='my_profile_page.tmpl'>
-</tmpl_if>
-
 <tmpl_if expr="ACTION eq 'diff'">
 	<pre><tmpl_var CONTENT></pre>
 <tmpl_elsif expr="ACTION eq 'edit'">
@@ -35,3 +29,5 @@
 </tmpl_if>
 
 <tmpl_include name='menu_bar.tmpl'>
+
+

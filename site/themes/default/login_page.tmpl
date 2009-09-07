@@ -1,19 +1,19 @@
-<script type="text/javascript">
-	$(document).ready(function(){ 
-		$.floatbox({ content: "<div class=\"floatbox_head\">Log in</div><div class=\"floatbox_body\"><form method=\"post\" enctype=\"multipart/form-data\">  <table style=\"margin-left: auto; margin-right: auto\"><tr><td>Username: </td> <td><input type=\"text\" name=\"username\"  /></td></tr> <tr><td>Password: </td> <td><input type=\"password\" name=\"password\"  /></td></tr></table> <br /> <br /> <input type=\"hidden\" name=\"action\" value=\"login\"  /> <input type=\"submit\" name=\"submit\" value=\"Log in\" /> </form></div>" });
-	});
-</script>
-<noscript>
-	<div class="floatbox_head">Log in</div>
-	<div class="floatbox_body">
-		<form method="post" enctype="multipart/form-data">
-		<table style="margin-left: auto; margin-right: auto">
-			<tr><td>Username: </td> <td><input type="text" name="username" /></td></tr>
-			<tr><td>Password: </td> <td><input type="password" name="password" /></td></tr>
-		</table>
-		<br /> <br />
-		<input type="hidden" name="action" value="login" />
-		<input type="submit" name="submit" value="Log in" />
-		</form>
-	</div>
-</noscript>
+
+<div id="modal">
+  <div class="modal_head">Log in</div>
+
+  <div class="modal_body">
+    <form method="post" enctype="multipart/form-data">
+      <table style="margin-left: auto; margin-right: auto">
+        <tr><td>Username: </td> <td><input type="text"     name="username"  /></td></tr>
+        <tr><td>Password: </td> <td><input type="password" name="password"  /></td></tr>
+      </table>
+      <br /> <br />
+      <input type="hidden" name="action" value="login"  />
+      &nbsp;&nbsp;
+      <input type="submit" name="submit" value="Log in" /> 
+    </form>
+
+    <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
+  </div>
+</div>

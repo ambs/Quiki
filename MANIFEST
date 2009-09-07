@@ -23,7 +23,6 @@ site/images/gritter-close.png
 site/images/gritter-top.png
 site/index.html
 site/js/jquery.gritter.js
-site/js/jquery.floatbox.js
 site/js/jquery.js
 site/quiki.cgi
 site/quiki.conf
@@ -39,10 +38,10 @@ site/themes/default/main.tmpl
 site/themes/default/menu_bar.tmpl
 site/themes/default/nav_bar.tmpl
 site/themes/default/profile_page.tmpl
-site/themes/default/my_profile_page.tmpl
 site/themes/default/register_page.tmpl
 site/themes/default/wrapper.tmpl
 site/themes/default/meta.tmpl
 lib/Quiki/Meta.pm
 lib/Quiki/Users.pm
 lib/Quiki/Pages.pm
+site/js/quiki.js
