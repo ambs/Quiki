@@ -269,21 +269,23 @@ sub run {
         my $L_META = sprintf("Last edited by %s, in %s",
                              $self->{meta}{last_update_by}  || "",
                              $self->{meta}{last_updated_in} || "");
-        my $R_META = sprintf("Revision: %s <> Older: ",
+        my $R_META = sprintf("Revision: %s | Older: ",
                              $self->{meta}{rev} || "");
 
         if ($self->{meta}{rev} > 1) {
-			for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+            for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
                 $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
             }
-        	$R_META .= start_form(-method=>'post',-action=>$self->{SCRIPT_NAME},-style=>'display: inline;');
-        	$R_META .= hidden(-name => 'node', -value => $node, -override => 1);
-        	$R_META .= hidden(-name => 'action', -value => 'diff', -override => 1);
-       		$R_META .= submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1);
-        	$R_META .= "<select name='target'>";
-        	for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
-        	 	$R_META .= "<option value='$i'>revision $i</option>";
-        	}
+            $R_META .= start_form(-method => 'post',
+                                  -action => $self->{SCRIPT_NAME},
+                                  -style  => 'display: inline;');
+            $R_META .= hidden(-name => 'node', -value => $node, -override => 1);
+            $R_META .= hidden(-name => 'action', -value => 'diff', -override => 1);
+            $R_META .= submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1);
+            $R_META .= "<select name='target'>";
+            for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
+                $R_META .= "<option value='$i'>revision $i</option>";
+            }
         }
         $R_META .= "</select></form>";
         $template->param(L_META=>$L_META);
