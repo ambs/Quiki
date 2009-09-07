@@ -1,46 +1,52 @@
 <!-- MENU BAR AT THE BOTTOM -->
 <div class="quiki_menu_bar">
-	<div class="quiki_menu_bar_left">
-		<TMPL_IF EXPR="ACTION eq 'edit'">
-			<input type="submit" name="submit" value="Cancel" />
-			&nbsp;&nbsp;|&nbsp;&nbsp;
-			<input type="submit" name="submit" value="Preview" />
-			&nbsp;&nbsp;|&nbsp;&nbsp;
-			<input type="submit" name="submit" value="Save" />
-			</form>
-		<TMPL_ELSE>
-			<TMPL_IF NAME="AUTHENTICATED">
-				<TMPL_IF NAME="LAST_REV">
-					<form method="post" enctype="multipart/form-data">
-					<input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
-					<input type="hidden" name="action" value="edit" />
-					<input type="submit" name="submit" value="Edit this page" />
-					</form>
-					&nbsp;&nbsp;|&nbsp;&nbsp;
-					<form method="post" enctype="multipart/form-data">
-					<input type="submit" name="submit" value="Create new page" />
-					&nbsp;
-					<input type="text" name="node" value="&lt;name&gt;" size="8" />
-					<input type="hidden" name="action" value="create" />
-					</form>
-				<TMPL_ELSE>
-					<form method="post" enctype="multipart/form-data">
-					<input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
-					<input type="hidden" name="action" value="rollback" />
-					<input type="hidden" name="rev" value="<TMPL_VAR REV>" />
-					<input type="submit" name="submit" value="Rollback to this version" />
-					</form>
-					&nbsp;&nbsp;|&nbsp;&nbsp;
-					<form method="post" enctype="multipart/form-data">
-					<input type="submit" name="submit" value="Create new page" />
-					&nbsp;
-					<input type="text" name="node" value="&lt;name&gt;" size="8" />
-					<input type="hidden" name="action" value="create" />
-					</form>
-				</TMPL_IF>
-			</TMPL_IF>
-		</TMPL_IF>
-	</div>
+  <div class="quiki_menu_bar_left">
+    <TMPL_IF EXPR="ACTION eq 'edit'">
+        <input type="submit" name="submit" value="Cancel" />
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <input type="submit" name="submit" value="Preview" />
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <input type="submit" name="submit" value="Save" />
+      </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
+    <TMPL_ELSE>
+      <TMPL_IF NAME="AUTHENTICATED">
+	<TMPL_IF NAME="LAST_REV">
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+	    <input type="hidden" name="action" value="edit" />
+	    <input type="submit" name="submit" value="Edit this page" />
+	  </form>
+	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+	    <input type="hidden" name="action" value="attach" />
+	    <input type="submit" name="submit" value="Attach Document" />
+	  </form>
+	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="submit" name="submit" value="Create new page" />
+	    &nbsp;
+	    <input type="text" name="node" value="&lt;name&gt;" size="8" />
+	    <input type="hidden" name="action" value="create" />
+	  </form>
+        <TMPL_ELSE>
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+	    <input type="hidden" name="action" value="rollback" />
+	    <input type="hidden" name="rev" value="<TMPL_VAR REV>" />
+	    <input type="submit" name="submit" value="Rollback to this version" />
+	  </form>
+	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="submit" name="submit" value="Create new page" />
+	    &nbsp;
+	    <input type="text" name="node" value="&lt;name&gt;" size="8" />
+	    <input type="hidden" name="action" value="create" />
+	  </form>
+	</TMPL_IF>
+      </TMPL_IF>
+    </TMPL_IF>
+  </div>
 	<div class="quiki_menu_bar_right">
 		<form method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="index" />

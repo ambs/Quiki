@@ -1,0 +1,17 @@
+
+<div id="modal">
+  <div class="modal_head">Upload Files</div>
+
+  <div class="modal_body">
+    <form method="post" enctype="multipart/form-data">
+      <table style="margin-left: auto; margin-right: auto">
+        <tr><td>Filename: </td> <td><input type="file"     name="filename1"  /></td></tr>
+      </table>
+      <br /> <br />
+      <input type="hidden" name="action" value="upload"  />
+      <input type="submit" name="submit" value="Upload" /> 
+    </form>
+
+    <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
+  </div>
+</div>

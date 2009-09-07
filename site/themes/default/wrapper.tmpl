@@ -1,21 +1,24 @@
-<tmpl_include name='./header.tmpl'>
-<body>
-  <tmpl_if expr="ACTION eq 'login_page' or ACTION eq 'register_page' or ACTION eq 'profile_page'">
-    <div id="modalPage">
-      <div class="modalBackground">
-      </div>
-      <div class="modalContainer">
-        <tmpl_if expr="ACTION eq 'login_page'">
-  	  <tmpl_include name='login_page.tmpl'>
-        <tmpl_elsif expr="ACTION eq 'register_page'">
-	  <tmpl_include name='register_page.tmpl'>
-        <tmpl_elsif expr="ACTION eq 'profile_page'">
-	  <tmpl_include name='profile_page.tmpl'>
-        </tmpl_if>
-      </div>
-    </div>
-  </tmpl_if>
-  <tmpl_include name='./body.tmpl'>
-</body>
-
+<!DOCTYPE html
+	  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+  <tmpl_include name='./header.tmpl'>
+    <body>
+      <tmpl_if expr="ACTION eq 'login_page' or ACTION eq 'register_page' or ACTION eq 'profile_page'">
+        <div id="modalPage">
+          <div class="modalBackground">
+          </div>
+          <div class="modalContainer">
+            <tmpl_if expr="ACTION eq 'login_page'">
+  	      <tmpl_include name='login_page.tmpl'>
+            <tmpl_elsif expr="ACTION eq 'register_page'">
+	      <tmpl_include name='register_page.tmpl'>
+            <tmpl_elsif expr="ACTION eq 'profile_page'">
+	      <tmpl_include name='profile_page.tmpl'>
+           </tmpl_if>
+         </div>
+       </div>
+     </tmpl_if>
+     <tmpl_include name='./body.tmpl'>
+  </body>
 </html>
