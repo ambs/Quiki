@@ -22,12 +22,14 @@
       <h3>Node attachments:</h3>
       <table>
         <tr>
+          <th></th>
           <th>Identifier</th>
           <th>Mime-type</th>
           <th>Description</th>
         </tr>
         <tmpl_loop name=ATTACHS>
           <tr>
+            <td <img src="images/paste.png" alt="Copy to Textarea"/> </td>
             <td> <a target="_new" href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
             <td> <tmpl_var MIME ></td>
             <td> <tmpl_var DESC ></td>
