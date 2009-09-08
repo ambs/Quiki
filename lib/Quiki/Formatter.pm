@@ -209,6 +209,7 @@ sub _inlines {
        qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub {
            a({-href=>"$script?node=".uri_escape($1) }, _inlines($Quiki, $2))
        },
+
        ## ** foo **
        qr/\*\* ((?:\\\*|[^*]|\*[^*])+) \*\*/x   => sub { b(_inlines($Quiki, $1)) },
        ## __ foo __
@@ -217,8 +218,23 @@ sub _inlines {
        qr/\/\/ ((?:\\\/|[^\/]|\/[^\/])+) \/\//x => sub { i(_inlines($Quiki, $1)) },
        ## '' foo ''
        qr/'' ((?:\\'|[^']|'[^'])+) ''/x => sub { tt(_inlines($Quiki, $1)) },
+
+       ## {{wiki: foo | desc }}
+       qr/\{\{wiki:([^}|]+)\|([^}]+)\}\}/        => sub {
+           "TODO"
+       },
+       ## {{wiki: foo  }}
+       qr/\{\{wiki:([^}]+)\}\}/        => sub {
+           "TODO"
+       },
+       ## {{ foo | desc  }}
+       qr/\{\{([^}|]+)\|([^}]+)\}\}/        => sub { img({alt => $2, src => $1}) },
+       ## {{ foo  }}
+       qr/\{\{([^}]+)\}\}/                  => sub { img({alt => $1, src => $1}) },
+
        ## urls que nao sigam aspas
        qr/(?<!")$RE{URI}{-keep}/                => sub { a({-href=>$1}, $1) },
+
       );
 
     while (@inline) {

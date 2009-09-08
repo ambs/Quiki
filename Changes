@@ -2,9 +2,10 @@ Revision history for Quiki
 
 0.01_2
         This second beta version features:
-         - First templating structure
-         - Gravatar support on user profile
-         - Attach support / mimetype guessing
+         - First templating structure;
+         - Gravatar support on user profile;
+         - Attach support / mimetype guessing;
+         - Inline external image inclusion;
 
 0.01_1    Sun Sep  6 14:22:48 WEST 2009
         First version, released on an unsuspecting world full of other wikis.

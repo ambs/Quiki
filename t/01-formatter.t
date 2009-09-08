@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 39;
+use Test::More tests => 40;
 
 use_ok("Quiki::Formatter");
 
@@ -466,4 +466,11 @@ EOI
 <h1>foo</h1>
 
 <p>hello world</p>
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+{{http://www.xpto.foo/foo.png}}
+EOI
+<p><img alt="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" /></p>
 EOO
