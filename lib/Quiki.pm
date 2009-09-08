@@ -85,6 +85,7 @@ sub run {
     $node =~ s/\s/_/g;
 
     $self->{meta} = Quiki::Meta::get($node);
+    $self->{node} = $node;
 
 
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {

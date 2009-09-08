@@ -220,13 +220,10 @@ sub _inlines {
        qr/'' ((?:\\'|[^']|'[^'])+) ''/x => sub { tt(_inlines($Quiki, $1)) },
 
        ## {{wiki: foo | desc }}
-       qr/\{\{wiki:([^}|]+)\|([^}]+)\}\}/        => sub {
-           "TODO"
-       },
+       qr/\{\{wiki:([^}|]+)\|([^}]+)\}\}/        => sub { _inline_doc($Quiki, $1,$2) },
        ## {{wiki: foo  }}
-       qr/\{\{wiki:([^}]+)\}\}/        => sub {
-           "TODO"
-       },
+       qr/\{\{wiki:([^}]+)\}\}/                  => sub { _inline_doc($Quiki, $1,$1) },
+
        ## {{ foo | desc  }}
        qr/\{\{([^}|]+)\|([^}]+)\}\}/        => sub { img({alt => $2, src => $1}) },
        ## {{ foo  }}
@@ -244,6 +241,19 @@ sub _inlines {
     }
 
     return _expand_entities($chunk);
+}
+
+sub _inline_doc {
+    my ($quiki, $id, $desc) = @_;
+    my $node = $quiki->{node};
+    my $mm = new File::MMagic;
+    my $mime = $mm->checktype_filename("data/attach/$node/$id");
+    if ($mime =~ /^image/) {
+        img({-alt=>$desc, -src=>"data/attach/$node/$id"})
+    }
+    else {
+        a({-href=>"data/attach/$node/$id", -target=>"_new"}, $desc)
+    }
 }
 
 sub _unbackslash {
