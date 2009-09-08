@@ -47,3 +47,4 @@ lib/Quiki/Users.pm
 lib/Quiki/Pages.pm
 site/js/quiki.js
 site/themes/default/upload_page.tmpl
+site/images/document.png

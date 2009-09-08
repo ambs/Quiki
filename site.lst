@@ -30,5 +30,4 @@ themes/default/wrapper.tmpl        replace
 themes/default/meta.tmpl           replace
 themes/default/upload_page.tmpl    replace
 themes/default/index.tmpl          replace
-
-
+images/document.png                replace
