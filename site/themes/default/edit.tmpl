@@ -19,10 +19,13 @@
   <input type="hidden" name="node" value="<tmpl_var WIKINODE>" />
   <input type="hidden" name="action" value="save" />
 
-  <div id="quiki_attach_list">
-    <tmpl_loop name=ATTACHS>
-      <div class="quiki_attach">
-        <tmpl_var ID>
-      </div>
-    </tmpl_loop>
-  </div>
+  <tmpl_if name=ATTACHS>
+    <div id="quiki_attach_list">
+      <h3>Node attachments:</h3>
+      <table>
+        <tmpl_loop name=ATTACHS>
+          <tr><td> <tmpl_var ID> </td><td> <tmpl_var MIME ></td></tr>
+        </tmpl_loop>
+      </table>
+    </div>
+  </tmpl_if>

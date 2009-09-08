@@ -34,7 +34,7 @@ WriteMakefile(
                   'Email::Simple::Creator' => 0,
                   'Gravatar::URL'  => 0,
                   'HTML::Template::Pro' => 0,
-                  'File::MimeInfo::Magic' => 0,
+                  'File::MMagic'   => 0,
 
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
