@@ -234,7 +234,8 @@ sub run {
     my $email    = Quiki::Users->email($username);
     my $theme    = $self->{theme} || 'default';
 
-    my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl");
+    my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl",
+                                            global_vars => 1);
     $template->param(WIKINAME    => $self->{name},
                      USERNAME    => $username,
                      WIKINODE    => $node,
