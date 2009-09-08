@@ -257,13 +257,23 @@ sub run {
         ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
         if ($preview) {
             my $text = param('text') // '';
-			$template->param(CONTENT=>Quiki::Formatter::format($self, $text));
+            $template->param(CONTENT=>Quiki::Formatter::format($self, $text));
         }
         else {
             Quiki::Pages->lock($node, $self->{sid});
         }
 
         $template->param(TEXT=>$content);
+
+        if (-d "data/attach/$node") {
+            my @attachs;
+            opendir DIR, "data/attach/$node";
+            for my $f (sort { lc($a) <=> lc($b)  } readdir(DIR)) {
+                next if $f =~ /^_desc_/ or $f =~ /^\.\.?$/;
+                push @attachs, { ID => $f };
+            }
+            $template->param(ATTACHS => \@attachs);
+        }
     }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');

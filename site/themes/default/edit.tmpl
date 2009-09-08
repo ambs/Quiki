@@ -1,20 +1,28 @@
 <tmpl_if NAME='PREVIEW'>
-	<div class='quiki_preview'>
-		<h4>Preview</h4>
-		<hr />
-		<tmpl_var CONTENT>
-	</div>
+  <div class='quiki_preview'>
+    <h4>Preview</h4>
+    <hr />
+    <tmpl_var CONTENT>
+  </div>
 </tmpl_if>
 
 <script type="text/javascript">
-	$(document).ready(function(){ 
-		$('textarea.resizable:not(.processed)').TextAreaResizer(); 
-	});
+  $(document).ready(function(){ 
+    $('textarea.resizable:not(.processed)').TextAreaResizer(); 
+  });
 </script>
 
 <form method="post" enctype="multipart/form-data">
-<textarea name="text"  rows="30" cols="80" class="resizable">
-<tmpl_var TEXT>
-</textarea>
-<input type="hidden" name="node" value="<tmpl_var WIKINODE>" />
-<input type="hidden" name="action" value="save" />
+  <textarea name="text"  rows="30" cols="80" class="resizable">
+    <tmpl_var TEXT>
+  </textarea>
+  <input type="hidden" name="node" value="<tmpl_var WIKINODE>" />
+  <input type="hidden" name="action" value="save" />
+
+  <div id="quiki_attach_list">
+    <tmpl_loop name=ATTACHS>
+      <div class="quiki_attach">
+        <tmpl_var ID>
+      </div>
+    </tmpl_loop>
+  </div>
