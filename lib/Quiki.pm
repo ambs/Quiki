@@ -12,6 +12,7 @@ use CGI::Session;
 use HTML::Template::Pro;
 use Gravatar::URL;
 use File::MMagic;
+use File::Slurp 'slurp';
 
 use warnings;
 use strict;
@@ -272,10 +273,19 @@ sub run {
             my @attachs;
             opendir DIR, "data/attach/$node";
             my $mm = new File::MMagic;
+            my %desc;
             for my $f (sort { lc($a) <=> lc($b)  } readdir(DIR)) {
-                next if $f =~ /^_desc_/ or $f =~ /^\.\.?$/;
-                my $mime = $mm->checktype_filename("data/attach/$node/$f");
-                push @attachs, { ID => $f, MIME => $mime };
+                next if $f =~ /^\.\.?$/;
+                if ($f =~ m!_desc_(.*)!) {
+                    $desc{$1} = slurp "data/attach/$node/$f";
+                }
+                else {
+                    my $mime = $mm->checktype_filename("data/attach/$node/$f");
+                    push @attachs, { ID => $f, MIME => $mime };
+                }
+            }
+            for (@attachs) {
+                $_->{DESC} = $desc{$_->{ID}}
             }
             $template->param(ATTACHS => \@attachs);
         }

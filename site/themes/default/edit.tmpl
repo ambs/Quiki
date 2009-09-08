@@ -21,8 +21,17 @@
     <div id="quiki_attach_list">
       <h3>Node attachments:</h3>
       <table>
+        <tr>
+          <th>Identifier</th>
+          <th>Mime-type</th>
+          <th>Description</th>
+        </tr>
         <tmpl_loop name=ATTACHS>
-          <tr><td> <a target="_new" href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td><td> <tmpl_var MIME ></td></tr>
+          <tr>
+            <td> <a target="_new" href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
+            <td> <tmpl_var MIME ></td>
+            <td> <tmpl_var DESC ></td>
+          </tr>
         </tmpl_loop>
       </table>
     </div>
