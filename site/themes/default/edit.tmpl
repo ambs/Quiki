@@ -13,7 +13,7 @@
 </script>
 
 <form method="post" enctype="multipart/form-data">
-  <textarea name="text"  rows="30" cols="80" class="resizable"><tmpl_var TEXT></textarea>
+  <textarea id="editfield" name="text"  rows="30" cols="80" class="resizable"><tmpl_var TEXT></textarea>
   <input type="hidden" name="node" value="<tmpl_var WIKINODE>" />
   <input type="hidden" name="action" value="save" />
 
@@ -29,8 +29,11 @@
         </tr>
         <tmpl_loop name=ATTACHS>
           <tr>
-            <td <img src="images/paste.png" alt="Copy to Textarea"/> </td>
-            <td> <a target="_new" href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
+            <td <img src="images/paste.png"
+                     onClick="insertAtCursor('editfield','{{wiki:<tmpl_var ID>}}')"
+                     alt="Copy to Textarea"/> </td>
+            <td> <a target="_new"
+                    href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
             <td> <tmpl_var MIME ></td>
             <td> <tmpl_var DESC ></td>
           </tr>
