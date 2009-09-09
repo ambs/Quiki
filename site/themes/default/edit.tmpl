@@ -9,7 +9,9 @@
 <script type="text/javascript">
   $(document).ready(function(){ 
     $('textarea.resizable:not(.processed)').TextAreaResizer(); 
+    $('#quiki_attach_table').hide();
   });
+
 </script>
 
 <form method="post" enctype="multipart/form-data">
@@ -19,8 +21,8 @@
 
   <tmpl_if name=ATTACHS>
     <div id="quiki_attach_list">
-      <h3>Node attachments:</h3>
-      <table>
+      <h4 onClick="$('#quiki_attach_table').toggle(400);">Node attachments</h4>
+      <table id="quiki_attach_table">
         <tr>
           <th></th>
           <th>Identifier</th>
