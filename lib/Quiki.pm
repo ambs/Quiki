@@ -262,12 +262,12 @@ sub run {
         if ($preview) {
             my $text = param('text') // '';
             $template->param(CONTENT=>Quiki::Formatter::format($self, $text));
+        	$template->param(TEXT=>$text);
         }
         else {
             Quiki::Pages->lock($node, $self->{sid});
+        	$template->param(TEXT=>$content);
         }
-
-        $template->param(TEXT=>$content);
 
         if (-d "data/attach/$node") {
             my @attachs;
