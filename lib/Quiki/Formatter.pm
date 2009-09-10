@@ -121,10 +121,11 @@ sub _format_chunk {
 
     if ($chunk =~ /^(\^|\|)/) {
         $chunk = _format_table($Quiki, $chunk);
+        $chunk = _unbackslash($chunk);
     }
     elsif ($chunk =~ /^\s{2}[*-]/) {
         $chunk = _format_list($Quiki, $chunk);
-
+        $chunk = _unbackslash($chunk);
     }
     elsif ($chunk =~ /^\s{3}/) {
         $chunk = _format_verbatim($chunk);
