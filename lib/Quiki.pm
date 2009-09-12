@@ -58,15 +58,13 @@ sub new {
     my %conf = (
                 name  => 'defaultName',
                 index => 'index', # index node
-                protocol => 'http', # support https?
                );
     $self = {%conf, %args};
 
     $self->{SCRIPT_NAME} = $ENV{SCRIPT_NAME};
     $self->{SERVER_NAME} = $ENV{SERVER_NAME};
 
-    $self->{DOCROOT} = sprintf("%s://%s%s",
-                               $self->{protocol}, $self->{SERVER_NAME}, $ENV{SCRIPT_NAME});
+    $self->{DOCROOT} = $ENV{SCRIPT_NAME};
     $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
     return bless $self, $class;
@@ -295,8 +293,15 @@ sub run {
         my @pages;
         for my $f (sort { lc($a) <=> lc($b) } readdir(DIR)) {
             unless ($f=~/^\./) {
-                push @pages, { link => a({-href=>"$self->{SCRIPT_NAME}?node=$f"}, $f)};
-            }
+                my $meta = Quiki::Meta::get($f);
+                push @pages, 
+                  { URL => "$self->{SCRIPT_NAME}?node=$f",
+                    NAME => $f,
+                    AUTHOR => $meta->{last_update_by},
+                    DATE => $meta->{last_updated_in},
+                    GRAVATAR => gravatar_url(email => Quiki::Users->email($meta->{last_update_by})),
+                  }
+              }
         }
         closedir(DIR);
         $template->param(PAGES=>\@pages);
