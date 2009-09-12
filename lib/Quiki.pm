@@ -318,9 +318,17 @@ sub run {
     }
 
     unless ($action eq 'edit') {
-        my $L_META = sprintf("Last edited by %s, in %s",
-                             $self->{meta}{last_update_by}  || "",
-                             $self->{meta}{last_updated_in} || "");
+        my $L_META;
+        if ($self->{meta}{last_update_by}) {
+            my $url = gravatar_url(email => Quiki::Users->email($self->{meta}{last_update_by}));
+            $L_META = img({-src => $url, -width => '24', -style => 'vertical-align: middle'});
+            $L_META .= sprintf("&nbsp;Last edited by %s, in %s",
+                               $self->{meta}{last_update_by},
+                               $self->{meta}{last_updated_in} || "");
+        }
+        else {
+            $L_META = "";
+        }
         my $R_META = sprintf("Revision: %s | Older: ",
                              $self->{meta}{rev} || "");
 
