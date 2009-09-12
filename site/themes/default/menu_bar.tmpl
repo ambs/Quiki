@@ -1,7 +1,9 @@
 <!-- MENU BAR AT THE BOTTOM -->
 <div class="quiki_menu_bar">
   <div class="quiki_menu_bar_left">
-    <TMPL_IF EXPR="ACTION eq 'edit'">
+    <TMPL_IF EXPR="ACTION eq 'index'">
+      <!-- ... -->
+    <TMPL_ELSIF EXPR="ACTION eq 'edit'">
         <input type="submit" name="submit" value="Cancel" />
         &nbsp;&nbsp;|&nbsp;&nbsp;
         <input type="submit" name="submit" value="Preview" />

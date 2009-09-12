@@ -1,27 +1,27 @@
 
 
-<tmpl_include name='nav_bar.tmpl'>
+<tmpl_include name='nav_bar.tmpl'/>
 
 <tmpl_if name='MSG'>
-	<script type="text/javascript">
+  <script type="text/javascript">
 		$(document).ready(function(){
 			$.gritter.add({
 				title: 'Info!',
-				text: '<tmpl_var MSG>',
+				text: '<tmpl_var name="MSG"/>',
 			});
 		});
-	</script>
-	<noscript>
-		<b>Info! <tmpl_var MSG></b>
-	</noscript>
+  </script>
+  <noscript>
+    <b>Info! <tmpl_var name="MSG"/></b>
+  </noscript>
 </tmpl_if>
 
 <tmpl_if expr="ACTION eq 'diff'">
-	<pre><tmpl_var CONTENT></pre>
+  <pre><tmpl_var name="CONTENT"/></pre>
 <tmpl_elsif expr="ACTION eq 'edit'">
-	<tmpl_include name='edit.tmpl'>
+	<tmpl_include name='edit.tmpl'/>
 <tmpl_elsif expr="ACTION eq 'index'">
-	<tmpl_include name='index.tmpl'>
+	<tmpl_include name='index.tmpl'/>
 <tmpl_else>
 	<div class="quiki_body">
 		<tmpl_var CONTENT>
