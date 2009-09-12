@@ -3,12 +3,12 @@
   <div class="quiki_menu_bar_left">
     <TMPL_IF EXPR="ACTION eq 'index'">
       <!-- ... -->
-    <TMPL_ELSIF EXPR="ACTION eq 'edit'">
-        <input type="submit" name="submit" value="Cancel" />
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        <input type="submit" name="submit" value="Preview" />
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        <input type="submit" name="submit" value="Save" />
+    <TMPL_ELSIF EXPR="ACTION eq 'edit'"/>
+      <input type="submit" name="submit" value="Cancel" />
+      &nbsp;|&nbsp;
+      <input type="submit" name="submit" value="Preview" />
+      &nbsp;|&nbsp;
+      <input type="submit" name="submit" value="Save" />
       </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
@@ -18,13 +18,19 @@
 	    <input type="hidden" name="action" value="edit" />
 	    <input type="submit" name="submit" value="Edit this page" />
 	  </form>
-	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  &nbsp;|&nbsp;
 	  <form method="post" enctype="multipart/form-data">
 	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
 	    <input type="hidden" name="action" value="attach" />
 	    <input type="submit" name="submit" value="Attach Document" />
 	  </form>
-	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  &nbsp;|&nbsp;
+	  <form method="post" enctype="multipart/form-data">
+	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
+	    <input type="hidden" name="action" value="history" />
+	    <input type="submit" name="submit" value="Page history" />
+	  </form>
+	  &nbsp;|&nbsp;
 	  <form method="post" enctype="multipart/form-data">
 	    <input type="submit" name="submit" value="Create new page" />
 	    &nbsp;
@@ -38,7 +44,7 @@
 	    <input type="hidden" name="rev" value="<TMPL_VAR REV>" />
 	    <input type="submit" name="submit" value="Rollback to this version" />
 	  </form>
-	  &nbsp;&nbsp;|&nbsp;&nbsp;
+	  &nbsp;|&nbsp;
 	  <form method="post" enctype="multipart/form-data">
 	    <input type="submit" name="submit" value="Create new page" />
 	    &nbsp;
@@ -54,13 +60,13 @@
 		<input type="hidden" name="action" value="index" />
 		<input type="submit" name="submit" value="Index" />
 		</form>
-		&nbsp;&nbsp;|&nbsp;&nbsp;
+		&nbsp;|&nbsp;
 		<TMPL_IF NAME="AUTHENTICATED">
 			<form method="post" enctype="multipart/form-data">
 			<input type="submit" name="submit" value="Edit Profile" />
 			<input type="hidden" name="action" value="profile_page" />
 			</form>
-			&nbsp;&nbsp;|&nbsp;&nbsp;
+			&nbsp;|&nbsp;
 			<form method="post" enctype="multipart/form-data">
 			<input type="submit" name="submit" value="Log out" />
 			<input type="hidden" name="action" value="logout" />
@@ -70,7 +76,7 @@
 			<input type="hidden" name="action" value="register_page"  />
 			<input type="submit" name="submit" value="Sign up" />
 			</form>
-			&nbsp;&nbsp;|&nbsp;&nbsp;
+			&nbsp;|&nbsp;
 			<form method="post" enctype="multipart/form-data">
 			<input type="submit" name="submit" value="Log in" />
 			<input type="hidden" name="node" value="index"  />
