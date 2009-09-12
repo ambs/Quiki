@@ -177,3 +177,15 @@ a:hover {
 a img { 
   border: 0px;
 }
+
+.quiki_index_line { 
+  margin: 1px;
+  padding: 3px;
+  background-color: #efefef;
+}
+
+.quiki_index_line:hover { 
+  margin: 1px;
+  padding: 3px;
+  background-color: #eeeedd;
+}
