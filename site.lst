@@ -32,3 +32,4 @@ themes/default/upload_page.tmpl    replace
 themes/default/index.tmpl          replace
 images/document.png                replace
 images/paste.png                   replace
+images/images.png                  replace
