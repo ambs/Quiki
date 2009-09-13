@@ -21,22 +21,23 @@
 
   <tmpl_if name=ATTACHS>
     <div id="quiki_attach_list">
-      <h4 onClick="$('#quiki_attach_table').toggle(400);">Node attachments</h4>
+      <h4 style="cursor: pointer" 
+          onClick="$('#quiki_attach_table').toggle(400);">Node attachments</h4>
       <table id="quiki_attach_table">
         <tr>
           <th></th>
           <th>Identifier</th>
-          <th>Mime-type</th>
+          <th> </th>
           <th>Description</th>
         </tr>
         <tmpl_loop name=ATTACHS>
           <tr>
-            <td <img src="images/paste.png"
+            <td <img src="images/paste.png" title="Copy to Textarea"
                      onClick="insertAtCursor('editfield','{{wiki:<tmpl_var ID>}}')"
                      alt="Copy to Textarea"/> </td>
             <td> <a target="_new"
                     href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
-            <td> <tmpl_var MIME ></td>
+            <td> <img src="images/<tmpl_var name="MIMEIMG"/>" alt="<tmpl_var name="MIME"/>" title="<tmpl_var name="MIME"/>"/></td>
             <td> <tmpl_var DESC ></td>
           </tr>
         </tmpl_loop>
