@@ -272,7 +272,7 @@ sub run {
             opendir DIR, "data/attach/$node";
             my $mm = new File::MMagic;
             my %desc;
-            for my $f (sort { lc($a) <=> lc($b)  } readdir(DIR)) {
+            for my $f (sort { lc($a) cmp lc($b)  } readdir(DIR)) {
                 next if $f =~ /^\.\.?$/;
                 if ($f =~ m!_desc_(.*)!) {
                     $desc{$1} = slurp "data/attach/$node/$f";
@@ -309,7 +309,7 @@ sub run {
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
         my @pages;
-        for my $f (sort { lc($a) <=> lc($b) } readdir(DIR)) {
+        for my $f (sort { lc($a) cmp lc($b) } readdir(DIR)) {
             unless ($f=~/^\./) {
                 my $meta = Quiki::Meta::get($f);
                 push @pages, 
