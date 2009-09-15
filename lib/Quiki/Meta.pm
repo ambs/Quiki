@@ -8,7 +8,10 @@ sub get {
     my $node = shift;
 
     unless (-f "data/meta/$node") {
-        my $meta = {'last_update_by'=>'_','last_updated_in'=>'_','rev'=>0};
+        my $meta = {
+                    last_update_by   => '_',
+                    last_updated_in  => '_',
+                    rev              => 0};
         set($node, $meta);
     }
 
