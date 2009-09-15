@@ -58,7 +58,13 @@ sub check_in {
     my $file = "data/content/$node";
 
     #if (defined($contents)) {
-    $Quiki->{meta}{rev}++ unless ($contents =~ m/^Edit me!/);
+    unless ($contents =~ m/^Edit me!/) {
+        $Quiki->{meta}{revs}{$Quiki->{meta}{rev}}{last_update_by} = $Quiki->{meta}{last_update_by};
+        $Quiki->{meta}{revs}{$Quiki->{meta}{rev}}{last_updated_in} = $Quiki->{meta}{last_updated_in};
+        $Quiki->{meta}{rev}++ ;
+    }
+
+
     open O, "> $file" or die $!;
     print O $contents;
     close O;

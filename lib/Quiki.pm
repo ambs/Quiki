@@ -300,14 +300,21 @@ sub run {
         }
     }
     elsif ($action eq 'history') {
-        # Impressao minha ou nao temos estes dados armazenados? :-/
-        #  REVISIONS => [ { GRAVATAR => '...',
-        #                   AUTHOR   => '...',
-        #                   DATE     => '...',
-        #                   VERSION  => '...',
+
         my @revs;
         for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-            push @revs, { VERSION => $i };
+            my $entry = { VERSION => $i };
+            if ($i != $self->{meta}{rev}) {
+                $entry->{AUTHOR} = $self->{meta}{revs}{$i}{last_update_by};
+                $entry->{DATE} =  $self->{meta}{revs}{$i}{last_updated_in};
+                $entry->{GRAVATAR} = gravatar_url(email => Quiki::Users->email($self->{meta}{revs}{$i}{last_update_by}));
+            }
+            else {
+                $entry->{AUTHOR} = $self->{meta}{last_update_by};
+                $entry->{DATE} =  $self->{meta}{last_updated_in};
+                $entry->{GRAVATAR} = gravatar_url(email => Quiki::Users->email($self->{meta}{last_update_by}));
+            }
+            push @revs, $entry;
         }
         $template->param(REVISIONS => \@revs);
     }
