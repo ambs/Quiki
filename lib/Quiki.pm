@@ -86,7 +86,6 @@ sub run {
     $self->{meta} = Quiki::Meta::get($node);
     $self->{node} = $node;
 
-
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
         if (param("new_password1") && (param("new_password1") ne param("new_password2"))) {
             $self->{session}->param('msg', "Passwords do not match. Try again!");
@@ -212,7 +211,7 @@ sub run {
 
     my @trace;
     $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
-    if ($trace[-1] ne $node) {
+    if (@trace && $trace[-1] ne $node) {
         push @trace, $node;
         @trace > 5 and shift @trace;
         $self->{session}->param('trace',\@trace);
@@ -382,7 +381,6 @@ sub run {
 
     # save meta data
     Quiki::Meta::set($node, $self->{meta});
-
     $template->output(print_to => \*STDOUT);
 }
 
