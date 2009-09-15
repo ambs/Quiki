@@ -300,10 +300,16 @@ sub run {
         }
     }
     elsif ($action eq 'history') {
+        # Impressao minha ou nao temos estes dados armazenados? :-/
         #  REVISIONS => [ { GRAVATAR => '...',
         #                   AUTHOR   => '...',
         #                   DATE     => '...',
-
+        #                   VERSION  => '...',
+        my @revs;
+        for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
+            push @revs, { VERSION => $i };
+        }
+        $template->param(REVISIONS => \@revs);
     }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');

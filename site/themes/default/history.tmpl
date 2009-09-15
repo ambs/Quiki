@@ -1,5 +1,8 @@
 <tmpl_loop name='REVISIONS'>
   <div class="quiki_index_line">
+    <span style="width: 10%; display: inline-block">
+      <a href="<tmpl_var name='WIKISCRIPT'/>?node=<tmpl_var name='WIKINODE'/>&rev=<tmpl_var name='VERSION'/>">Version <tmpl_var name="VERSION"/></a>
+    </span>
     <span style="width: 40%; display: inline-block">
       <img style="vertical-align: middle" src="<tmpl_var name="GRAVATAR"/>" width="24"/>&nbsp;Last edited by <tmpl_var name="AUTHOR"/> in <tmpl_var name="DATE"/>
     </span>
