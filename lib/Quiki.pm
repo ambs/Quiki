@@ -301,7 +301,10 @@ sub run {
         }
     }
     elsif ($action eq 'history') {
-        
+        #  REVISIONS => [ { GRAVATAR => '...',
+        #                   AUTHOR   => '...',
+        #                   DATE     => '...',
+
     }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
