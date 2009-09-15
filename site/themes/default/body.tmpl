@@ -19,17 +19,19 @@
 <tmpl_if expr="ACTION eq 'diff'">
   <pre><tmpl_var name="CONTENT"/></pre>
 <tmpl_elsif expr="ACTION eq 'edit'">
-	<tmpl_include name='edit.tmpl'/>
+  <tmpl_include name='edit.tmpl'/>
 <tmpl_elsif expr="ACTION eq 'index'">
-	<tmpl_include name='index.tmpl'/>
+  <tmpl_include name='index.tmpl'/>
+<tmpl_elsif expr="ACTION eq history'">
+  <tmpl_include name='history.tmpl'/>
 <tmpl_else>
-	<div class="quiki_body">
-		<tmpl_var CONTENT>
-	</div>
+  <div class="quiki_body">
+    <tmpl_var name='CONTENT'/>
+  </div>
 
-    <tmpl_include name='meta.tmpl'>
+  <tmpl_include name='meta.tmpl'/>
 </tmpl_if>
 
-<tmpl_include name='menu_bar.tmpl'>
+<tmpl_include name='menu_bar.tmpl'/>
 
 

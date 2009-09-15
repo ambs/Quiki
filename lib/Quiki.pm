@@ -300,6 +300,9 @@ sub run {
             $template->param(ATTACHS => \@attachs);
         }
     }
+    elsif ($action eq 'history') {
+        
+    }
     elsif ($action eq 'index') {
         opendir(DIR,'data/content/');
         my @pages;
