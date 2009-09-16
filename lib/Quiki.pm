@@ -133,6 +133,7 @@ sub run {
             if (Quiki::Users->exists($username)) {
                 $self->{session}->param('msg',
                                         "User name already in use. Please try again!");
+                $action = 'register_page';
             }
             else {
                 Quiki::Users->create($self, $username, $email);
@@ -143,6 +144,7 @@ sub run {
         else {
             $self->{session}->param('msg',
                                     "Sign up failed! Perhaps you forgot to fill in the form?");
+            $action = 'register_page';
         }
     }
 

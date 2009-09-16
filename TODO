@@ -9,9 +9,6 @@ motivated to implement it.
 
 - [smash] handle revision diff on the new revision page
 
-- [ambs] when registering a user, if the username already exist, come
-  back to the registration page, not the standard viewing page.
-
 - [ambs] when updating the password, if they do not match, come back
   to the profile page, not to the standard viewing page.
 
