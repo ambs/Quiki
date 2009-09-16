@@ -200,6 +200,7 @@ sub run {
     if ($action eq 'rollback') {
         $content = Quiki::Pages->check_out($self,$node,$self->{rev});
         Quiki::Pages->check_in($self, $node, $content);
+		$self->{rev} = $self->{meta}{rev};
     }
     else {
     	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
@@ -337,8 +338,9 @@ sub run {
         $template->param(PAGES=>\@pages);
     }
     elsif ($action eq 'diff') {
-        my $target = param('target') || 0;
-        $template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$self->{rev},$target));
+        my $source = param('source') || 1;
+        my $target = param('target') || 1;
+        $template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$source,$target));
     }
     else {
         $template->param(CONTENT=>Quiki::Formatter::format($self, $content));
@@ -364,25 +366,8 @@ sub run {
         else {
             $L_META = "";
         }
-        my $R_META = sprintf("Revision: %s | Older: ",
-                             $self->{meta}{rev} || "");
+        my $R_META = sprintf("Revision: %s", $self->{meta}{rev} || "");
 
-        if ($self->{meta}{rev} > 1) {
-            for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
-                $R_META .= a({-href=>"$self->{SCRIPT_NAME}?node=$node&rev=$i"}, $i).' ';
-            }
-            $R_META .= start_form(-method => 'post',
-                                  -action => $self->{SCRIPT_NAME},
-                                  -style  => 'display: inline;');
-            $R_META .= hidden(-name => 'node', -value => $node, -override => 1);
-            $R_META .= hidden(-name => 'action', -value => 'diff', -override => 1);
-            $R_META .= submit(-name => 'submit', -value => 'Calc diff with: ', -override => 1);
-            $R_META .= "<select name='target'>";
-            for (my $i=$self->{meta}{rev}-1 ; $i>0 ; $i--) {
-                $R_META .= "<option value='$i'>revision $i</option>";
-            }
-        }
-        $R_META .= "</select></form>";
         $template->param(L_META=>$L_META);
         $template->param(R_META=>$R_META);
     }

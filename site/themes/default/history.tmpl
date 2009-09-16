@@ -5,6 +5,33 @@
     </span>
     <span style="width: 40%; display: inline-block">
       <img style="vertical-align: middle" src="<tmpl_var name="GRAVATAR"/>" width="24"/>&nbsp;Last edited by <tmpl_var name="AUTHOR"/> in <tmpl_var name="DATE"/>
-    </span>
+	  <form style='display: inline;'>
+	    <input type="hidden" name="node" value="<tmpl_var name="WIKINODE"/>" />
+	    <input type="hidden" name="action" value="rollback" />
+	    <input type="hidden" name="rev" value="<tmpl_var name="VERSION"/>" />
+		&nbsp;<input type='submit' value='Roolback to this version'>
+	  </form>
+	</span>
   </div>
 </tmpl_loop>
+
+<hr />
+<center>
+	<form method='POST'>
+		Diff between revision
+		<select name='source'>
+			<tmpl_loop name="REVISIONS">
+				<option><tmpl_var name="VERSION"/></option>
+			</tmpl_loop>
+		</select>
+		and revision
+        <select name='target'>
+            <tmpl_loop name="REVISIONS">
+                <option><tmpl_var name="VERSION"/></option>
+            </tmpl_loop>
+        </select>
+		<input type="hidden" name="node" value="<tmpl_var name="WIKINODE"/>" />
+		<input type="hidden" name="action" value="diff" />
+		<input type='submit' value='Show'>
+	</form>
+</center>
