@@ -212,7 +212,8 @@ sub run {
 
     my @trace;
     $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
-    if (@trace && $trace[-1] ne $node) {
+	!@trace and push @trace, $node;
+    if ($trace[-1] ne $node) {
         push @trace, $node;
         @trace > 5 and shift @trace;
         $self->{session}->param('trace',\@trace);
