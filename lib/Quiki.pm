@@ -173,7 +173,6 @@ sub run {
     # XXX
     ($action eq 'create') and (-f "data/content/$node") and ($action = '');
     if( ($action eq 'create') or !-f "data/content/$node") {
-        #Quiki::Pages -> save($node, "Edit me!");
         Quiki::Pages->check_in($self, $node, "Edit me!");
 	$self->{session}->param('msg',"New node \"$node\" created.");
     }
@@ -187,7 +186,6 @@ sub run {
     if ($action eq 'save' && param("submit") eq "Save") {
         if (Quiki::Pages->locked($node, $self->{sid})) {
             my $text = param('text') // '';
-            #Quiki::Pages->save($node, $text);
             Quiki::Pages->check_in($self, $node, $text);
             Quiki::Pages->unlock($node);
             $self->{session}->param('msg',"Content for \"$node\" updated.");
