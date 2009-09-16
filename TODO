@@ -7,8 +7,6 @@ motivated to implement it.
 
 - Handle meta history during rollback
 
-- [smash] Complain when a non-existing revision is requested in the URL DONE!
-
 - [smash] handle revision diff on the new revision page
 
 - [ambs] when registering a user, if the username already exist, come
