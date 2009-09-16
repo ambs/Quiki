@@ -200,7 +200,7 @@ sub run {
     if ($action eq 'rollback') {
         $content = Quiki::Pages->check_out($self,$node,$self->{rev});
         Quiki::Pages->check_in($self, $node, $content);
-		$self->{rev} = $self->{meta}{rev};
+        $self->{rev} = $self->{meta}{rev};
     }
     else {
     	$content = Quiki::Pages->check_out($self,$node,$self->{rev});
