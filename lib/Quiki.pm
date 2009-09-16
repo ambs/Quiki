@@ -197,6 +197,11 @@ sub run {
     # XXX
     my $content;
     $self->{rev} = param('rev') || $self->{meta}{rev};
+	# sanity check revision number
+	if (!($self->{rev} =~ m/\d+/) || $self->{rev}<0 || $self->{rev}>$self->{meta}{rev}) {
+    	$self->{rev} = $self->{meta}{rev};
+		$self->{session}->param('msg','Revision requested not found.');
+	}
     if ($action eq 'rollback') {
         $content = Quiki::Pages->check_out($self,$node,$self->{rev});
         Quiki::Pages->check_in($self, $node, $content);
