@@ -9,9 +9,6 @@ motivated to implement it.
 
 - [smash] handle revision diff on the new revision page
 
-- [ambs] when updating the password, if they do not match, come back
-  to the profile page, not to the standard viewing page.
-
 - [ambs] probably ask for the old password when changing the password.
 
 - [ambs] add a configuration flag when to activate or not Gravatars.
