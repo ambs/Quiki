@@ -34,7 +34,6 @@ site/themes/default/header.tmpl
 site/themes/default/body.tmpl
 site/themes/default/edit.tmpl
 site/themes/default/login_page.tmpl
-site/themes/default/main.tmpl
 site/themes/default/menu_bar.tmpl
 site/themes/default/nav_bar.tmpl
 site/themes/default/profile_page.tmpl
