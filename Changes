@@ -1,12 +1,15 @@
 Revision history for Quiki
 
-0.01_3
-        Third beta pre-release, featuring:
+0.01  Fri Sep 18 12:24:03 WEST 2009
+        This is not properly a stable release, but releasing a non-beta
+        version will force RT to create a Quiki queue.
+        This version adds:
          - Better attach handling;
          - Extra information saved during revision control;
-         - New page for revision control;
+         - New page for revision control analysis;
          - Quiki favicon (any designer out there?);
          - New 'index' page;
+         - image attach alignment;
 
 0.01_2 Wed Sep  9 12:30:09 WEST 2009
         This second beta pre-release features:
