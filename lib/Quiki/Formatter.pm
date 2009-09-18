@@ -221,9 +221,13 @@ sub _inlines {
        qr/'' ((?:\\'|[^']|'[^'])+) ''/x => sub { tt(_inlines($Quiki, $1)) },
 
        ## {{wiki: foo | desc }}
-       qr/\{\{wiki:([^}|]+)\|([^}]+)\}\}/        => sub { _inline_doc($Quiki, $1,$2) },
+       qr/\{\{(\s*)wiki:([^}|]+)\|([^}]+?)(\s*)\}\}/        => sub {
+           my $align = (length($1)&&length($2))?"center":(length($1)?"right":"left");
+           _inline_doc($Quiki, $2,$3, $align) },
        ## {{wiki: foo  }}
-       qr/\{\{wiki:([^}]+)\}\}/                  => sub { _inline_doc($Quiki, $1,$1) },
+       qr/\{\{(\s*)wiki:([^}]+?)(\s*)\}\}/                  => sub {
+           my $align = (length($1)&&length($2))?"center":(length($1)?"right":"left");
+           _inline_doc($Quiki, $2,$2, $align) },
 
        ## {{ foo | desc  }}
        qr/\{\{([^}|]+)\|([^}]+)\}\}/        => sub { img({alt => $2, src => $1}) },
@@ -245,12 +249,23 @@ sub _inlines {
 }
 
 sub _inline_doc {
-    my ($quiki, $id, $desc) = @_;
+    my ($quiki, $id, $desc, $align) = @_;
     my $node = $quiki->{node};
     my $mm = new File::MMagic;
     my $mime = $mm->checktype_filename("data/attach/$node/$id");
     if ($mime =~ /^image/) {
-        img({-alt=>$desc, -src=>"data/attach/$node/$id"})
+        given($align) {
+            when ("left") {
+                img({-alt=>$desc, -src=>"data/attach/$node/$id"})
+            }
+            when ("right") {
+                img({-alt=>$desc, -src=>"data/attach/$node/$id", -style=>"float: right"})
+            }
+            when ("center") {
+                div({-style=>"text-align: center"}, 
+                    img({-alt=>$desc, -src=>"data/attach/$node/$id"}))
+            }
+        }
     }
     else {
         a({-href=>"data/attach/$node/$id", -target=>"_new"},
