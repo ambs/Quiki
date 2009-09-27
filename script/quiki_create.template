@@ -32,13 +32,28 @@ print "Creating user database... ";
 if (!-f "$path/data/users.sqlite") {
     $email or $email = prompt "\n  Enter wiki administrator email address: ";
     my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
-    $dbh->do("CREATE TABLE auth (username PRIMARY KEY, password, email);");
+    $dbh->do("CREATE TABLE auth (username PRIMARY KEY, password, email, perm_group);");
 
     my $sth = $dbh->prepare("INSERT INTO auth VALUES (?, ?, ?);");
-    $sth->execute("admin", md5_hex("admin"), $email);
+    $sth->execute("admin", md5_hex("admin"), $email, 'admin');
     print "done.\n";
 } else {
-    print "skipped.\n";
+    my (@ccols, @row);
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
+
+    my $sth = $dbh->prepare("PRAGMA table_info(auth)");
+    $sth->execute;
+    while (@row = $sth->fetchrow_array) {
+        push @ccols, $row[1];
+    }
+
+    unless (grep { $_ eq "perm_group" } @ccols) {
+        $dbh->do("ALTER TABLE auth ADD COLUMN perm_group;");
+        $dbh->prepare("UPDATE auth SET perm_group = 'admin' WHERE username == 'admin';");
+        $dbh->prepare("UPDATE auth SET perm_group = 'user'  WHERE username != 'admin';");
+        $dbh->execute;
+    }
+    print "upgraded.\n";
 }
 
 

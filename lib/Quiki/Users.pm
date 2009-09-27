@@ -47,7 +47,7 @@ sub create {
     my ($class, $quiki, $username, $email) = @_;
     my $password = Text::Password::Pronounceable->generate(6, 10);
     my $dbh = _connect;
-    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?,?,?);");
+    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?,?,?,'user');");
     $sth->execute($username, md5_hex($password), $email);
 
     my $servername = "http://$quiki->{SERVER_NAME}$quiki->{SCRIPT_NAME}";
