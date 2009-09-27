@@ -238,7 +238,9 @@ sub run {
 
     my $username = ($self->{session}->param('authenticated')?
                     $self->{session}->param('username'):"guest");
+    ## XXX - Later, join these functions to query database only once
     my $email    = Quiki::Users->email($username);
+    my $urole    = Quiki::Users->role($username);
     my $theme    = $self->{theme} || 'default';
 
     my $template = HTML::Template::Pro->new(filename => "themes/$theme/wrapper.tmpl",
@@ -254,6 +256,7 @@ sub run {
                      REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
+                     USER_ROLE   => $urole,
                      PREVIEW     => $preview,
                     );
 

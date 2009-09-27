@@ -33,6 +33,16 @@ sub update {
     $sth->execute($username);
 }
 
+sub role {
+    my ($class, $username) = @_;
+    my $dbh = _connect;
+    my $sth = $dbh->prepare("SELECT perl_group FROM auth WHERE username = ?;");
+    $sth->execute($username);
+    my @row = $sth->fetchrow_array;
+
+    return @row ? $row[0] : undef ;
+}
+
 sub email {
     my ($class, $username) = @_;
     my $dbh = _connect;
@@ -132,6 +142,10 @@ This function creates a new user given an username and an e-mail address.
 =head2 email
 
 This function retrieves the e-mail address for a given username.
+
+=head2 role
+
+This function retrieves the user role for a given username.
 
 =head2 update
 
