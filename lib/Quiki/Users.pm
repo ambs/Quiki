@@ -36,7 +36,7 @@ sub update {
 sub role {
     my ($class, $username) = @_;
     my $dbh = _connect;
-    my $sth = $dbh->prepare("SELECT perl_group FROM auth WHERE username = ?;");
+    my $sth = $dbh->prepare("SELECT perm_group FROM auth WHERE username = ?;");
     $sth->execute($username);
     my @row = $sth->fetchrow_array;
 
