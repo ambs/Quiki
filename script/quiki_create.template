@@ -49,9 +49,8 @@ if (!-f "$path/data/users.sqlite") {
 
     unless (grep { $_ eq "perm_group" } @ccols) {
         $dbh->do("ALTER TABLE auth ADD COLUMN perm_group;");
-        $dbh->prepare("UPDATE auth SET perm_group = 'admin' WHERE username == 'admin';");
-        $dbh->prepare("UPDATE auth SET perm_group = 'user'  WHERE username != 'admin';");
-        $dbh->execute;
+        $dbh->do("UPDATE auth SET perm_group = 'admin' WHERE username == 'admin';");
+        $dbh->do("UPDATE auth SET perm_group = 'user'  WHERE username != 'admin';");
     }
     print "upgraded.\n";
 }
