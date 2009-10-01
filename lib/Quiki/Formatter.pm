@@ -221,12 +221,12 @@ sub _inlines {
        qr/'' ((?:\\'|[^']|'[^'])+) ''/x => sub { tt(_inlines($Quiki, $1)) },
 
        ## {{wiki: foo | desc }}
-       qr/\{\{(\s*)wiki:([^}|]+)\|([^} ]+)(\s*)\}\}/        => sub {
+       qr/\{\{(\s*)wiki:([^}|]+)\|([^}]+?)(\s*)\}\}/        => sub {
            my $align = (length($1) && length($4))?"center":(length($1)?"right":"left");
            _inline_doc($Quiki, $2,$3, $align)
        },
        ## {{wiki: foo  }}
-       qr/\{\{(\s*)wiki:([^} ]+)(\s*)\}\}/                  => sub {
+       qr/\{\{(\s*)wiki:([^}]+?)(\s*)\}\}/                  => sub {
            my $align = (length($1) && length($3))?"center":(length($1)?"right":"left");
            _inline_doc($Quiki, $2,$2, $align) },
 
