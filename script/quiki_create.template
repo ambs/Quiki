@@ -34,7 +34,7 @@ if (!-f "$path/data/users.sqlite") {
     my $dbh = DBI->connect("dbi:SQLite:dbname=$path/data/users.sqlite","","");
     $dbh->do("CREATE TABLE auth (username PRIMARY KEY, password, email, perm_group);");
 
-    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?, ?, ?, 'admin');");
+    my $sth = $dbh->prepare("INSERT INTO auth VALUES (?, ?, ?, ?);");
     $sth->execute("admin", md5_hex("admin"), $email, 'admin');
     print "done.\n";
 } else {
