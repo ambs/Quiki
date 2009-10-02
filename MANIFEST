@@ -6,6 +6,7 @@ lib/Quiki.pm
 lib/Quiki/Formatter.pm
 t/00-load.t
 t/01-formatter.t
+t/02-meta.t
 t/pod-coverage.t
 t/pod.t
 script/quiki_create.PL
