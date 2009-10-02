@@ -67,13 +67,14 @@ sub new {
     $self->{DOCROOT} = $ENV{SCRIPT_NAME};
     $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
+	$self->{QUIKI_ID} = $self->{name} . '_' . slurp 'data/quiki_id';
     return bless $self, $class;
 }
 
 sub run {
     my $self = shift;
 
-    $self->{sid} = cookie("QuikiSID") || undef;
+    $self->{sid} = cookie($self->{SCRIPT_ID}) || undef;
     $self->{session} = new CGI::Session(undef, $self->{sid}, undef);
 
     # XXX
@@ -213,7 +214,7 @@ sub run {
     }
 
 
-    my $cookie = cookie('QuikiSID' => $self->{session}->id);
+    my $cookie = cookie($self->{QUIKI_ID} => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
 
     my @trace;

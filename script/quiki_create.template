@@ -71,6 +71,12 @@ for my $d (@dirs) {
 
 print "done.\n";
 
+print "Generating Quiki identification... ";
+my $rand = int(rand(100000));
+open FH, ">$path/data/quiki_id" or die;
+print FH $rand;
+close FH;
+print "done.\n";
 
 sub create_files_from_data {
     my $path = shift;
