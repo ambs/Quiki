@@ -3,6 +3,8 @@
 use Test::More tests => 4;
 use File::Slurp 'slurp';
 use File::Path qw.make_path.;
+use YAML::Any qw.LoadFile Dump.;
+
 
 # setting up
 make_path 'data/meta/';
@@ -19,15 +21,11 @@ is_deeply( $default, $r, 'default values' );
 my $t = {'one'=>1,'two'=>2,'three'=>3};
 Quiki::Meta::set('test',$t);
 
-is(slurp("data/meta/test"), <<'EOO', 'set values');
----
-one: 1
-three: 3
-two: 2
-EOO
-$r = Quiki::Meta::get('test');
+my $l = LoadFile("data/meta/test");
+is_deeply( $t, $l, 'set values' );
 
 # 4
+$r = Quiki::Meta::get('test');
 is_deeply( $t, $r, 'id' );
 
 # clean up
