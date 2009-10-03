@@ -75,7 +75,7 @@ sub new {
 sub run {
     my $self = shift;
 
-    $self->{sid} = cookie($self->{SCRIPT_ID}) || undef;
+    $self->{sid} = cookie($self->{QUIKI_ID}) || undef;
     $self->{session} = new CGI::Session(undef, $self->{sid}, undef);
 
     # XXX
