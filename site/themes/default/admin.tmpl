@@ -2,7 +2,7 @@
 <tmpl_loop name='USERS'>
   <div class="quiki_index_line">
     <span style="width: 10%; display: inline-block">
-      <img style="vertical-align: middle" src="<tmpl_var name="gravatar"/>" width="24"/> <tmpl_var name="username"/>
+      <img style="vertical-align: middle" src="<tmpl_var name="gravatar"/>" width="24"/> <tmpl_var name="username"/> &lt;<a href="mailto:"<tmpl_var name="email"/>"><tmpl_var name="email"/></a>&gt;
     </span>
   </div>
 </tmpl_loop>
