@@ -1,6 +1,7 @@
 Revision history for Quiki
 
 0.02
+        - Added administration page to give/revoke admin privileges;
         - Fixed document attachment with spaces in descriptions;
         - Fixed problem when hosting more than one quiki in the same machine;
 
