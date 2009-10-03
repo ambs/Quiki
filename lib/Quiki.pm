@@ -46,7 +46,7 @@ Creates a new Quiki object.
 
 =head2 run
 
-Runs de Quiki.
+Runs the Quiki.
 
 =cut
 
@@ -68,7 +68,7 @@ sub new {
     $self->{DOCROOT} = $ENV{SCRIPT_NAME};
     $self->{DOCROOT} =~ s!/[^/]+$!/!;
 
-	$self->{QUIKI_ID} = $self->{name} . '_' . slurp 'data/quiki_id';
+    $self->{QUIKI_ID} = $self->{name} . '_' . slurp 'data/quiki_id';
     return bless $self, $class;
 }
 
