@@ -22,6 +22,8 @@
   <tmpl_include name='edit.tmpl'/>
 <tmpl_elsif expr="ACTION eq 'index'">
   <tmpl_include name='index.tmpl'/>
+<tmpl_elsif expr="ACTION eq 'admin_page'">
+  <tmpl_include name='admin.tmpl'/>
 <tmpl_elsif expr="ACTION eq 'history'">
   <tmpl_include name='history.tmpl'/>
 <tmpl_else>

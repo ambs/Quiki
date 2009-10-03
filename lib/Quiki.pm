@@ -2,6 +2,8 @@ package Quiki;
 
 use feature ':5.10';
 
+use Data::Dumper;
+
 use Quiki::Formatter;
 use Quiki::Meta;
 use Quiki::Users;
@@ -10,7 +12,6 @@ use Quiki::Pages;
 use CGI qw/:standard *div/;
 use CGI::Session;
 use HTML::Template::Pro;
-use Gravatar::URL;
 use File::MMagic;
 use File::Slurp 'slurp';
 
@@ -263,7 +264,7 @@ sub run {
 
     if ($action eq 'profile_page') {
         $template->param(EMAIL       => $email,
-                         GRAVATAR    => gravatar_url(email => $email));
+                         GRAVATAR    => Quiki::Users->gravatar($username));
     }
 
     if ($action eq 'edit' && 
@@ -319,19 +320,23 @@ sub run {
             if ($i != $self->{meta}{rev}) {
                 $entry->{AUTHOR} = $self->{meta}{revs}{$i}{last_update_by};
                 $entry->{DATE} =  $self->{meta}{revs}{$i}{last_updated_in};
-                $entry->{GRAVATAR} = gravatar_url(email => Quiki::Users->email($self->{meta}{revs}{$i}{last_update_by}));
+                $entry->{GRAVATAR} = Quiki::Users->gravatar($self->{meta}{revs}{$i}{last_update_by});
             }
             else {
                 $entry->{AUTHOR} = $self->{meta}{last_update_by};
                 $entry->{DATE} =  $self->{meta}{last_updated_in};
-                $entry->{GRAVATAR} = gravatar_url(email => Quiki::Users->email($self->{meta}{last_update_by}));
+                $entry->{GRAVATAR} = Quiki::Users->gravatar($self->{meta}{last_update_by});
             }
             push @revs, $entry;
         }
         $template->param(REVISIONS => \@revs);
     }
+    elsif ($action eq 'admin_page') {
+        my $users = Quiki::Users->list;
+        $template->param(USERS => $users);
+    }
     elsif ($action eq 'index') {
-        opendir(DIR,'data/content/');
+        opendir DIR, 'data/content/';
         my @pages;
         for my $f (sort { lc($a) cmp lc($b) } readdir(DIR)) {
             unless ($f=~/^\./) {
@@ -341,11 +346,11 @@ sub run {
                     NAME => $f,
                     AUTHOR => $meta->{last_update_by},
                     DATE => $meta->{last_updated_in},
-                    GRAVATAR => gravatar_url(email => Quiki::Users->email($meta->{last_update_by})),
+                    GRAVATAR => Quiki::Users->gravatar($meta->{last_update_by}),
                   }
               }
         }
-        closedir(DIR);
+        closedir DIR;
         $template->param(PAGES=>\@pages);
     }
     elsif ($action eq 'diff') {
@@ -368,7 +373,7 @@ sub run {
     unless ($action eq 'edit') {
         my $L_META;
         if ($self->{meta}{last_update_by}) {
-            my $url = gravatar_url(email => Quiki::Users->email($self->{meta}{last_update_by}));
+            my $url = Quiki::Users->gravatar($self->{meta}{last_update_by});
             $L_META = img({-src => $url, -width => '24', -style => 'vertical-align: middle'});
             $L_META .= sprintf("&nbsp;Last edited by %s, in %s",
                                $self->{meta}{last_update_by},
