@@ -4,5 +4,33 @@
     <span style="width: 25%; display: inline-block">
       <img style="vertical-align: middle" src="<tmpl_var name="gravatar"/>" width="24"/> <tmpl_var name="username"/> &lt;<a href="mailto:"<tmpl_var name="email"/>"><tmpl_var name="email"/></a>&gt;
     </span>
+    <span style="width: 25%; display: inline-block">
+      <form>
+        <label>Admin
+        <tmpl_if expr="perm_group eq 'admin'">
+          <input type="radio" name="perms" value="admin" checked="1"/>
+        <tmpl_else/>
+          <input type="radio" name="perms" value="admin"/>
+        </tmpl_if></label>
+
+        <label>User
+        <tmpl_if expr="perm_group eq 'user'">
+          <input type="radio" name="perms" value="user" checked="1"/>
+        <tmpl_else/>
+          <input type="radio" name="perms" value="user"/>
+        </tmpl_if></label>
+
+        <label>Reader
+        <tmpl_if expr="perm_group eq 'reader'">
+          <input type="radio" name="perms" value="reader" checked="1"/>
+        <tmpl_else/>
+          <input type="radio" name="perms" value="reader"/>
+        </tmpl_if></label>
+
+        <input type="hidden" name="edit_user" value="<tmpl_var name="username"/>"/>
+        <input type="submit" value="Save"/>
+        <input type="submit" value="Delete"/>
+      </form>
+    </span>
   </div>
 </tmpl_loop>
