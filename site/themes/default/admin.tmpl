@@ -7,26 +7,25 @@
     <span style="width: 30%; display: inline-block">
       <form>
         <input type="hidden" name="action" value="update_perms"/>
-        <label>Admin
+        <label>
         <tmpl_if expr="perm_group eq 'admin'">
           <input type="radio" name="perms" value="admin" checked="1"/>
         <tmpl_else/>
           <input type="radio" name="perms" value="admin"/>
-        </tmpl_if></label>
+        </tmpl_if>Admin</label>
 
-        <label>User
+        <label>
         <tmpl_if expr="perm_group eq 'user'">
           <input type="radio" name="perms" value="user" checked="1"/>
         <tmpl_else/>
           <input type="radio" name="perms" value="user"/>
-        </tmpl_if></label>
+        </tmpl_if>User</label>
 
-        <label>Reader
-        <tmpl_if expr="perm_group eq 'reader'">
+        <label><tmpl_if expr="perm_group eq 'reader'">
           <input type="radio" name="perms" value="reader" checked="1"/>
         <tmpl_else/>
           <input type="radio" name="perms" value="reader"/>
-        </tmpl_if></label>
+        </tmpl_if>Reader</label>
 
         <input type="hidden" name="edit_user" value="<tmpl_var name="username"/>"/>
         <input type="submit" name="admin_action" value="Save"/>

@@ -91,7 +91,21 @@ sub run {
     if ($action eq 'update_perms') {
         my $username = param('edit_user');
         if (param("admin_action") eq "Delete") {
-            Quiki::Users->delete($username);
+            if ($username eq "admin") {
+                $self->{session}->param('msg', "Admin account can not be deleted.");
+            } else {
+                Quiki::Users->delete($username);
+                $self->{session}->param('msg', "User '$username' deleted.");
+            }
+        }
+        if (param("admin_action") eq "Save") {
+            my $perm = param("perms");
+            if ($username eq "admin") {
+                $self->{session}->param('msg', "Admin account righs can not be changed.");
+            } else {
+                Quiki::Users->update($username, perm_group => $perm);
+                $self->{session}->param('msg', "Permission rights changed for user '$username'.");
+            }
         }
         $action = 'admin_page';
     }
