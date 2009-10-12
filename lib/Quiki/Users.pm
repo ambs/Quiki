@@ -183,6 +183,10 @@ This function retrieves the e-mail address for a given username.
 
 This function retrieves the user role for a given username.
 
+=head2 delete
+
+Delestes information for a specific user. No questions. Just does it.
+
 =head2 update
 
 This function is used to update user's information.
