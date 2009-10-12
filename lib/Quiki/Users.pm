@@ -38,7 +38,7 @@ sub gravatar {
 
 sub update {
     my ($class, $username, %info) = @_;
-    my @valid_fields = qw.password email.;
+    my @valid_fields = qw.password email perm_group.;
 
     $info{password} = md5_hex($info{password}) if exists($info{password});
 
