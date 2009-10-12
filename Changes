@@ -1,11 +1,12 @@
+
 Revision history for Quiki
 
-0.02_1
+0.02_1 Mon Oct 12 18:23:51 WEST 2009
         - Added administration page to give/revoke admin privileges and delete users;
         - Fixed document attachment with spaces in descriptions;
         - Fixed problem when hosting more than one quiki in the same machine;
 
-0.01  Fri Sep 18 12:24:03 WEST 2009
+0.01   Fri Sep 18 12:24:03 WEST 2009
         This is not properly a stable release, but releasing a non-beta
         version will force RT to create a Quiki queue.
         This version adds:
