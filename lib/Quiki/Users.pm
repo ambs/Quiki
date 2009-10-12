@@ -75,6 +75,13 @@ sub email {
     return @row ? $row[0] : undef ;
 }
 
+sub delete {
+    my ($class, $username) = @_;
+    my $dbh = _connect;
+    my $sth = $dbh->prepare("DELETE FROM auth WHERE username = ?;");
+    $sth->execute($username);
+}
+
 sub create {
     my ($class, $quiki, $username, $email) = @_;
     my $password = Text::Password::Pronounceable->generate(6, 10);

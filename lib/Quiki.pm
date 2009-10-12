@@ -88,6 +88,14 @@ sub run {
     $self->{meta} = Quiki::Meta::get($node);
     $self->{node} = $node;
 
+    if ($action eq 'update_perms') {
+        my $username = param('edit_user');
+        if (param("admin_action") eq "Delete") {
+            Quiki::Users->delete($username);
+        }
+        $action = 'admin_page';
+    }
+
     if ($action eq 'save_profile' && param('submit') =~ /^Save/) {
         if (param("new_password1") && (param("new_password1") ne param("new_password2"))) {
             $self->{session}->param('msg', "Passwords do not match. Try again!");

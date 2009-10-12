@@ -5,9 +5,7 @@ Add entries. Put your name on it if you are planning to fix/implement
 it.  Leave it without name if you know that should be done but are not
 motivated to implement it.
 
-- Handle meta history during rollback
-
-- [smash] handle revision diff on the new revision page
+- add a javascript yes/no box on the admin page when deleting user.
 
 - [ambs] probably ask for the old password when changing the password.
 

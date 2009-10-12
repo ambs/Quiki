@@ -6,6 +6,7 @@
     </span>
     <span style="width: 25%; display: inline-block">
       <form>
+        <input type="hidden" name="action" value="update_perms"/>
         <label>Admin
         <tmpl_if expr="perm_group eq 'admin'">
           <input type="radio" name="perms" value="admin" checked="1"/>
@@ -28,8 +29,8 @@
         </tmpl_if></label>
 
         <input type="hidden" name="edit_user" value="<tmpl_var name="username"/>"/>
-        <input type="submit" value="Save"/>
-        <input type="submit" value="Delete"/>
+        <input type="submit" name="admin_action" value="Save"/>
+        <input type="submit" name="admin_action" value="Delete"/>
       </form>
     </span>
   </div>
