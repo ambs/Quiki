@@ -5,9 +5,13 @@ Add entries. Put your name on it if you are planning to fix/implement
 it.  Leave it without name if you know that should be done but are not
 motivated to implement it.
 
-- add a javascript yes/no box on the admin page when deleting user.
+- Toolbar para notação durante edição
 
-- [ambs] probably ask for the old password when changing the password.
+- imagens com possibilidade de scaling a-la-dokuwiki 
 
-- [ambs] add a configuration flag when to activate or not Gravatars.
+- formatação de listas 'lazy' nx(2+1?) espaco?
+
+- probably ask for the old password when changing the password.
+
+- add a configuration flag when to activate or not Gravatars.
 
