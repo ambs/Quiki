@@ -15,6 +15,7 @@ while(<L>) {
     chomp;
     next unless $_;
     my ($name,$props) = split /\s+/;
+    print STDERR " - codifying $name\n";
     my @props = split /,/,$props;
     my %props;
     @props{@props} = @props;

@@ -1,6 +1,5 @@
-css/gritter.css                    replace
 css/local.css
-css/quiki.css                      replace
+quiki.conf
 data/content/index                 
 images/gritter-bg-tile.png         replace,binary
 images/gritter-bottom.png          replace,binary
@@ -8,13 +7,14 @@ images/gritter-close-ie6.gif       replace,binary
 images/gritter-close.png           replace,binary
 images/gritter-top.png             replace,binary
 images/grippie.png                 replace,binary
+css/gritter.css                    replace
+css/quiki.css                      replace
 index.html                         replace
 js/jquery.gritter.js               replace
 js/jquery.js                       replace
 js/quiki.js                        replace
 js/jquery.textarearesizer.js       replace
 quiki.cgi                          replace
-quiki.conf
 css/textarea.css                   replace
 css/default_theme.css              replace
 themes/default/header.tmpl         replace

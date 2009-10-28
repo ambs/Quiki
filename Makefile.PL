@@ -40,3 +40,13 @@ WriteMakefile(
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Quiki-*' },
 );
+
+package MY;
+sub processPL {
+    my $self = shift;
+
+    my $make = $self->SUPER::processPL(@_);
+    $make =~ s{pm_to_blib}{pm_to_blib site.lst script/quiki_create.template};
+
+    return $make;
+}
