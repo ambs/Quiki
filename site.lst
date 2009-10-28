@@ -1,12 +1,6 @@
 css/local.css
 quiki.conf
 data/content/index                 
-images/gritter-bg-tile.png         replace,binary
-images/gritter-bottom.png          replace,binary
-images/gritter-close-ie6.gif       replace,binary
-images/gritter-close.png           replace,binary
-images/gritter-top.png             replace,binary
-images/grippie.png                 replace,binary
 css/gritter.css                    replace
 css/quiki.css                      replace
 index.html                         replace
@@ -37,3 +31,9 @@ images/doc_pdf.png                 replace
 themes/default/history.tmpl        replace
 images/favicon.ico                 replace
 themes/default/admin.tmpl          replace
+images/gritter-bg-tile.png         replace,binary
+images/gritter-bottom.png          replace,binary
+images/gritter-close-ie6.gif       replace,binary
+images/gritter-close.png           replace,binary
+images/gritter-top.png             replace,binary
+images/grippie.png                 replace,binary
