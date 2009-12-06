@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 40;
+use Test::More tests => 41;
 
 use_ok("Quiki::Formatter");
 
@@ -473,4 +473,26 @@ is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 {{http://www.xpto.foo/foo.png}}
 EOI
 <p><img alt="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" /></p>
+EOO
+
+
+# The space in the example bellow IS IMPORTANT
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+  * one
+  * two
+ 
+  * one
+  * two
+EOI
+<ul>
+<li> one</li>
+<li> two</li>
+</ul>
+
+
+<ul>
+<li> one</li>
+<li> two</li>
+</ul>
+
 EOO
