@@ -116,6 +116,7 @@ sub _format_list {
 sub _format_chunk {
     my ($Quiki, $chunk) = @_;
     $chunk =~ s/\n$//;
+	$chunk =~ s/\n\s{1,2}\n/\n\n/g;
     $chunk =~ s/^\n//;
     $chunk = _protect($chunk);
 
