@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 41;
+use Test::More tests => 42;
 
 use_ok("Quiki::Formatter");
 
@@ -494,5 +494,14 @@ EOI
 <li> one</li>
 <li> two</li>
 </ul>
+
+EOO
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+| [[http://www.google.com|a]] | b | c |
+EOI
+<table class="quiki_table">
+<tr><td style="text-align: center"> <a href="http://www.google.com">a</a> </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
+</table>
 
 EOO

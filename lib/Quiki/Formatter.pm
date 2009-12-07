@@ -49,7 +49,7 @@ sub _format_table {
         if ($1 eq "^") {
             $table .= Tr(th([map { _inlines($Quiki, $_) }  split /\^/, $c[0]])) . "\n";
         } else {
-            $table .= Tr(join(" ",map { _tds($Quiki, $_) } split /\|/, $c[0])) . "\n";
+            $table .= Tr(join(" ",map { _tds($Quiki, $_) } split /\|(?![^\[]+\]\])/, $c[0])) . "\n";
         }
         shift @c;
     }
