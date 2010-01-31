@@ -280,6 +280,7 @@ sub run {
                      REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
                      DOCROOT     => $self->{DOCROOT},
+                     OPENSITE    => $self->{opensite} || 1,
                      USER_ROLE   => $urole,
                      PREVIEW     => $preview,
                     );
