@@ -421,7 +421,47 @@ sub run {
     $template->output(print_to => \*STDOUT);
 }
 
-=head1 SYNTAX
+=head1 QUIKI CONFIGURATION FILE
+
+After a Quiki wiki is deployed with C<< quiki_create >> a
+C<< quiki.conf >> file can be edited to configure Quiki behavior. While
+later versions might offer a web interface to configure them, at
+present you need to use a text editor and change the file.  Note that
+it is a Perl file. Therefore it should parse correctly by Perl. You
+can check it using C<< perl -c quiki.conf >>.
+
+Quiki configuration file supports the following keys:
+
+=over 4
+
+=item name
+
+The display name for your wiki
+
+=item theme
+
+The theme to be used. Note that at the time we are writing this only
+the C<< default >> theme exists
+
+=item index
+
+The name of the main quiki page. It defaults to C<< index >>.
+
+=item opensite
+
+This is a boolean value. By default it is true (1), meaning the
+register button will be available to everybody visiting your
+Quiki. Turn it off setting it to false (0).
+
+At the current moment there isn't any other way to register. Therefore
+you should turn registering off only after all users have an account,
+or you need to turn it off manually everytime a new user has to
+register.
+
+=back
+
+
+=head1 QUIKI SYNTAX
 
 Quiki wiki syntax is very similar to other wiki, and especially
 similar with dokuwiki syntax.
