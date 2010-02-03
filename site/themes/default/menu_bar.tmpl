@@ -9,6 +9,9 @@
       <input type="submit" name="submit" value="Preview" />
       &nbsp;|&nbsp;
       <input type="submit" name="submit" value="Save" />
+      &nbsp;|&nbsp;
+      <button type="button" onClick="window.open('<TMPL_VAR NAME="WIKISCRIPT"/>?help=syntax')">Syntax Help</button>
+      <input type="submit" name="submit" value="Syntax Help" />
       </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
