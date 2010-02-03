@@ -281,6 +281,7 @@ sub run {
                      LAST_REV    => (($self->{rev} || 0) == ($self->{meta}{rev} || 0)),
                      REV         => $self->{rev},
                      BREADCUMBS  => $breadcumbs,
+                     SERVERNAME  => $self->{SERVER_NAME},
                      DOCROOT     => $self->{DOCROOT},
                      OPENSITE    => $self->{opensite} // 1,
                      USER_ROLE   => $urole,

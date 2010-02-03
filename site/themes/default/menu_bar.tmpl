@@ -10,7 +10,7 @@
       &nbsp;|&nbsp;
       <input type="submit" name="submit" value="Save" />
       &nbsp;|&nbsp;
-      <button type="button" onClick="window.open('<TMPL_VAR NAME="DOCROOT"/>/help/syntax')">Syntax Help</button>
+      <button type="button" onClick="window.open('<TMPL_VAR NAME="SERVERROOT"/><TMPL_VAR NAME="DOCROOT"/>help/syntax.html')">Syntax Help</button>
       </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
