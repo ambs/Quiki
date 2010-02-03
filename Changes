@@ -1,6 +1,9 @@
 
 Revision history for Quiki
 
+        - Added option to close user registering link;
+        - Added documentation page to every wiki;
+
 0.02_1 Mon Oct 12 18:23:51 WEST 2009
         - Added administration page to give/revoke admin privileges and delete users;
         - Fixed document attachment with spaces in descriptions;
