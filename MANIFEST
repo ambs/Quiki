@@ -45,6 +45,7 @@ site/themes/default/index.tmpl
 lib/Quiki/Meta.pm
 lib/Quiki/Users.pm
 lib/Quiki/Pages.pm
+lib/Quiki/Syntax.pod
 site/js/quiki.js
 site/themes/default/upload_page.tmpl
 site/images/document.png
