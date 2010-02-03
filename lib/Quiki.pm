@@ -83,6 +83,7 @@ sub run {
     my $action = param('action') || '';
 
     # XXX -- temos de proteger mais coisas, possivelmente
+    #        E era giro termos filename e displayname
     $node =~ s/\s/_/g;
 
     $self->{meta} = Quiki::Meta::get($node);
@@ -131,7 +132,7 @@ sub run {
             if (param("filename$_") && param("name$_")) {
                 my $id = param("name$_");
                 my $path = "data/attach/$node";
-                (! -f $path) and mkdir $path and chown 0777, $path;
+                -f $path or (mkdir $path and chown 0777, $path);
                 open OUT, ">", "$path/$id" or die "Can't create out file: $!";
                 my $filename = param("filename$_");
                 my ($buffer, $bytesread);
