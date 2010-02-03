@@ -14,6 +14,7 @@ use CGI::Session;
 use HTML::Template::Pro;
 use File::MMagic;
 use File::Slurp 'slurp';
+use Pod::Html;
 
 use warnings;
 use strict;

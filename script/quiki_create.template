@@ -9,6 +9,8 @@ use File::Path qw.make_path.;
 use MIME::Base64;
 use Digest::MD5 'md5_hex';
 use ExtUtils::MakeMaker;
+use Pod::Simple::Search;
+use Pod::Simple::XHTML;
 use DBI;
 
 our ($force, $email);
@@ -27,6 +29,7 @@ if (!-d $path) {
 
 print "Creating files:\n";
 create_files_from_data($path);
+create_html_files();
 
 print "Creating user database... ";
 if (!-f "$path/data/users.sqlite") {
@@ -132,6 +135,17 @@ sub create_files_from_data {
     }
 }
 
+
+sub create_html_files {
+    my $doc = Pod::Simple::Search->new->find('Quiki::Syntax');
+    my $parser = Pod::Simple::XHTML->new();
+    mkdir "$path/help";
+    open HELP, ">$path/help/syntax.html" or die;
+    $parser->output_fh(*HELP);
+    $parser->parse_file($doc);
+    close HELP;
+    print " - help/syntax.html... created.\n";
+}
 
 =head1 NAME
 

@@ -25,6 +25,7 @@ WriteMakefile(
                   'MIME::Base64'   => 0,
                   'DBD::SQLite'    => 0,
                   'Digest::MD5'    => 0,
+                  'Pod::Simple'    => 0,
                   'DBI'            => 0,
                   'Regexp::Common' => '2.122',
                   'Email::Sender'  => 0,
