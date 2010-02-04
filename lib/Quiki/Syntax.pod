@@ -4,6 +4,8 @@
 Quiki wiki syntax is very similar to other wiki, and especially
 similar with dokuwiki syntax.
 
+=head2 Basics
+
 =over 4
 
 =item *
@@ -22,7 +24,9 @@ To link the Internet use just the URL and it should be highlighted
 
 You can also create named links with: C<[[URL|URL Description]]>
 
-=item * Basic formatting:
+=back
+
+=head2 Basic formatting
 
 =over 4
 
@@ -44,9 +48,7 @@ Typewriter: C<< ''typewriter'' >>;
 
 =back
 
-=item *
-
-Six levels of headings:
+=head2 Headings
 
 =over 4
 
@@ -60,15 +62,7 @@ Weaker: C<= title =>
 
 =back
 
-=item *
-
-Hard rules are obtained with ten or more dashes: C<--------------->
-
-=item *
-
-Code/verbatim zones are blocks with all lines indented three spaces.
-
-=item * Lists:
+=head2 Lists
 
 =over 4
 
@@ -90,9 +84,7 @@ Deeper levels have multiples of two spaces indentation
 
 =back
 
-=item *
-
-Tables:
+=head2 Tables
 
 =over 4
 
@@ -126,5 +118,61 @@ put the content at the center, with spaces both sides, to get center alignment: 
 
 =back
 
+=head2 Images
+
+=over 4
+
+=item *
+
+Pictures are delimited by a pair or curly braces: C<< {{ http://www.google.com/images/logo.gif }} >>
+
+=item *
+
+You can add a description to the image. It will be used as alternative text (and tooltip text): C<< {{ http://www.google.com/images/logo.gif | Google logo }} >>
+
+=item *
+
+Alignment can be obtained with spaces:
+
+=over 4
+
+=item Default alignment
+
+For the default alignment do not add any extra space after the opening pair of curly braces or before the closing pair of curly braces: C<< {{http://www.google.com/images/logo.gif}} >>
+
+=item Centering
+
+To center the image add spaces both sides, after the opening curly braces and before the closing curly braces: C<< {{  http://www.google.com/images/logo.gif }} >>
+
+=item Float left
+
+To float the image at the left add spaces  before the closing curly braces: C<< {{http://www.google.com/images/logo.gif }} >>
+
+Note that if you have a description, spaces will go B<after> the descriptions, right before the closing braces.
+
+=item Float right
+
+To float the image at the right add spaces  after the opening curly braces: C<< {{  http://www.google.com/images/logo.gif}} >>
+
 =back
+
+=back
+
+=head2 Attachments
+
+Attachments follow the same philosophy of images but instead of the image URL you should add the attachment name preceded by C<<wiki:>> as: C<< {{wiki:picture|Picture of a dog}} >>.
+=head2 Other
+
+=over 4
+
+=item *
+
+Hard rules are obtained with ten or more dashes: C<--------------->
+
+=item *
+
+Code/verbatim zones are blocks with all lines indented three spaces.
+
+=back
+
 
