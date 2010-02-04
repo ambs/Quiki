@@ -160,7 +160,8 @@ To float the image at the right add spaces  after the opening curly braces: C<< 
 
 =head2 Attachments
 
-Attachments follow the same philosophy of images but instead of the image URL you should add the attachment name preceded by C<<wiki:>> as: C<< {{wiki:picture|Picture of a dog}} >>.
+Attachments follow the same philosophy of images but instead of the image URL you should add the attachment name preceded by C<< wiki: >> as: C<< {{wiki:picture|Picture of a dog}} >>.
+
 =head2 Other
 
 =over 4
