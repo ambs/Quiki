@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 42;
+use Test::More tests => 44;
 
 use_ok("Quiki::Formatter");
 
@@ -472,7 +472,21 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 {{http://www.xpto.foo/foo.png}}
 EOI
-<p><img alt="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" /></p>
+<p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" alt="http://www.xpto.foo/foo.png" /></p>
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+{{  http://www.xpto.foo/foo.png}}
+EOI
+<p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" style="float: right" alt="http://www.xpto.foo/foo.png" /></p>
+EOO
+
+
+is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+{{http://www.xpto.foo/foo.png  }}
+EOI
+<p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" style="float: left" alt="http://www.xpto.foo/foo.png" /></p>
 EOO
 
 
