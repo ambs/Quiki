@@ -67,7 +67,7 @@ Nuno Carvalho, E<lt>smash@cpan.orgE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2009 Alberto Simoes and Nuno Carvalho.
+Copyright 2009-2010 Alberto Simoes and Nuno Carvalho.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

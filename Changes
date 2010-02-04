@@ -1,6 +1,9 @@
 
 Revision history for Quiki
 
+0.02   Thu Feb  4 16:28:10 WEST 2010
+        - Fixed alignment problems with images;
+        - Added attach information to documentation page;
         - Added option to close user registering link;
         - Added documentation page to every wiki;
 
