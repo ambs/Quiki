@@ -30,6 +30,15 @@ sub locked {
     }
 }
 
+
+sub locked_for_user {
+    my ($class, $node, $user) = @_;
+    return 0 unless $user;
+    return 0 unless -f "data/locks/$node";
+    return 0 unless -M "data/locks/$node" < 0.01;
+    return (slurp("data/locks/$node") eq $user);
+}
+
 sub lock {
     my ($class, $node, $user) = @_;
 

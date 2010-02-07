@@ -213,7 +213,7 @@ sub run {
 
     # XXX
     if ($action eq 'save' && param("submit") eq "Save") {
-        if (Quiki::Pages->locked($node, $self->{sid})) {
+        if (Quiki::Pages->locked_for_user($node, $self->{sid})) {
             my $text = param('text') // '';
             Quiki::Pages->check_in($self, $node, $text);
             Quiki::Pages->unlock($node);
