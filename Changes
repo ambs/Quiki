@@ -1,6 +1,8 @@
 
 Revision history for Quiki
 
+        - Fixed old bug with Locks;
+
 0.02   Thu Feb  4 16:28:10 WEST 2010
         - Fixed alignment problems with images;
         - Added attach information to documentation page;
