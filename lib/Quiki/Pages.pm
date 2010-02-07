@@ -135,34 +135,41 @@ Quiki::Users - Quiki pages manager
 =head1 DESCRIPTION
 
 This module is handles the needed operations to maintain the pages
-information. It is used to gain and free locks to edit pages, and 
+information. It is used to gain and free locks to edit pages, and
 implements a simple revision system for page's content.
 
 =head2 lock
 
-This function is used to gain a lock to edit a given page.
+This method is used to gain a lock to edit a given page.
 
 =head2 unlock
 
-This function is used to free a lock to edit a given page.
+This method is used to free a lock to edit a given page.
 
 =head2 locked
 
-This function is used to verify if exists lock to a given page.
+This method is used to verify if exists a lock to a given page.  It
+returns false (page not locked) if there isn't a lock or, if a user is
+supplied and that user owns the lock.
+
+=head locked_for_user
+
+This method is similar to C<< locked >> and needs that a user is supplied.
+It returns true only if the page is locked by the supplied user.
 
 =head2 check_in
 
-This function is used to update new content to a page. It creates
+This method is used to update new content to a page. It creates
 a diff file and increments the revision number.
 
 =head2 check_out
 
-This function returns the content for a given page and revision
+This method returns the content for a given page and revision
 number.
 
 =head2 calc_diff
 
-This function calculates the diff between any two given revisions for
+This method calculates the diff between any two given revisions for
 a page.
 
 =head1 SEE ALSO
