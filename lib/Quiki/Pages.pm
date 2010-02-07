@@ -14,25 +14,18 @@ sub unlock {
 
 sub locked {
     my ($class, $node, $user) = @_;
-    print STDERR "Checking lock...\n";
     if (-f "data/locks/$node") {
-        print STDERR "Lock file does exist!\n";
         if (-M "data/locks/$node" < 0.01) {
-            print STDERR "Recent Lock!\n";
             if ($user) {
-                print STDERR "Checking lock file contents...\n";
                 return (slurp("data/locks/$node") eq $user);
             }
             else {
-                print STDERR "User not supplied... locked!\n";
                 return 1;
             }
         } else {
-            print STDERR "Lock too old!\n";
             return 0;
         }
     } else {
-        print STDERR "Lock file does not exist!\n";
         return 0;
     }
 }
