@@ -152,7 +152,7 @@ This method is used to verify if exists a lock to a given page.  It
 returns false (page not locked) if there isn't a lock or, if a user is
 supplied and that user owns the lock.
 
-=head locked_for_user
+=head2 locked_for_user
 
 This method is similar to C<< locked >> and needs that a user is supplied.
 It returns true only if the page is locked by the supplied user.
