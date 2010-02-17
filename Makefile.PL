@@ -22,6 +22,7 @@ WriteMakefile(
                   'URI::Escape'    => 0,
                   'YAML::Any'      => 0,
                   'File::Slurp'    => 0,
+                  'File::Path'     => '2.08',
                   'MIME::Base64'   => 0,
                   'DBD::SQLite'    => 0,
                   'Digest::MD5'    => 0,
