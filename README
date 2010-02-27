@@ -18,7 +18,7 @@ There are already a lot of Wikis in Perl:
     * mojomojo — catalyst based. More than 200 Perl modules of dependencies
     * socialtext — commercial
 
-We fell the Perl community is lacking a simple yet powerful
+We felt the Perl community is lacking a simple yet powerful
 wiki. Something like DokuWiki. If you ask why not to use DokuWiki, we
 would love to, but having Perl projects hosted in a PHP Wiki is not
 positive.
