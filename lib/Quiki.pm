@@ -317,17 +317,16 @@ sub run {
                     $desc{$1} = slurp "data/attach/$node/$f";
                 }
                 else {
+                    ## XXX - TODO - Put this elsewhere
                     my $mime = $mm->checktype_filename("data/attach/$node/$f");
                     my $mimeimg;
                     given ($mime) {
                         when (/image/) {
                             $mimeimg = "images.png"
                         }
-                        when (/pdf/) {
-                            $mimeimg = "doc_pdf.png"
-                        }
-                        default {
-                            $mimeimg = "page.png"
+                        when (/pdf/) { $mimeimg = "mime_pdf.png" }
+                        when (/zip/) { $mimeimg = "mime_zip.png" }
+                        default      { $mimeimg = "page.png"     }
                         }
                     }
                     push @attachs, { ID => $f, MIME => $mime, MIMEIMG => $mimeimg};

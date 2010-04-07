@@ -27,7 +27,8 @@ images/document.png                replace
 images/paste.png                   replace
 images/images.png                  replace
 images/page.png                    replace
-images/doc_pdf.png                 replace
+images/mime_pdf.png                replace
+images/mime_zip.png                replace
 themes/default/history.tmpl        replace
 images/favicon.ico                 replace
 themes/default/admin.tmpl          replace
