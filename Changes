@@ -1,6 +1,8 @@
 
 Revision history for Quiki
 
+        - Remain on current node when logging in on registering;
+
 0.03   Wed Apr  7 21:36:01 WEST 2010
         - Fixed old bug with Locks;
         - Fixed bug with uploading documents that gone all to the main node;
