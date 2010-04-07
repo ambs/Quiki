@@ -1,7 +1,10 @@
 
 Revision history for Quiki
 
+0.03   Wed Apr  7 21:36:01 WEST 2010
         - Fixed old bug with Locks;
+        - Fixed bug with uploading documents that gone all to the main node;
+        - Fixed bug with formatting more than one URL per block.
 
 0.02   Thu Feb  4 16:28:10 WEST 2010
         - Fixed alignment problems with images;
