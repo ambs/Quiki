@@ -83,12 +83,14 @@
 		<TMPL_ELSE>
                         <TMPL_IF NAME="OPENSITE">
   			   <form method="post" enctype="multipart/form-data">
+                           <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
 			   <input type="hidden" name="action" value="register_page"  />
 			   <input type="submit" name="submit" value="Sign up" />
 			   </form>
 			  &nbsp;|&nbsp;
                         </TMPL_IF>
 			<form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
 			<input type="submit" name="submit" value="Log in" />
 			<input type="hidden" name="action" value="login_page"  />
 			</form>
