@@ -190,13 +190,13 @@ sub _format_verbatim {
     return $pre . ( @c ? ("\n\n" . _format_chunk($Quiki, join("\n", @c))) : "");
 }
 
+our %SAVES;
+our $SAVES;
+
 sub _inlines {
     my ($Quiki, $chunk) = @_;
 
     my $script = $Quiki->{SCRIPT_NAME};
-
-    my %SAVES;
-    my $SAVES;
 
     sub _saveit {
         my $text = shift;
