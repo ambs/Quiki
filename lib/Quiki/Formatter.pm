@@ -195,21 +195,32 @@ sub _inlines {
 
     my $script = $Quiki->{SCRIPT_NAME};
 
+    my %SAVES;
+    my $SAVES;
+
+    sub _saveit {
+        my $text = shift;
+        $SAVES++;
+        $SAVES{"#$SAVES"} = $text;
+        return "#$SAVES";
+    }
+    sub _loadit { $SAVES{$_[0]} }
+
     my @inline =
       (
        ## [[http://foo]] -- same as http://foo ?
-       qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { a({-href=>$1}, $1) },
+       qr/\[\[(\w+:\/\/[^\]|]+)\]\]/            => sub { _saveit(a({-href=>$1}, $1)) },
        ## [[nodo]]
        qr/\[\[([^\]|]+)\]\]/                    => sub {
-           a({-href=>"$script?node=".uri_escape($1) }, $1)
+           _saveit(a({-href=>"$script?node=".uri_escape($1) }, $1))
        },
        ## [[protocol://foo|descricao]]
        qr/\[\[(\w+:\/\/[^\]|]+)\|([^\]|]+)\]\]/ => sub {
-           a({-href=>$1}, _inlines($Quiki, $2))
+           _saveit(a({-href=>$1}, _inlines($Quiki, $2)))
        },
        ## [[nodo|descricao]]
        qr/\[\[([^\]|]+)\|([^\]|]+)\]\]/         => sub {
-           a({-href=>"$script?node=".uri_escape($1) }, _inlines($Quiki, $2))
+           _saveit(a({-href=>"$script?node=".uri_escape($1) }, _inlines($Quiki, $2)))
        },
 
        ## ** foo **
@@ -252,6 +263,9 @@ sub _inlines {
 
        ## urls que nao sigam aspas
        qr/(?<!")$RE{URI}{-keep}/                => sub { a({-href=>$1}, $1) },
+
+       ## savits
+       qr/(\#\d+)/              => sub { _loadit($1) },
 
       );
 

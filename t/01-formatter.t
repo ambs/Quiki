@@ -521,7 +521,7 @@ EOI
 EOO
 
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
-See also [[http://urd.let.rug.nl/tiedeman/OPUS/|OPUS]].
+Um corpus retirado do [[http://urd.let.rug.nl/tiedeman/OPUS/|OPUS]], que consiste nas legendas em Português do site [[http://www.opensubtitles.org/]].
 EOI
-<p>See also <a href="http://urd.let.rug.nl/tiedeman/OPUS/">OPUS</a>.</p>
+<p>Um corpus retirado do <a href="http://urd.let.rug.nl/tiedeman/OPUS/">OPUS</a>, que consiste nas legendas em Português do site <a href="http://www.opensubtitles.org/">http://www.opensubtitles.org/</a>.</p>
 EOO
