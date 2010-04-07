@@ -327,7 +327,6 @@ sub run {
                         when (/pdf/) { $mimeimg = "mime_pdf.png" }
                         when (/zip/) { $mimeimg = "mime_zip.png" }
                         default      { $mimeimg = "page.png"     }
-                        }
                     }
                     push @attachs, { ID => $f, MIME => $mime, MIMEIMG => $mimeimg};
                 }
