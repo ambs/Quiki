@@ -321,14 +321,14 @@ sub run {
                     my $mime = $mm->checktype_filename("data/attach/$node/$f");
                     my $mimeimg;
                     given ($mime) {
-                        when (/image/) {
-                            $mimeimg = "images.png"
-                        }
-                        when (/pdf/) { $mimeimg = "mime_pdf.png" }
-                        when (/zip/) { $mimeimg = "mime_zip.png" }
-                        default      { $mimeimg = "page.png"     }
+                        when (/image/) { $mimeimg = "mime_image.png"   }
+                        when (/pdf/)   { $mimeimg = "mime_pdf.png"     }
+                        when (/zip/)   { $mimeimg = "mime_zip.png"     }
+                        default        { $mimeimg = "mime_default.png" }
                     }
-                    push @attachs, { ID => $f, MIME => $mime, MIMEIMG => $mimeimg};
+                    push @attachs, { ID      => $f,
+                                     MIME    => $mime,
+                                     MIMEIMG => $mimeimg };
                 }
             }
             for (@attachs) {
