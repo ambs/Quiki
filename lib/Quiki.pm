@@ -327,7 +327,7 @@ sub run {
                     }
                     push @attachs, { ID      => $f,
                                      MIME    => $mime,
-                                     SIZE    => ((stat($filename))[7] / 1024),
+                                     SIZE    => sprintf("%.2f",((stat($filename))[7] / 1024)),
                                      MIMEIMG => $mimeimg };
                 }
             }
