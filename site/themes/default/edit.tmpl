@@ -10,6 +10,14 @@
 <script type="text/javascript">
   $(document).ready(function(){ 
     $('textarea.resizable:not(.processed)').TextAreaResizer(); 
+    var title = $('#quiki_attach_title');
+    if (title.hasClass('quiki_collapsed')) {
+      $('#quiki_attach_title').removeClass('quiki_collapsed');
+      $('#quiki_attach_title').addClass('quiki_expanded');
+    } else {
+      $('#quiki_attach_title').removeClass('quiki_expanded');
+      $('#quiki_attach_title').addClass('quiki_collapsed');
+    }
     $('#quiki_attach_table').hide();
   });
 
@@ -22,7 +30,7 @@
 
   <tmpl_if name=ATTACHS>
     <div id="quiki_attach_list">
-      <h4 style="cursor: pointer" 
+      <h4 id="quick_attach_title" style="cursor: pointer" class="quiki_collapsed"
           onClick="$('#quiki_attach_table').toggle(400);">Node attachments</h4>
       <table id="quiki_attach_table">
         <tr>
@@ -40,7 +48,7 @@
             <td> <a target="_new"
                     href="data/attach/<tmpl_var name="WIKINODE">/<tmpl_var ID>"><tmpl_var ID></a> </td>
             <td> <img src="images/<tmpl_var name="MIMEIMG"/>" alt="<tmpl_var name="MIME"/>" title="<tmpl_var name="MIME"/>"/></td>
-            <td> <tmpl_var SIZE > Kb</td>
+            <td style="text-align: right"> <tmpl_var SIZE > Kb</td>
             <td> <tmpl_var DESC ></td>
           </tr>
         </tmpl_loop>
