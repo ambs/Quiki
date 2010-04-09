@@ -313,12 +313,11 @@ sub run {
             my %desc;
             for my $f (sort { lc($a) cmp lc($b)  } readdir(DIR)) {
                 next if $f =~ /^\.\.?$/;
-                if ($f =~ m!_desc_(.*)!) {
-                    $desc{$1} = slurp "data/attach/$node/$f";
-                }
+                my $filename = "data/attach/$node/$f";
+                if ($f =~ m!_desc_(.*)!) { $desc{$1} = slurp $filename }
                 else {
                     ## XXX - TODO - Put this elsewhere
-                    my $mime = $mm->checktype_filename("data/attach/$node/$f");
+                    my $mime = $mm->checktype_filename( $filename );
                     my $mimeimg;
                     given ($mime) {
                         when (/image/) { $mimeimg = "mime_image.png"   }
@@ -328,6 +327,7 @@ sub run {
                     }
                     push @attachs, { ID      => $f,
                                      MIME    => $mime,
+                                     SIZE    => ((stat($filename))[7] / 1024),
                                      MIMEIMG => $mimeimg };
                 }
             }

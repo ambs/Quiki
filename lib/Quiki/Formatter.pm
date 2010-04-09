@@ -325,7 +325,7 @@ sub _inline_doc {
     else {
         a({-href=>"data/attach/$node/$id", -target=>"_new"},
           img({-alt => "Attachment",
-               -src => "images/document.png"}), $desc)
+               -src => "images/mime_default.png"}), $desc)
     }
 }
 

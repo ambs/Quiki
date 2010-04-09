@@ -23,10 +23,9 @@ themes/default/wrapper.tmpl        replace
 themes/default/meta.tmpl           replace
 themes/default/upload_page.tmpl    replace
 themes/default/index.tmpl          replace
-images/document.png                replace
 images/paste.png                   replace
-images/images.png                  replace
-images/page.png                    replace
+images/mime_image.png              replace
+images/mime_default.png            replace
 images/mime_pdf.png                replace
 images/mime_zip.png                replace
 themes/default/history.tmpl        replace
