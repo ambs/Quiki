@@ -191,9 +191,9 @@ a img {
 }
 
 .quiki_collapsed:before { 
-  content: "[+]"
+  content: "[+] "
 }
 
 .quiki_expanded:before { 
-  content: "[-]"
+  content: "[-] "
 }

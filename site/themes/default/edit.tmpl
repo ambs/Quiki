@@ -10,16 +10,20 @@
 <script type="text/javascript">
   $(document).ready(function(){ 
     $('textarea.resizable:not(.processed)').TextAreaResizer(); 
-    var title = $('#quiki_attach_title');
-    if (title.hasClass('quiki_collapsed')) {
-      $('#quiki_attach_title').removeClass('quiki_collapsed');
-      $('#quiki_attach_title').addClass('quiki_expanded');
-    } else {
-      $('#quiki_attach_title').removeClass('quiki_expanded');
-      $('#quiki_attach_title').addClass('quiki_collapsed');
-    }
     $('#quiki_attach_table').hide();
   });
+
+  function attach_show() {
+     var title = $('#quiki_attach_title');
+     if (title.hasClass('quiki_collapsed')) {
+        title.removeClass('quiki_collapsed');
+        title.addClass('quiki_expanded');
+     } else {
+        title.removeClass('quiki_expanded');
+        title.addClass('quiki_collapsed');
+     }
+     $('#quiki_attach_table').toggle(400);
+  }
 
 </script>
 
@@ -31,7 +35,7 @@
   <tmpl_if name=ATTACHS>
     <div id="quiki_attach_list">
       <h4 id="quick_attach_title" style="cursor: pointer" class="quiki_collapsed"
-          onClick="$('#quiki_attach_table').toggle(400);">Node attachments</h4>
+          onClick="attach_show();">Node attachments</h4>
       <table id="quiki_attach_table">
         <tr>
           <th></th>
