@@ -48,7 +48,6 @@ lib/Quiki/Pages.pm
 lib/Quiki/Syntax.pod
 site/js/quiki.js
 site/themes/default/upload_page.tmpl
-site/images/document.png
 site/images/paste.png
 site/images/mime_image.png
 site/images/mime_default.png
