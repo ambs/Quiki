@@ -15,7 +15,12 @@ use DBI;
 
 our ($force, $email);
 
-my $path = shift || '.';
+my $path = shift;
+unless ($path) {
+	print "\nUsage: quiki_create <path>\n\n",
+		"Create new Quiki instance in <path>, see Quiki documentation for more info.\n";
+	exit;
+}
 
 if (!-d $path) {
     my $ans = prompt "The directory '$path' does not exists. Should I create it?", "yes";
