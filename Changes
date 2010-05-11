@@ -1,7 +1,10 @@
 
 Revision history for Quiki
 
+0.04   Tue May 11 21:03:27 WEST 2010
         - Remain on current node when logging in on registering;
+        - Fixed, yet again, problem with breadcumbs;
+        - Maintain node when logging on or registering, or editing info;
 
 0.03   Wed Apr  7 21:36:01 WEST 2010
         - Fixed old bug with Locks;
