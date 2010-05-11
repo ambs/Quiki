@@ -33,7 +33,12 @@ sub list {
 
 sub gravatar {
     my ($class, $username) = @_;
-    return gravatar_url(email => $class->email($username));
+    my $email;
+    if ($username && ($email = $class->email($username))) {
+        return gravatar_url(email => $email );
+    } else {
+        return gravatar_url(email => "default");
+    }
 }
 
 sub update {
