@@ -244,14 +244,15 @@ sub run {
     my $cookie = cookie($self->{QUIKI_ID} => $self->{session}->id);
     print header(-charset=>'UTF-8',-cookie=>$cookie);
 
+    # Calculate breadcumbs
     my @trace;
-    $self->{session}->param('trace') and @trace = @{$self->{session}->param('trace')};
-	!@trace and push @trace, $node;
+    @trace = @{$self->{session}->param('trace')} if $self->{session}->param('trace');
+    push @trace, $node unless @trace;
     if ($trace[-1] ne $node) {
         push @trace, $node;
         @trace > 5 and shift @trace;
-        $self->{session}->param('trace',\@trace);
     }
+    $self->{session}->param('trace',\@trace);
     my $breadcumbs = join(' » ', map { a({-href=>"$self->{SCRIPT_NAME}?node=$_"}, $_); } @trace);
 
 
