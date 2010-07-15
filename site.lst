@@ -23,6 +23,8 @@ themes/default/wrapper.tmpl        replace
 themes/default/meta.tmpl           replace
 themes/default/upload_page.tmpl    replace
 themes/default/index.tmpl          replace
+themes/default/footer.tmpl         replace
+themes/default/title.tmpl          replace
 images/paste.png                   replace
 images/mime_image.png              replace
 images/mime_default.png            replace
@@ -37,3 +39,15 @@ images/gritter-close-ie6.gif       replace,binary
 images/gritter-close.png           replace,binary
 images/gritter-top.png             replace,binary
 images/grippie.png                 replace,binary
+images/button_left.png             replace,binary
+images/button_right.png            replace,binary
+images/menu_bg.png                 replace,binary
+images/menu_side.png               replace,binary
+images/meta_bg.png                 replace,binary
+images/nodename_hr.png             replace,binary
+images/nodename_left.png           replace,binary
+images/nodename_right.png          replace,binary
+images/quiki_bg.png                replace,binary
+images/revision.png                replace,binary
+images/sep.png                     replace,binary
+

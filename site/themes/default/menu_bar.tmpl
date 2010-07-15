@@ -1,4 +1,7 @@
 <!-- MENU BAR AT THE BOTTOM -->
+<div class="quiki_menu_bar_wrapper">
+<div class="quiki_menu_bar_wrapper_side_l"></div>
+<div class="quiki_menu_bar_wrapper_side_r"></div>
 <div class="quiki_menu_bar">
   <div class="quiki_menu_bar_left">
     <TMPL_IF EXPR="ACTION eq 'index' or ACTION eq 'history' or ACTION eq 'admin_page'">
@@ -15,24 +18,9 @@
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
 	<TMPL_IF NAME="LAST_REV">
-	  <form method="post" enctype="multipart/form-data">
-	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
-	    <input type="hidden" name="action" value="edit" />
-	    <input type="submit" name="submit" value="Edit this page" />
-	  </form>
-	  &nbsp;|&nbsp;
-	  <form method="post" enctype="multipart/form-data">
-	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
-	    <input type="hidden" name="action" value="attach" />
-	    <input type="submit" name="submit" value="Attach Document" />
-	  </form>
-	  &nbsp;|&nbsp;
-	  <form method="post" enctype="multipart/form-data">
-	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
-	    <input type="hidden" name="action" value="history" />
-	    <input type="submit" name="submit" value="Page history" />
-	  </form>
-	  &nbsp;|&nbsp;
+		<a class="quiki_menu_button" href="?node=<TMPL_VAR WIKINODE>&action=edit"><span>Edit this page</span></a>
+		<a class="quiki_menu_button" href="?action=attach"><span>Attach document</span></a>
+		<a class="quiki_menu_button" href="?action=history"><span>Page history</span></a>
 	  <form method="post" enctype="multipart/form-data">
 	    <input type="submit" name="submit" value="Create new page" />
 	    &nbsp;
@@ -58,43 +46,21 @@
     </TMPL_IF>
   </div>
 	<div class="quiki_menu_bar_right">
-		<form method="post" enctype="multipart/form-data">
-		<input type="hidden" name="action" value="index" />
-		<input type="submit" name="submit" value="Index" />
-		</form>
-		&nbsp;|&nbsp;
+		<a class="quiki_menu_button" href="?node=index"><span>Index</span></a>
 		<TMPL_IF NAME="AUTHENTICATED">
-			<form method="post" enctype="multipart/form-data">
-			<input type="submit" name="submit" value="Edit Profile" />
-			<input type="hidden" name="action" value="profile_page" />
-			</form>
-			&nbsp;|&nbsp;
+			<a class="quiki_menu_button" href="?action=profile_page"><span>Edit Profile</span></a>
                         <TMPL_IF EXPR="USER_ROLE eq 'admin'">
-                          <form method="post" enctype="multipart/form-data">
-                            <input type="submit" name="submit" value="Admin Page" />
-                            <input type="hidden" name="action" value="admin_page" />
-                          </form>
-			&nbsp;|&nbsp;
+						<a class="quiki_menu_button" href="?action=admin_page"><span>Admin Page</span></a>
+						<img src="images/sep.png" />
                         </TMPL_IF>
-			<form method="post" enctype="multipart/form-data">
-			<input type="submit" name="submit" value="Log out" />
-			<input type="hidden" name="action" value="logout" />
-			</form>
+			<a class="quiki_menu_button" href="?action=logout"><span>Logout</span></a>
 		<TMPL_ELSE>
-                        <TMPL_IF NAME="OPENSITE">
-  			   <form method="post" enctype="multipart/form-data">
-                           <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
-			   <input type="hidden" name="action" value="register_page"  />
-			   <input type="submit" name="submit" value="Sign up" />
-			   </form>
-			  &nbsp;|&nbsp;
-                        </TMPL_IF>
-			<form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
-			<input type="submit" name="submit" value="Log in" />
-			<input type="hidden" name="action" value="login_page"  />
-			</form>
+			<TMPL_IF NAME="OPENSITE">
+				<a class="quiki_menu_button" href="?node=<tmpl_var name='WIKINODE'>&action=register_page"><span>Sign Up</span></a>
+			</TMPL_IF>
+			<a class="quiki_menu_button" href="?node=<tmpl_var name='WIKINODE'>&action=login_page"><span>Log in</span></a>
 		</TMPL_IF>
 	</div>
-<div style="clear: both;"></div>
+</div>
+<div style="clear: both"></div>
 </div>

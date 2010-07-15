@@ -8,9 +8,42 @@ a:hover {
   text-decoration: underline;
 }
 
+body {
+  padding: 0px;
+  background: url('../images/quiki_bg.png') repeat-x top left;
+  background-color: #1B1B1B;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  color: #333333;
+  width: 94%;
+  margin: auto auto;
+}
+
+.quiki_content {
+  margin: 0 auto;
+}
+
+.quiki_header {
+  font-size: 32px;
+  color: #909090;
+}
+
 .quiki_body {
-  border: solid 1px #999999;
-  padding: 5px;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.quiki_body a:link {
+  color: #FFA200;
+  text-decoration: none;
+}
+
+.quiki_body a:hover {
+  text-decoration: underline;
+}
+
+.quiki_body a:visited {
+  color: #FF6600;
 }
 
 .quiki_preview {
@@ -20,8 +53,48 @@ a:hover {
 }
 
 .quiki_body h1 { 
-  color: #dd7777;
-  border-bottom: solid 1px #dd7777;
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body h2 { 
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body h3 { 
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body h4 { 
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body h5 { 
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body h6 { 
+  color: #FF6600;
+  border-bottom: solid 1px #FF6600;
+}
+
+.quiki_body table {
+  border: 0px solid black;
+}
+
+.quiki_body th { 
+  text-align: center;
+  padding: 2px 6px;
+  background-color: #FFA200;
+}
+
+.quiki_body td { 
+  padding: 2px;
+  background-color: silver;
 }
 
 .quiki_body pre {
@@ -31,46 +104,202 @@ a:hover {
   border: solid 1px #cccccc;
 }
 
-.quiki_nav_bar { 
-  padding: 3px;
-  background-color: #dedede;
-  border: solid 1px #bb9999;
-  margin-bottom: 5px;
-  overflow: hidden;
+.quiki_body hr {
+  border: 1px solid #660000;
 }
 
-.quiki_menu_bar {
-  padding: 3px;
-  background-color: #dedede;
-  border: solid 1px #bb9999;
+.quiki_nav_bar { 
+  margin: auto auto;
+  height: 27px;
+  padding: 0px;
+}
+
+.quiki_nav_bar a { 
+  overflow: hidden;
+  color: #ffa200;
+}
+
+.quiki_nodename {
+  display: block;
+  float: left;
+}
+
+.quiki_nodename_title_left {
+  background: url('../images/nodename_left.png') no-repeat top left transparent;
+  display: block;
+  float: left;
+  height: 27px;
+  padding-left: 41px;
+  padding-top: 8px;
+}
+
+.quiki_nodename_title_right  {
+  background: url('../images/nodename_right.png') no-repeat top right transparent;
+  display: block;
+  float: right;
+  color: black;
+  height: 27px;
+  padding-left: 11px;
+  padding-right: 28px;
+  padding-top: 8px;
+}
+
+.quiki_nodename_title_right a {
+  color: #000000;
+  font-size: 16px;
+}
+
+.quiki_breadcumbs {
+  float: right;
+  color: #909090;
+  padding-right: 5px;
+  padding-top: 8px;
+}
+
+.quiki_breadcumbs strong {
+	color: #FFFFFF;
+}
+
+.quiki_nav_bar_sep {
+  background: url('../images/nodename_hr.png') repeat-x scroll left top transparent;
+  display: block;
+  height: 8px;
+  width: 100%;
+}
+
+.quiki_menu_bar_wrapper {
+  display: inline;
+  height: 76px;
+}
+
+.quiki_menu_bar_wrapper_side_l {
+  background: url('../images/menu_side.png') no-repeat scroll left top transparent;
+  display: block;
+  float: left;
   margin-top: 5px;
+  height: 76px;
+  width: 1px;
+}
+
+.quiki_menu_bar_wrapper_side_r {
+  background: url('../images/menu_side.png') no-repeat scroll left top transparent;
+  display: block;
+  float: right;
+  margin-top: 5px;
+  height: 76px;
+  width: 1px;
+}
+
+
+.quiki_menu_bar {
+  background: url('../images/menu_bg.png') repeat-x scroll left top transparent;
+  display: block;
+  padding: 8px 0px;
+  margin-top: 5px;
+  height: 76px;
 }
 
 .quiki_menu_bar_left {
   float: left;
+  padding-left: 10px;
 }
 
 .quiki_menu_bar_right {
-  float: right;
+	float: right;
 }
 
 .quiki_menu_bar form {
   display: inline;
 }
 
+.quiki_menu_bar_sep  {
+	background: url('../images/sep.png') no-repeat top left transparent;
+	height: 20px
+	padding-left: 20px;
+	padding-right: 20px;
+	float: left;
+}
+
+.quiki_menu_side {
+  background: url('../images/menu_side.png') no-repeat top left transparent;
+  display: block;
+
+}
+
+a.quiki_menu_button {
+	background: url('../images/button_left.png') no-repeat top left transparent;
+	display: block;
+	float: left;
+	line-height: 19px;
+	height: 27px;
+	padding-left: 11px;
+	padding-right: 10px;
+	text-decoration: none;
+	color: black;
+}
+
+a.quiki_menu_button span {
+	background: url('../images/button_right.png') no-repeat top right transparent;
+	display: block;
+	padding: 4px 11px 4px 0;
+}
+
+a.quiki_menu_button:hover {
+	background-position: bottom left;
+}
+
+a.quiki_menu_button:hover span {
+	background-position: bottom right;
+}
+
+/*
+.quiki_menu_button:hover {
+  border: none;
+  background: url('../images/button_down.png') no-repeat top center;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+*/
+
+.quiki_meta_bar {
+  padding-top: 0px;
+}
+
 .quiki_meta { 
-  padding-top: 2px;
-  text-align: right;
-  font-size: small;
-  color: #999999;
+  background: url('../images/meta_bg.png') repeat-x scroll left bottom white;
+  display: block;
+  color: #818181;
+  height: 47px;
 }
 
 .quiki_meta_left { 
   float: left;
+  padding-top: 16px;
+  padding-left: 8px;
 }
 
 .quiki_meta_right {
+  display: block;
   float: right;
+  padding-top: 16px;
+  padding-right: 12px;
+  color: #000000;
+}
+
+.quiki_meta_right span {
+  background: url('../images/revision.png') no-repeat scroll center center transparent;
+  display: block;
+  padding-top: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 20px;
+}
+
+.quiki_powered {
+  display: block;
+  padding: 40px 0px;
+  margin: auto auto;
 }
 
 #quiki_name { 
@@ -81,28 +310,12 @@ a:hover {
   margin: -20px;
 }
 
-.quiki_table { 
-  background-color: #aaaaaa;
-  border: solid 1px #999999;
-}
-
-.quiki_table th { 
-  text-align: center;
-  padding: 2px;
-  background-color: #eeeeee;
-}
-
-.quiki_table td { 
-  padding: 2px;
-  background-color: #ffffff;
-}
-
 #floatbox-box { 
   border: solid 1px #550000;
 }
 
 .modal_head { 
-  background-color: #550000;
+  background-color: #FFA200;
   color: #fff;
   font-weight: bold;
   font-size: larger;
