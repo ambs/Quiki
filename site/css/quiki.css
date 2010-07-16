@@ -24,8 +24,9 @@ body {
 }
 
 .quiki_header {
-  font-size: 32px;
+  font-size: 24px;
   color: #909090;
+  text-shadow: 0.1em 0.1em 0.05em #333;
 }
 
 .quiki_body {
@@ -298,7 +299,7 @@ a.quiki_menu_button:hover span {
 
 .quiki_powered {
   display: block;
-  padding: 40px 0px;
+  padding: 20px 0px;
   margin: auto auto;
 }
 
