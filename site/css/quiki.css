@@ -316,8 +316,10 @@ a.quiki_menu_button:hover span {
 }
 
 .modal_head { 
-  background-color: #FFA200;
-  color: #fff;
+  background: url('../images/quiki_bar.png') repeat-x top left transparent;
+  display: block;
+  height: 20px;
+  color: #000000;
   font-weight: bold;
   font-size: larger;
   text-align: center;
