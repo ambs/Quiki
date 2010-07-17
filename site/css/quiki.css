@@ -90,19 +90,19 @@ body {
 .quiki_body th { 
   text-align: center;
   padding: 2px 6px;
-  background-color: #FFA200;
+  background-color: #FFAA33;
 }
 
 .quiki_body td { 
   padding: 2px;
-  background-color: silver;
+  background-color: #EEEEEE;
 }
 
 .quiki_body pre {
   margin: 5px;
-  padding: 3px;
-  background-color: #dcdcdc;
-  border: solid 1px #cccccc;
+  padding: 5px;
+  background-color: #EEEEEE;
+  border: solid 1px #999999;
 }
 
 .quiki_body hr {
@@ -142,7 +142,7 @@ body {
   height: 27px;
   padding-left: 11px;
   padding-right: 28px;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .quiki_nodename_title_right a {
@@ -263,6 +263,13 @@ a.quiki_menu_button:hover span {
 }
 */
 
+.quiki_menu_input_text {
+  background-color: #000000;
+  border: solid 1px #555555;
+  color: #FFFFFF;
+  height: 22px;
+}
+
 .quiki_meta_bar {
   padding-top: 0px;
 }
@@ -329,14 +336,20 @@ a.quiki_menu_button:hover span {
 
 .modal_body { 
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 36px;
   text-align: center;
+}
+
+.modal_body_actions {
+  padding-left: 270px;
+  padding-top: 20px;
 }
 
 #modalClose { 
   display: block;
   float: right;  
   padding-right: 3px;
+  padding-top: 16px;
 }
 
 #modalClose a { color: #999999; text-decoration: none; }

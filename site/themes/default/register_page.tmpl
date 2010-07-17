@@ -3,20 +3,20 @@
   <div class="modal_head">Register</div>
 
   <div class="modal_body">
-    <form method="post" enctype="multipart/form-data">
+    <form name="register_form" method="post" enctype="multipart/form-data">
     <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
       <table style="margin-left: auto; margin-right: auto">
         <tr><td>Username: </td> <td><input type="text" name="username" /></td></tr>
         <tr><td>E-mail:   </td> <td><input type="text" name="email"    /></td></tr>
       </table>
-      <br /> <br />
       <input type="hidden" name="action" value="register"  />
-      <input type="submit" name="submit" value="Cancel" /> 
-      &nbsp;&nbsp;
-      <input type="submit" name="submit" value="Register" /> 
+      <div class="modal_body_actions">
+        <a class="quiki_menu_button" href="javascript: document.register_form.submit();"><span>Register</span></a>
+      </div>
     </form>
 
     <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
   </div>
 </div>
+
 

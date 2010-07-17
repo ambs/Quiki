@@ -2,17 +2,19 @@
   <div class="modal_head">Log in</div>
 
   <div class="modal_body">
-    <form method="post" enctype="multipart/form-data">
+    <form name="log_in_form" method="post" enctype="multipart/form-data">
     <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
       <table style="margin-left: auto; margin-right: auto">
         <tr><td>Username: </td> <td><input type="text"     name="username"  /></td></tr>
         <tr><td>Password: </td> <td><input type="password" name="password"  /></td></tr>
       </table>
-      <br /> <br />
       <input type="hidden" name="action" value="login"  />
-      <input type="submit" name="submit" value="Log in" /> 
+      <div class="modal_body_actions">
+      <a class="quiki_menu_button" href="javascript: document.log_in_form.submit();"><span>Log in</span></a>
+      </div>
     </form>
 
     <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
   </div>
 </div>
+

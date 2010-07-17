@@ -22,9 +22,9 @@
 		<a class="quiki_menu_button" href="?action=attach"><span>Attach document</span></a>
 		<a class="quiki_menu_button" href="?action=history"><span>Page history</span></a>
 	  <form method="post" enctype="multipart/form-data">
-	    <input type="submit" name="submit" value="Create new page" />
+        <a class="quiki_menu_button" href="javascript: document.create_new_form.submit();"><span>Create new page</span></a>
 	    &nbsp;
-	    <input type="text" name="node" value="&lt;name&gt;" size="8" />
+	    <input class="quiki_menu_input_text" type="text" name="node" value="&lt;name&gt;" size="8" />
 	    <input type="hidden" name="action" value="create" />
 	  </form>
         <TMPL_ELSE>
@@ -35,10 +35,10 @@
 	    <input type="submit" name="submit" value="Rollback to this version" />
 	  </form>
 	  &nbsp;|&nbsp;
-	  <form method="post" enctype="multipart/form-data">
-	    <input type="submit" name="submit" value="Create new page" />
+	  <form name="create_new_form" method="post" enctype="multipart/form-data">
+        <a class="quiki_menu_button" href="javascript: document.create_new_form.submit();"><span>Create new page</span></a>
 	    &nbsp;
-	    <input type="text" name="node" value="&lt;name&gt;" size="8" />
+	    <input class="quiki_menu_input_text" type="text" name="node" value="&lt;name&gt;" size="8" />
 	    <input type="hidden" name="action" value="create" />
 	  </form>
 	</TMPL_IF>
