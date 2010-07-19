@@ -420,7 +420,7 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 EOI
-<table class="quiki_table">
+<table>
 <tr><th> a </th> <th> b </th> <th> c </th></tr>
 </table>
 
@@ -430,7 +430,7 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 | a | b | c |
 EOI
-<table class="quiki_table">
+<table>
 <tr><td style="text-align: center"> a </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
 </table>
 
@@ -441,7 +441,7 @@ is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 | a | b | c |
 EOI
-<table class="quiki_table">
+<table>
 <tr><th> a </th> <th> b </th> <th> c </th></tr>
 <tr><td style="text-align: center"> a </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
 </table>
@@ -453,7 +453,7 @@ is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 | a |b | c|
 EOI
-<table class="quiki_table">
+<table>
 <tr><th> a </th> <th> b </th> <th> c </th></tr>
 <tr><td style="text-align: center"> a </td> <td style="text-align: left">b </td> <td style="text-align: right"> c</td></tr>
 </table>
@@ -514,7 +514,7 @@ EOO
 is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
 | [[http://www.google.com|a]] | b | c |
 EOI
-<table class="quiki_table">
+<table>
 <tr><td style="text-align: center"> <a href="http://www.google.com">a</a> </td> <td style="text-align: center"> b </td> <td style="text-align: center"> c </td></tr>
 </table>
 
