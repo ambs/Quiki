@@ -679,6 +679,7 @@ L<http://search.cpan.org/dist/Quiki/>
 
 =head1 ACKNOWLEDGEMENTS
 
+Thank you Luis 'Houser' Fernandes for the default theme layout design.
 
 =head1 COPYRIGHT & LICENSE
 
