@@ -212,7 +212,7 @@ sub run {
     }
 
     # XXX
-    if ($action eq 'save' && param("submit") eq "Save") {
+    if ($action eq 'save' && param("submit_opt") eq "Save") {
         if (Quiki::Pages->locked_for_user($node, $self->{sid})) {
             my $text = param('text') // '';
             Quiki::Pages->check_in($self, $node, $text);
@@ -257,11 +257,11 @@ sub run {
 
 
     my $preview = 0;
-    if ($action eq 'save' && param("submit") eq "Preview") {
+    if ($action eq 'save' && param("submit_opt") eq "Preview") {
         $preview = 1;
         $action = 'edit';
     }
-    if ($action eq 'save' && param("submit") eq "Cancel") {
+    if ($action eq 'save' && param("submit_opt") eq "Cancel") {
         Quiki::Pages->unlock($node);
     }
 

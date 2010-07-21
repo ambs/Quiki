@@ -1,4 +1,16 @@
 <!-- MENU BAR AT THE BOTTOM -->
+<script type="text/javascript">
+function mySubmit(opt) {
+	var form = document.forms['edit_form'];
+	var el = document.createElement("input");
+	el.type = "hidden";
+	el.name = "submit_opt";
+	el.value = opt;
+	form.appendChild(el);
+	form.submit();
+}
+</script>
+
 <div class="quiki_menu_bar_wrapper">
 <div class="quiki_menu_bar_wrapper_side_l"></div>
 <div class="quiki_menu_bar_wrapper_side_r"></div>
@@ -7,13 +19,10 @@
     <TMPL_IF EXPR="ACTION eq 'index' or ACTION eq 'history' or ACTION eq 'admin_page'">
       <!-- ... -->
     <TMPL_ELSIF EXPR="ACTION eq 'edit'"/>
-      <input type="submit" name="submit" value="Cancel" />
-      &nbsp;|&nbsp;
-      <input type="submit" name="submit" value="Preview" />
-      &nbsp;|&nbsp;
-      <input type="submit" name="submit" value="Save" />
-      &nbsp;|&nbsp;
-      <button type="button" onClick="window.open('<TMPL_VAR NAME="SERVERROOT"/><TMPL_VAR NAME="DOCROOT"/>help/syntax.html')">Syntax Help</button>
+      <a class="quiki_menu_button" href="javascript: mySubmit('Cancel');"><span>Cancel</span></a>
+      <a class="quiki_menu_button" href="javascript: mySubmit('Preview');"><span>Preview</span></a>
+      <a class="quiki_menu_button" href="javascript: mySubmit('Save');"><span>Save</span></a>
+      <a class="quiki_menu_button" target="_blank" href="<TMPL_VAR NAME="SERVERROOT"/><TMPL_VAR NAME="DOCROOT"/>help/syntax.html"><span>Syntax Help</span></a>
       </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
@@ -64,3 +73,4 @@
 </div>
 <div style="clear: both"></div>
 </div>
+

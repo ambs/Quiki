@@ -27,7 +27,7 @@
 
 </script>
 
-<form method="post" enctype="multipart/form-data">
+<form name="edit_form" method="post" enctype="multipart/form-data">
   <textarea id="editfield" name="text"  rows="30" cols="80" class="resizable"><tmpl_var TEXT></textarea>
   <input type="hidden" name="node" value="<tmpl_var WIKINODE>" />
   <input type="hidden" name="action" value="save" />
@@ -59,3 +59,4 @@
       </table>
     </div>
   </tmpl_if>
+
