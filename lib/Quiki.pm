@@ -636,7 +636,7 @@ Sample VirtualHost for Apache2:
 
 =item * Alberto Simoes, C<< <ambs at cpan.org> >>
 
-=item * Nuno Carvalho, C<< <smash at cpan.org >>
+=item * Nuno Carvalho, C<< <smash at cpan.org> >>
 
 =back
 
@@ -679,7 +679,8 @@ L<http://search.cpan.org/dist/Quiki/>
 
 =head1 ACKNOWLEDGEMENTS
 
-Thank you Luis 'Houser' Fernandes for the default theme layout design.
+Thank you Luis 'Houser' Fernandes C<< <housah at gmail.com> >> for the 
+default theme layout design.
 
 =head1 COPYRIGHT & LICENSE
 
