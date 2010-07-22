@@ -1,9 +1,9 @@
-
 <div id="modal">
-  <div class="modal_head">Upload Files</div>
+  <div class="modal_head">Upload Files<span style="float: right;"><a href="javascript:hideModal('modalPage')"><img onmouseover="javascript: this.src='images/close_h.png';" onmouseout="javascript: this.src='images/close_n.png';" src="images/close_n.png" /></a></span>
+  </div>
 
   <div class="modal_body">
-    <form method="post" enctype="multipart/form-data">
+    <form name="upload_form" method="post" enctype="multipart/form-data">
     <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
       <table style="margin-left: auto; margin-right: auto">
         <tr><th>Filename </th><th>Identifier</th><th>Description</th></tr>
@@ -24,9 +24,13 @@
       </table>
       <br /> <br />
       <input type="hidden" name="action" value="upload"  />
-      <input type="submit" name="submit" value="Upload" /> 
+      <div class="modal_body_actions">
+        <span style="float: right; padding-top: 7px;">
+          <a class="quiki_menu_button" href="javascript: document.upload_form.submit();"><span>Upload</span></a>
+        </span>
+      </div>
+
     </form>
 
-    <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
   </div>
 </div>
