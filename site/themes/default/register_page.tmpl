@@ -1,6 +1,6 @@
-
 <div id="modal">
-  <div class="modal_head">Register</div>
+  <div class="modal_head">Register<span style="float: right;"><a href="javascript:hideModal('modalPage')"><img onmouseover="javascript: this.src='images/close_h.png';" onmouseout="javascript: this.src='images/close_n.png';" src="images/close_n.png" /></a></span>
+  </div>
 
   <div class="modal_body">
     <form name="register_form" method="post" enctype="multipart/form-data">
@@ -9,14 +9,14 @@
         <tr><td>Username: </td> <td><input type="text" name="username" /></td></tr>
         <tr><td>E-mail:   </td> <td><input type="text" name="email"    /></td></tr>
       </table>
-      <input type="hidden" name="action" value="register"  />
+      <input type="hidden" name="action" value="register" />
       <div class="modal_body_actions">
+        <span style="float: right; padding-top: 7px;">
         <a class="quiki_menu_button" href="javascript: document.register_form.submit();"><span>Register</span></a>
+        </span>
       </div>
     </form>
 
     <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
   </div>
 </div>
-
-

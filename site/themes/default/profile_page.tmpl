@@ -1,10 +1,9 @@
-
-
 <div id="modal">
-  <div class="modal_head">Edit Profile</div>
+  <div class="modal_head">Edit Profile<span style="float: right;"><a href="javascript:hideModal('modalPage')"><img onmouseover="javascript: this.src='images/close_h.png';" onmouseout="javascript: this.src='images/close_n.png';" src="images/close_n.png" /></a></span>
+  </div>
 
   <div class="modal_body">
-    <form method="post" enctype="multipart/form-data">
+    <form name="profile_form" method="post" enctype="multipart/form-data">
       <div style="float: right; margin-right: 20px">
         <img src="<tmpl_var GRAVATAR>"/>
       </div>
@@ -25,9 +24,11 @@
       </table>
       <br /> <br />
       <input type="hidden" name="action" value="save_profile"  />
-      <input type="submit" name="submit" value="Cancel" /> 
-      &nbsp;&nbsp;
-      <input type="submit" name="submit" value="Save Profile" />
+      <div class="modal_body_actions">
+        <span style="float: right; padding-top: 7px;">
+          <a class="quiki_menu_button" href="javascript: document.profile_form.submit();"><span>Save Profile</span></a>
+        </span>
+      </div>
     </form>
 
     <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>

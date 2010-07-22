@@ -1,20 +1,21 @@
 <div id="modal">
-  <div class="modal_head">Log in</div>
+  <div class="modal_head">Log in<span style="float: right;"><a href="javascript:hideModal('modalPage')"><img onmouseover="javascript: this.src='images/close_h.png';" onmouseout="javascript: this.src='images/close_n.png';" src="images/close_n.png" /></a></span>
+  </div>
 
   <div class="modal_body">
     <form name="log_in_form" method="post" enctype="multipart/form-data">
     <input type="hidden" name="node" value="<tmpl_var name="WIKINODE">">
       <table style="margin-left: auto; margin-right: auto">
-        <tr><td>Username: </td> <td><input type="text"     name="username"  /></td></tr>
-        <tr><td>Password: </td> <td><input type="password" name="password"  /></td></tr>
+        <tr><td>Username: </td> <td><input class="quiki_menu_input_text" type="text"     name="username"  /></td></tr>
+        <tr><td>Password: </td> <td><input class="quiki_menu_input_text" type="password" name="password"  /></td></tr>
       </table>
       <input type="hidden" name="action" value="login"  />
       <div class="modal_body_actions">
-      <a class="quiki_menu_button" href="javascript: document.log_in_form.submit();"><span>Log in</span></a>
+        <span style="float: right; padding-top: 7px;">
+          <a class="quiki_menu_button" href="javascript: document.log_in_form.submit();"><span>Log in</span></a>
+        </span>
       </div>
     </form>
-
-    <div id="modalClose"><a href="javascript:hideModal('modalPage')">close</a></div>
   </div>
 </div>
 

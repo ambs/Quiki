@@ -242,7 +242,7 @@ a.quiki_menu_button {
 a.quiki_menu_button span {
 	background: url('../images/button_right.png') no-repeat top right transparent;
 	display: block;
-	padding: 4px 11px 4px 0;
+	padding: 3px 11px 5px 0;
 }
 
 a.quiki_menu_button:hover {
@@ -264,11 +264,23 @@ a.quiki_menu_button:hover span {
 */
 
 .quiki_menu_input_text {
+  /* background-color: #000000;
+  border: solid 1px #555555;
+  color: #FFFFFF; */
+  height: 22px;
+}
+
+.quiki_menu_input_text_create {
   background-color: #000000;
   border: solid 1px #555555;
   color: #FFFFFF;
-  height: 22px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: 1px;
+  font-size: 12px;
+  width: 100px;
 }
+
 
 .quiki_meta_bar {
   padding-top: 0px;
@@ -329,20 +341,22 @@ a.quiki_menu_button:hover span {
   color: #000000;
   font-weight: bold;
   font-size: larger;
-  text-align: center;
   margin: 0px;
   padding: 2px;
+  padding-left: 5px;
+  padding-right: 3px;
+  border-bottom: solid 1px #000000;
 }
 
 .modal_body { 
-  margin-top: 20px;
-  margin-bottom: 36px;
+  padding-top: 20px;
   text-align: center;
 }
 
 .modal_body_actions {
-  padding-left: 270px;
-  padding-top: 20px;
+  background: url('../images/pop_bg.png') repeat-x top left transparent;
+  margin-top: 20px;
+  height: 40px;
 }
 
 #modalClose { 
