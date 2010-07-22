@@ -153,7 +153,7 @@ sub run {
     }
 
     # XXX
-    if ($action eq 'register' && param('submit') eq "Register") {
+    if ($action eq 'register' && param('submit_opt') eq "Register") {
         my $username = param('username') || '';
         my $email    = param('email')    || '';
         if ($username and $email and $email =~ m/\@/) { # XXX -- fix regexp :D
