@@ -37,17 +37,16 @@ function mySubmit(opt) {
 	    <input type="hidden" name="action" value="create" />
 	  </form>
         <TMPL_ELSE>
-	  <form method="post" enctype="multipart/form-data">
+	  <form name="rollback_form" method="post" enctype="multipart/form-data">
 	    <input type="hidden" name="node" value="<TMPL_VAR WIKINODE>" />
 	    <input type="hidden" name="action" value="rollback" />
 	    <input type="hidden" name="rev" value="<TMPL_VAR REV>" />
-	    <input type="submit" name="submit" value="Rollback to this version" />
+        <a class="quiki_menu_button" href="javascript: document.rollback_form.submit();"><span>Rollback to this version</span></a>
 	  </form>
-	  &nbsp;|&nbsp;
 	  <form name="create_new_form" method="post" enctype="multipart/form-data">
         <a class="quiki_menu_button" href="javascript: document.create_new_form.submit();"><span>Create new page</span></a>
 	    &nbsp;
-	    <input class="quiki_menu_input_text" type="text" name="node" value="&lt;name&gt;" size="8" />
+	    <input class="quiki_menu_input_text_create" type="text" name="node" value="&lt;name&gt;" size="8" />
 	    <input type="hidden" name="action" value="create" />
 	  </form>
 	</TMPL_IF>
