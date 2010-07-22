@@ -408,7 +408,7 @@ sub run {
         else {
             $L_META = "";
         }
-        my $R_META = sprintf("Revision: %s", $self->{meta}{rev} || "");
+        my $R_META = sprintf("Revision: %s", $self->{rev} || "");
 
         $template->param(L_META=>$L_META);
         $template->param(R_META=>$R_META);
