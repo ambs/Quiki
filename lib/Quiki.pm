@@ -360,6 +360,7 @@ sub run {
     elsif ($action eq 'admin_page') {
         my $users = Quiki::Users->list;
         $template->param(USERS => $users);
+        $template->param(WIKINODE => 'Administration');
     }
     elsif ($action eq 'index') {
         opendir DIR, 'data/content/';
