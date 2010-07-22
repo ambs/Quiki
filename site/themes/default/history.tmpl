@@ -6,20 +6,20 @@
     <span style="width: 40%; display: inline-block">
       <img style="vertical-align: middle" src="<tmpl_var name="GRAVATAR"/>" width="24"/>&nbsp;Last edited by <tmpl_var name="AUTHOR"/> in <tmpl_var name="DATE"/>
 	</span>
-    <span style="width: 10%; display: inline-block">
-	  <form style='display: inline;'>
+    <span style="width: 30%; display: inline-block">
+	  <form name="f<tmpl_var name="VERSION"/>"style='display: inline;'>
 	    <input type="hidden" name="node" value="<tmpl_var name="WIKINODE"/>" />
 	    <input type="hidden" name="action" value="rollback" />
 	    <input type="hidden" name="rev" value="<tmpl_var name="VERSION"/>" />
-		&nbsp;<input type='submit' value='Rollback to this version'>
+		<a class="quiki_menu_button" href="javascript: document.f<tmpl_var name="VERSION"/>.submit();"><span>Rollback to this version</span></a>
 	  </form>
     </span>
   </div>
 </tmpl_loop>
 
 <hr />
-<div style="text-align: center">
-  <form method='POST'>
+<div style="text-align: center; color: white; display: inline;">
+  <form name="show_form" method='POST'>
     Diff between revision
     <select name='source'>
       <tmpl_loop name="REVISIONS">
@@ -37,3 +37,4 @@
     <input type='submit' value='Show'>
   </form>
 </div>
+
