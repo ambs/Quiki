@@ -110,7 +110,7 @@ sub create_files_from_data {
                 print " - $f...";
                 my $folder = dirname(abs_path($path) . "/$f");
                 (!-d $folder) && (make_path($folder));
-                open $file, ">$path/$f" or die;
+                open $file, ">$path/$f" or die $!;
 
                 $mode = "BIN" if ($3 eq "BIN");
             }
