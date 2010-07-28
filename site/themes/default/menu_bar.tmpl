@@ -19,10 +19,10 @@ function mySubmit(opt) {
     <TMPL_IF EXPR="ACTION eq 'index' or ACTION eq 'history' or ACTION eq 'admin_page'">
       <!-- ... -->
     <TMPL_ELSIF EXPR="ACTION eq 'edit'"/>
+      <a class="quiki_menu_button" target="_blank" href="<TMPL_VAR NAME="SERVERROOT"/><TMPL_VAR NAME="DOCROOT"/>help/syntax.html"><span>Syntax Help</span></a>&nbsp;|&nbsp;
       <a class="quiki_menu_button" href="javascript: mySubmit('Cancel');"><span>Cancel</span></a>
       <a class="quiki_menu_button" href="javascript: mySubmit('Preview');"><span>Preview</span></a>
       <a class="quiki_menu_button" href="javascript: mySubmit('Save');"><span>Save</span></a>
-      <a class="quiki_menu_button" target="_blank" href="<TMPL_VAR NAME="SERVERROOT"/><TMPL_VAR NAME="DOCROOT"/>help/syntax.html"><span>Syntax Help</span></a>
       </form> <!-- XXX - Nao gosto deste </form> a fechar um <form> algures noutra template -->
     <TMPL_ELSE>
       <TMPL_IF NAME="AUTHENTICATED">
