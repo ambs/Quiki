@@ -129,13 +129,7 @@ sub run {
                 my $id = param("name$_");
                 my $path = "data/attach/$node";
                 -f $path or (mkdir $path and chown 0777, $path);
-                open OUT, ">", "$path/$id" or die "Can't create out file: $!";
-                my $filename = param("filename$_");
-                my ($buffer, $bytesread);
-                while ($bytesread = read($filename, $buffer, 1024)) {
-                    print OUT $buffer
-                }
-                close OUT;
+                _save_attach("filename$_", "$path/$id");
                 $count++;
                 if (param("description$_")) {
                     open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
@@ -419,6 +413,19 @@ sub run {
     Quiki::Meta::set($node, $self->{meta});
     $template->output(print_to => \*STDOUT);
 }
+
+
+sub _save_attach {
+    my ($param, $out) = @_;
+    open OUT, ">", $out or die "Can't create out file: $!";
+    my $filename = param($param);
+    my ($buffer, $bytesread);
+    while ($bytesread = read($filename, $buffer, 1024)) {
+        print OUT $buffer
+    }
+    close OUT;
+}
+
 
 =head1 QUIKI CONFIGURATION FILE
 
