@@ -1,5 +1,9 @@
-
 Revision history for Quiki
+
+0.06   Tue Aug  3 14:17:21 WEST 2010
+        - Quiki Star release (in honor of Rakudo Star)
+        - New user interface templates
+        - Minor tweeks;
 
 0.05   Tue May 11 21:58:04 WEST 2010
         - Removed hanging file in MANIFEST;
