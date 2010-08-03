@@ -289,49 +289,18 @@ sub run {
     }
 
     if ($action eq 'edit') { # && 
-#        ($preview || !Quiki::Pages->locked($node, $self->{sid}))) {
         if ($preview) {
             my $text = param('text') // '';
             $template->param(CONTENT=>Quiki::Formatter::format($self, $text));
-            $template->param(TEXT=>$text);
+            $template->param(TEXT => $text);
         }
         else {
-            $template->param(TEXT=>$content);
+            $template->param(TEXT => $content);
         }
 
-        if (-d "data/attach/$node") {
-            my @attachs;
-            opendir DIR, "data/attach/$node";
-            my $mm = new File::MMagic;
-            my %desc;
-            for my $f (sort { lc($a) cmp lc($b)  } readdir(DIR)) {
-                next if $f =~ /^\.\.?$/;
-                my $filename = "data/attach/$node/$f";
-                if ($f =~ m!_desc_(.*)!) { $desc{$1} = slurp $filename }
-                else {
-                    ## XXX - TODO - Put this elsewhere
-                    my $mime = $mm->checktype_filename( $filename );
-                    my $mimeimg;
-                    given ($mime) {
-                        when (/image/) { $mimeimg = "mime_image.png"   }
-                        when (/pdf/)   { $mimeimg = "mime_pdf.png"     }
-                        when (/zip/)   { $mimeimg = "mime_zip.png"     }
-                        default        { $mimeimg = "mime_default.png" }
-                    }
-                    push @attachs, { ID      => $f,
-                                     MIME    => $mime,
-                                     SIZE    => sprintf("%.0f",((stat($filename))[7] / 1024)),
-                                     MIMEIMG => $mimeimg };
-                }
-            }
-            for (@attachs) {
-                $_->{DESC} = $desc{$_->{ID}}
-            }
-            $template->param(ATTACHS => \@attachs);
-        }
+        $template->param(ATTACHS => _list_attachs($node)) if -d "data/attach/$node";
     }
     elsif ($action eq 'history') {
-
         my @revs;
         for (my $i=$self->{meta}{rev} ; $i>0 ; $i--) {
             my $entry = { VERSION => $i };
@@ -429,6 +398,39 @@ sub _save_attach {
     close OUT;
 }
 
+
+sub _list_attachs {
+    my $node = shift;
+    my $folder = "data/attach/$node";
+    my %desc;
+    my @attachs;
+    my $mm = new File::MMagic;
+    opendir DIR, $folder;
+    for my $f (sort { lc($a) cmp lc($b)  } readdir(DIR)) {
+        next if $f =~ /^\.\.?$/;
+        my $filename = "data/attach/$node/$f";
+        if ($f =~ m!_desc_(.*)!) { $desc{$1} = slurp $filename }
+        else {
+            ## XXX - TODO - Put this elsewhere
+            my $mime = $mm->checktype_filename( $filename );
+            my $mimeimg;
+            given ($mime) {
+                when (/image/) { $mimeimg = "mime_image.png"   }
+                when (/pdf/)   { $mimeimg = "mime_pdf.png"     }
+                when (/zip/)   { $mimeimg = "mime_zip.png"     }
+                default        { $mimeimg = "mime_default.png" }
+            }
+            push @attachs, { ID      => $f,
+                             MIME    => $mime,
+                             SIZE    => sprintf("%.0f",((stat($filename))[7] / 1024)),
+                             MIMEIMG => $mimeimg };
+        }
+    }
+    for (@attachs) {
+        $_->{DESC} = $desc{$_->{ID}}
+    }
+    return \@attachs;
+}
 
 =head1 QUIKI CONFIGURATION FILE
 
