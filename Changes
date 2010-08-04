@@ -4,6 +4,7 @@ Revision history for Quiki
         - Multiple file uploads at once;
         - Code refactoring;
         - Changed favicon accordingly with the new logo;
+        - Minor template fixes;
 
 0.06   Tue Aug  3 14:17:21 WEST 2010
         - Quiki Star release (in honor of Rakudo Star)
