@@ -56,3 +56,4 @@ site/images/mime_zip.png
 site/themes/default/history.tmpl
 site/images/favicon.ico
 site/themes/default/admin.tmpl
+lib/Quiki/Attachments.pm

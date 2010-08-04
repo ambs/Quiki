@@ -8,11 +8,12 @@ use Quiki::Formatter;
 use Quiki::Meta;
 use Quiki::Users;
 use Quiki::Pages;
+use Quiki::Attachments;
 
 use CGI qw/:standard *div/;
 use CGI::Session;
 use HTML::Template::Pro;
-use File::MMagic;
+
 use File::Slurp 'slurp';
 use Pod::Html;
 
@@ -130,10 +131,11 @@ sub run {
     if ($action eq "upload") {
         my $i = 1;
         while (param("filename$i") && param("name$i")) {
+            # XXX - Move all this shit to Quiki::Attachments
             my $id = param("name$i");
             my $path = "data/attach/$node";
             -f $path or (mkdir $path and chown 0777, $path);
-            _save_attach("filename$i", "$path/$id");
+            Quiki::Attachments->save_attach("filename$i", "$path/$id");
             if (param("description$i")) {
                 open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
                 print OUT param("description$_");
@@ -296,7 +298,7 @@ sub run {
             $template->param(TEXT => $content);
         }
 
-        $template->param(ATTACHS => _list_attachs($node)) if -d "data/attach/$node";
+        $template->param(ATTACHS => Quiki::Attachments->list($node)) if -d "data/attach/$node";
     }
     elsif ($action eq 'history') {
         my @revs;
@@ -385,50 +387,6 @@ sub run {
 }
 
 
-sub _save_attach {
-    my ($param, $out) = @_;
-    open OUT, ">", $out or die "Can't create out file: $!";
-    my $filename = param($param);
-    my ($buffer, $bytesread);
-    while ($bytesread = read($filename, $buffer, 1024)) {
-        print OUT $buffer
-    }
-    close OUT;
-}
-
-
-sub _list_attachs {
-    my $node = shift;
-    my $folder = "data/attach/$node";
-    my %desc;
-    my @attachs;
-    my $mm = new File::MMagic;
-    opendir DIR, $folder;
-    for my $f (sort { lc($a) cmp lc($b)  } readdir(DIR)) {
-        next if $f =~ /^\.\.?$/;
-        my $filename = "data/attach/$node/$f";
-        if ($f =~ m!_desc_(.*)!) { $desc{$1} = slurp $filename }
-        else {
-            ## XXX - TODO - Put this elsewhere
-            my $mime = $mm->checktype_filename( $filename );
-            my $mimeimg;
-            given ($mime) {
-                when (/image/) { $mimeimg = "mime_image.png"   }
-                when (/pdf/)   { $mimeimg = "mime_pdf.png"     }
-                when (/zip/)   { $mimeimg = "mime_zip.png"     }
-                default        { $mimeimg = "mime_default.png" }
-            }
-            push @attachs, { ID      => $f,
-                             MIME    => $mime,
-                             SIZE    => sprintf("%.0f",((stat($filename))[7] / 1024)),
-                             MIMEIMG => $mimeimg };
-        }
-    }
-    for (@attachs) {
-        $_->{DESC} = $desc{$_->{ID}}
-    }
-    return \@attachs;
-}
 
 =head1 QUIKI CONFIGURATION FILE
 
