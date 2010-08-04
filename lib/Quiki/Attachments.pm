@@ -69,6 +69,10 @@ attachments.
 
 lists specific node attachments
 
+=head2 save_attach
+
+temporary function to save attachments. Should be replaced/bettened soon.
+
 =head1 SEE ALSO
 
 Quiki, perl(1)
