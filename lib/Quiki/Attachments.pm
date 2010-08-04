@@ -1,6 +1,7 @@
 package Quiki::Attachments;
 use 5.010;
 use File::MMagic;
+use CGI qw/:standard/;
 
 sub save_attach {
     my ($self, $param, $out) = @_;
