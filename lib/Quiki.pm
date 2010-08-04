@@ -51,7 +51,6 @@ Runs the Quiki.
 
 =cut
 
-
 sub new {
     my ($class, %args) = @_;
     my $self;
@@ -129,22 +128,21 @@ sub run {
 
     # XXX
     if ($action eq "upload") {
-        my $count = 0;
-        for (1..3) {
-            if (param("filename$_") && param("name$_")) {
-                my $id = param("name$_");
-                my $path = "data/attach/$node";
-                -f $path or (mkdir $path and chown 0777, $path);
-                _save_attach("filename$_", "$path/$id");
-                $count++;
-                if (param("description$_")) {
-                    open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
-                    print OUT param("description$_");
-                    close OUT;
-                }
+        my $i = 1;
+        while (param("filename$i") && param("name$i")) {
+            my $id = param("name$i");
+            my $path = "data/attach/$node";
+            -f $path or (mkdir $path and chown 0777, $path);
+            _save_attach("filename$i", "$path/$id");
+            if (param("description$i")) {
+                open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
+                print OUT param("description$_");
+                close OUT;
             }
+            ++$i;
         }
-        $self->_msg("$count file(s) uploaded.");
+        --$i;
+        $self->_msg("$i file(s) uploaded.");
     }
 
     # XXX
@@ -344,10 +342,10 @@ sub run {
     elsif ($action eq 'diff') {
         my $source = param('source') || 1;
         my $target = param('target') || 1;
-        $template->param(CONTENT=>Quiki::Pages->calc_diff($self,$node,$source,$target));
+        $template->param(CONTENT => Quiki::Pages->calc_diff($self,$node,$source,$target));
     }
     else {
-        $template->param(CONTENT=>Quiki::Formatter::format($self, $content));
+        $template->param(CONTENT => Quiki::Formatter::format($self, $content));
     }
 
 

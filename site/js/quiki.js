@@ -1,4 +1,24 @@
 
+jQuery(document).ready(function($){
+    $('.quiki_js').show();
+});
+
+var numFiles=1;
+
+function addUploadFile() {
+    var aux = $('#rowid'+numFiles);
+    if (aux) {
+        numFiles++;
+        aux.after('<tr id="rowid' + numFiles +
+                  '"><td><input type="file" name="filename' + numFiles + 
+                  '" onChange="updateField(this, ' + numFiles + 
+                  ')" /></td><td><input name="name' + numFiles +
+                  '"  size="10"  id="name' + numFiles + 
+                  '"/></td><td><input name="description' + numFiles +
+                  '" size="30"/></td></tr>');
+    }
+}
+
 function insertAtCursor(Id, myValue) {
     var myField = document.getElementById(Id);
     //IE support
