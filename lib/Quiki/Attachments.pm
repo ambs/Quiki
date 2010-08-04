@@ -2,6 +2,7 @@ package Quiki::Attachments;
 use 5.010;
 use File::MMagic;
 use CGI qw/:standard/;
+use File::Slurp 'slurp';
 
 sub save_attach {
     my ($self, $param, $out) = @_;
