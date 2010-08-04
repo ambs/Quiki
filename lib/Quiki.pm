@@ -138,7 +138,7 @@ sub run {
             Quiki::Attachments->save_attach("filename$i", "$path/$id");
             if (param("description$i")) {
                 open OUT, ">", "$path/_desc_$id" or die "Can't create out file: $!";
-                print OUT param("description$_");
+                print OUT param("description$i");
                 close OUT;
             }
             ++$i;

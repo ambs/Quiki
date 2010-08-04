@@ -16,8 +16,7 @@ sub save_attach {
 
 
 sub list {
-    my $slef = shift;
-    my $node = shift;
+    my ($self, $nome) = @_;
     my $folder = "data/attach/$node";
     my %desc;
     my @attachs;
