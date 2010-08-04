@@ -1,5 +1,5 @@
 package Quiki::Attachments;
-use 5.012;
+use 5.010;
 use File::MMagic;
 
 sub save_attach {
