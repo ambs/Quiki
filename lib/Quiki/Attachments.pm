@@ -16,7 +16,7 @@ sub save_attach {
 
 
 sub list {
-    my ($self, $nome) = @_;
+    my ($self, $node) = @_;
     my $folder = "data/attach/$node";
     my %desc;
     my @attachs;
