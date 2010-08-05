@@ -408,17 +408,20 @@ a.quiki_menu_button:hover span {
   z-index: 1000;
 }
 
+#quiki_attach_list {
+  color: #999999;
+}
+
 #quiki_attach_list th { 
-  border: solid 1px #aaaaaa;
   margin: 1px;
   padding: 1px;
-  background-color: #aaaaaa;
+  background-color: #ffa200;
+  color: black;
 }
 
 #quiki_attach_list td { 
-  border: solid 1px #aaaaaa;
   margin: 1px;
-  padding: 1px;
+  padding: 1px 4px;
 }
 
 a img { 
