@@ -1,6 +1,6 @@
 Revision history for Quiki
 
-0.07
+0.07   Thu Aug  5 09:28:46 WEST 2010
         - Multiple file uploads at once;
         - Code refactoring;
         - Changed favicon accordingly with the new logo;
