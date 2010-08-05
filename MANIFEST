@@ -57,7 +57,4 @@ site/themes/default/history.tmpl
 site/images/favicon.ico
 site/themes/default/admin.tmpl
 lib/Quiki/Attachments.pm
-<!-- SITE TITLE AT THE TOP -->
-<div class="quiki_header">
-  <h1><tmpl_var name="WIKINAME"/></h1>
-</div>
+site/themes/default/footer.tmpl
