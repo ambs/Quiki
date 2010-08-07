@@ -1,7 +1,5 @@
 package Quiki::Formatter;
 
-use feature ':5.10';
-
 use CGI qw/:standard/;
 use URI::Escape;
 use Regexp::Common qw/URI/;
@@ -25,17 +23,15 @@ sub format {
 sub _tds {
     my ($Quiki, $content) = @_;
 
-    given ($content) {
-        when (/^\S/) {
-            return td({-style=>"text-align: left"}, _inlines($Quiki, $content));
-        }
-        when (/\S$/) {
-            return td({-style=>"text-align: right"}, _inlines($Quiki, $content));
-        }
-        default {
-            return td({-style=>"text-align: center"}, _inlines($Quiki, $content));
-        }
+    if ($contet =~ /^\S/) {
+        return td({-style=>"text-align: left"}, _inlines($Quiki, $content));
     }
+
+    if ($content =~ /\S$/) {
+        return td({-style=>"text-align: right"}, _inlines($Quiki, $content));
+    }
+
+    return td({-style=>"text-align: center"}, _inlines($Quiki, $content));
 }
 
 sub _format_table {
@@ -140,14 +136,15 @@ sub _format_chunk {
         elsif ($chunk =~ /^(={1,6}) ((?:\\=|[^=]|\/[^=])+) \1\s*($|\n)/x) {
             my ($delim, $title) = ($1, $2);
             $chunk =~ s/.*($|\n)//;
-            given(length($delim)) {
-                when (1) { $title = h6(_inlines($Quiki, $title)) }
-                when (2) { $title = h5(_inlines($Quiki, $title)) }
-                when (3) { $title = h4(_inlines($Quiki, $title)) }
-                when (4) { $title = h3(_inlines($Quiki, $title)) }
-                when (5) { $title = h2(_inlines($Quiki, $title)) }
-                when (6) { $title = h1(_inlines($Quiki, $title)) }
-            }
+
+            my $l = length($delim);
+            $title = h6(_inlines($Quiki, $title)) if $l == 1
+            $title = h5(_inlines($Quiki, $title)) if $l == 2
+            $title = h4(_inlines($Quiki, $title)) if $l == 3
+            $title = h3(_inlines($Quiki, $title)) if $l == 4
+            $title = h2(_inlines($Quiki, $title)) if $l == 5
+            $title = h1(_inlines($Quiki, $title)) if $l == 6
+
             $chunk = $chunk ? ($title . "\n\n"  . _format_chunk($Quiki, $chunk)) : $title;
         }
         else {
@@ -280,24 +277,24 @@ sub _inlines {
 
 sub _inline_pic {
     my ($quiki, $url, $desc, $align) = @_;
-    given($align) {
-        when ("right") {
-            return img({-alt=>$desc, -title=>$desc,
-                        -src=>$url, -style=>"float: right"})
-        }
-        when ("left") {
-            return img({-alt=>$desc, -title=>$desc,
-                        -src=>$url, -style=>"float: left"})
-        }
-        when ("center") {
-            return div({-style=>"text-align: center"},
-                       img({-alt=>$desc, -title=>$desc,
-                            -src=>$url}))
-        }
-        default {
-            return img({-alt=>$desc, -title=>$desc, -src=>$url})
-        }
+
+    if ($align eq "right") {
+        return img({-alt=>$desc, -title=>$desc,
+                    -src=>$url, -style=>"float: right"})
     }
+
+    if ($align eq "left") {
+        return img({-alt=>$desc, -title=>$desc,
+                    -src=>$url, -style=>"float: left"})
+    }
+
+    if ($align eq "center") {
+        return div({-style=>"text-align: center"},
+                   img({-alt=>$desc, -title=>$desc,
+                        -src=>$url}))
+    }
+
+    return img({-alt=>$desc, -title=>$desc, -src=>$url})
 }
 
 sub _inline_doc {
@@ -306,21 +303,20 @@ sub _inline_doc {
     my $mm = new File::MMagic;
     my $mime = $mm->checktype_filename("data/attach/$node/$id");
     if ($mime =~ /^image/) {
-        given($align) {
-            when ("right") {
-                return img({-alt=>$desc, -src=>"data/attach/$node/$id", -style=>"float: right"})
-            }
-            when ("left") {
-                return img({-alt=>$desc, -src=>"data/attach/$node/$id", -style=>"float: left"})
-            }
-            when ("center") {
-                return div({-style=>"text-align: center"}, 
-                           img({-alt=>$desc, -src=>"data/attach/$node/$id"}))
-            }
-            default {
-                return img({-alt=>$desc, -src=>"data/attach/$node/$id"})
-            }
+        if ($align eq "right") {
+            return img({-alt=>$desc, -src=>"data/attach/$node/$id", -style=>"float: right"})
         }
+
+        if ($align eq "left") {
+            return img({-alt=>$desc, -src=>"data/attach/$node/$id", -style=>"float: left"})
+        }
+
+        if ($align eq "center") {
+            return div({-style=>"text-align: center"}, 
+                       img({-alt=>$desc, -src=>"data/attach/$node/$id"}))
+        }
+
+        return img({-alt=>$desc, -src=>"data/attach/$node/$id"})
     }
     else {
         a({-href=>"data/attach/$node/$id", -target=>"_new"},
