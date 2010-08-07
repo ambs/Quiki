@@ -42,9 +42,11 @@ sub locked_for_user {
 sub lock {
     my ($class, $node, $user) = @_;
 
-    open LOCK, "> data/locks/$node" or die;
-    print LOCK $user;
-    close LOCK;
+    if ($user) {
+        open LOCK, "> data/locks/$node" or die;
+        print LOCK $user;
+        close LOCK;
+    }
 }
 
 sub check_in {
