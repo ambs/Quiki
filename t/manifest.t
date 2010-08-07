@@ -8,6 +8,7 @@ ok_manifest({filter => [qr/\.git/,
                         qr/testsite/,
                         qr/Makefile.old/,
                         qr'/TODO$',
+                        qr'tar.gz$',
                         qr'script/quiki_create$',
                         qr/extra_files/,
                         qr/~$/]});
