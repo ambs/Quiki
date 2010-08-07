@@ -1,7 +1,5 @@
 package Quiki::Meta;
 
-use feature ':5.10';
-
 use YAML::Any qw.LoadFile Dump.;
 
 sub get {
