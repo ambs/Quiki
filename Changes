@@ -1,5 +1,11 @@
 Revision history for Quiki
 
+0.09   Sat Aug  7 15:24:34 WEST 2010
+        - Mental note: releases during YAPCes are not good idea.
+        - Added a lot of files missing in the MANIFEST
+        - Added a test to check the MANIFEST :)
+        - Added CSS for the attachments table 
+
 0.08   Thu Aug  5 09:50:13 WEST 2010
         - Stupid MANIFEST mistake
 

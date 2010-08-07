@@ -32,6 +32,7 @@ WriteMakefile(
                   'Email::Sender'  => 0,
                   'Text::Password::Pronounceable' => '0.28',
                   'Text::Patch'    => 0,
+                  'Test::CheckManifest' => 0,
                   'Text::Diff'     => 0,
                   'Email::Simple::Creator' => 0,
                   'Gravatar::URL'  => 0,
