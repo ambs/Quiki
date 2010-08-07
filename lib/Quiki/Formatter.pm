@@ -23,7 +23,7 @@ sub format {
 sub _tds {
     my ($Quiki, $content) = @_;
 
-    if ($contet =~ /^\S/) {
+    if ($content =~ /^\S/) {
         return td({-style=>"text-align: left"}, _inlines($Quiki, $content));
     }
 
@@ -138,12 +138,12 @@ sub _format_chunk {
             $chunk =~ s/.*($|\n)//;
 
             my $l = length($delim);
-            $title = h6(_inlines($Quiki, $title)) if $l == 1
-            $title = h5(_inlines($Quiki, $title)) if $l == 2
-            $title = h4(_inlines($Quiki, $title)) if $l == 3
-            $title = h3(_inlines($Quiki, $title)) if $l == 4
-            $title = h2(_inlines($Quiki, $title)) if $l == 5
-            $title = h1(_inlines($Quiki, $title)) if $l == 6
+            $title = h6(_inlines($Quiki, $title)) if $l == 1;
+            $title = h5(_inlines($Quiki, $title)) if $l == 2;
+            $title = h4(_inlines($Quiki, $title)) if $l == 3;
+            $title = h3(_inlines($Quiki, $title)) if $l == 4;
+            $title = h2(_inlines($Quiki, $title)) if $l == 5;
+            $title = h1(_inlines($Quiki, $title)) if $l == 6;
 
             $chunk = $chunk ? ($title . "\n\n"  . _format_chunk($Quiki, $chunk)) : $title;
         }

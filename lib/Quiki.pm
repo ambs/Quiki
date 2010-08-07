@@ -204,7 +204,7 @@ sub run {
     # XXX
     if ($action eq 'save' && param("submit_opt") eq "Save") {
         if (Quiki::Pages->locked_for_user($node, $self->{sid})) {
-            my $text = defined(param('text')) ? param('text') || '';
+            my $text = defined(param('text')) ? param('text') : '';
             Quiki::Pages->check_in($self, $node, $text);
             Quiki::Pages->unlock($node);
             $self->_msg("Content for \"$node\" updated.");
@@ -276,7 +276,7 @@ sub run {
                      BREADCUMBS  => $breadcumbs,
                      SERVERNAME  => $self->{SERVER_NAME},
                      DOCROOT     => $self->{DOCROOT},
-                     OPENSITE    => defined($self->{opensite}) ? $self->{opensite} || 1,
+                     OPENSITE    => defined($self->{opensite}) ? $self->{opensite} : 1,
                      USER_ROLE   => $urole,
                      PREVIEW     => $preview,
                     );
