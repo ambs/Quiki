@@ -1,5 +1,8 @@
 Revision history for Quiki
 
+0.11   Sun Aug  8 13:49:56 WEST 2010
+        - Fixed a smart match found in version 0.10
+
 0.10   Sat Aug  7 15:46:05 WEST 2010
         - Backported to perl 5.8.8
 

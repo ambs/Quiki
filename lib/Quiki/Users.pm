@@ -49,7 +49,7 @@ sub update {
 
     my @sql;
     for my $key (keys %info) {
-        if ($key ~~ [@valid_fields]) {
+        if (grep {$_ eq $key}  @valid_fields) {
             push @sql, "$key = '$info{$key}'"
         }
     }

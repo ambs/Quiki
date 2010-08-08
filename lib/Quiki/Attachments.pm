@@ -3,6 +3,8 @@ use File::MMagic;
 use CGI qw/:standard/;
 use File::Slurp 'slurp';
 
+our $VERSION = 0.01;
+
 sub save_attach {
     my ($self, $param, $out) = @_;
     open OUT, ">", $out or die "Can't create out file: $!";
