@@ -3,7 +3,7 @@ MANIFEST
 Makefile.PL
 README
 lib/Quiki.pm
-lib/Quiki/Formatter.pm
+lib/Quiki/Formatter/HTML.pm
 t/00-load.t
 t/01-formatter.t
 t/02-meta.t

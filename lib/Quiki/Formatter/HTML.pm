@@ -1,4 +1,4 @@
-package Quiki::Formatter;
+package Quiki::Formatter::HTML;
 
 use CGI qw/:standard/;
 use URI::Escape;
@@ -345,12 +345,12 @@ sub _protect {
 
 =head1 NAME
 
-Quiki::Formatter - Quiki formatter module
+Quiki::Formatter::HTML - Quiki HTML formatter module
 
 =head1 SYNOPSIS
 
-  use Quiki::Formatter;
-  my $html = Quiki::Formatter::format($string);
+  use Quiki::Formatter::HTML;
+  my $html = Quiki::Formatter::HTML::format($string);
 
 =head1 DESCRIPTION
 
@@ -358,7 +358,7 @@ Hides formatting subroutine.
 
 =head1 EXPORTS
 
-None. Use Quiki::Formatter::format.
+None. Use Quiki::Formatter::HTML::format.
 
 =head2 format
 

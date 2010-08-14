@@ -2,7 +2,7 @@ package Quiki;
 
 use Data::Dumper;
 
-use Quiki::Formatter;
+use Quiki::Formatter::HTML;
 use Quiki::Meta;
 use Quiki::Users;
 use Quiki::Pages;
@@ -290,7 +290,7 @@ sub run {
         if ($preview) {
             my $text = param('text');
             $text = '' unless defined $text;
-            $template->param(CONTENT=>Quiki::Formatter::format($self, $text));
+            $template->param(CONTENT=>Quiki::Formatter::HTML::format($self, $text));
             $template->param(TEXT => $text);
         }
         else {
@@ -346,7 +346,7 @@ sub run {
         $template->param(CONTENT => Quiki::Pages->calc_diff($self,$node,$source,$target));
     }
     else {
-        $template->param(CONTENT => Quiki::Formatter::format($self, $content));
+        $template->param(CONTENT => Quiki::Formatter::HTML::format($self, $content));
     }
 
 
