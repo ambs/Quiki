@@ -25,6 +25,8 @@ sub set {
 }
 
 
+=encoding UTF-8
+
 =head1 NAME
 
 Quiki::Meta - Quiki meta information handler

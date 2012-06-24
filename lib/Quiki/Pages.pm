@@ -111,6 +111,8 @@ sub calc_diff {
 
 '\o/';
 
+=encoding UTF-8
+
 =head1 NAME
 
 Quiki::Users - Quiki pages manager

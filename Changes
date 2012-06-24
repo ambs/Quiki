@@ -1,5 +1,8 @@
 Revision history for Quiki
 
+0.12   Sun Jun 24 13:41:05 WEST 2012
+        - fix POD encoding issues
+
 0.11   Sun Aug  8 13:49:56 WEST 2010
         - Fixed a smart match found in version 0.10
 

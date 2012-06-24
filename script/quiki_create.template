@@ -152,6 +152,8 @@ sub create_html_files {
     print " - help/syntax.html... created.\n";
 }
 
+=encoding UTF-8
+
 =head1 NAME
 
 quiki_create.pl - Deploys a Quiki!

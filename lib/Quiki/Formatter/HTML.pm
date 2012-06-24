@@ -343,6 +343,8 @@ sub _protect {
 
 "false";
 
+=encoding UTF-8
+
 =head1 NAME
 
 Quiki::Formatter::HTML - Quiki HTML formatter module

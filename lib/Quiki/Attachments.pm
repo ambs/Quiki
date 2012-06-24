@@ -54,6 +54,8 @@ sub list {
 
 "42";
 
+=encoding UTF-8
+
 =head1 NAME
 
 Quiki::Attachments - Quiki attachments manager

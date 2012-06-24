@@ -2,9 +2,9 @@
 
 use Test::More tests => 45;
 
-use_ok("Quiki::Formatter");
+use_ok("Quiki::Formatter::HTML");
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph.
 
 two paragraphs.
@@ -14,7 +14,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph.
 
 
@@ -28,7 +28,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph < other paragraph.
 
 two paragraphs.
@@ -38,7 +38,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a [[link]].
 
 two paragraphs.
@@ -48,7 +48,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with [[more]] than a [[link]].
 
 two paragraphs.
@@ -58,7 +58,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with [[http://www.google.com|an external link]].
 
 two paragraphs.
@@ -68,7 +68,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a [[named link|link]].
 
 two paragraphs.
@@ -78,7 +78,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a **bold**.
 
 two paragraphs.
@@ -88,7 +88,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with a **bold * with \*\* stars**.
 
 two paragraphs.
@@ -98,7 +98,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with an //italic//.
 
 two paragraphs.
@@ -108,7 +108,7 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 one paragraph with an //italic / with \/\/ slashes//.
 
 two paragraphs.
@@ -118,55 +118,55 @@ EOI
 <p>two paragraphs.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo /\/ bar \** zbr \/\/ ugh \*\*.
 EOI
 <p>foo // bar ** zbr // ugh **.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo \\ bar \[[ zbr \]] ugh \*\*.
 EOI
 <p>foo \ bar [[ zbr ]] ugh **.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 foo ''bar'' \'' zbr \'' ugh.
 EOI
 <p>foo <tt>bar</tt> '' zbr '' ugh.</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will //**bold and italic**// work?
 EOI
 <p>will <i><b>bold and italic</b></i> work?</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will **//bold and italic//** work?
 EOI
 <p>will <b><i>bold and italic</i></b> work?</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will **//__bold and italic and underline__//** work?
 EOI
 <p>will <b><i><u>bold and italic and underline</u></i></b> work?</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will __underline__ work? __foo _ bar__
 EOI
 <p>will <u>underline</u> work? <u>foo _ bar</u></p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 will [[link|Links **with** formatting //work//]]?
 EOI
 <p>will <a href="quiki?node=link">Links <b>with</b> formatting <i>work</i></a>?</p>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ======foo======
 
 =====bar=====
@@ -199,7 +199,7 @@ EOI
 <h6>zbr != ugh</h6>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ------------
 
 ---------------------
@@ -213,7 +213,7 @@ EOI
 <hr/>
 EOO
 
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ------------
 foo bar.
 
@@ -226,7 +226,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 foo
 
    bar
@@ -244,7 +244,7 @@ zbr
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 foo
 
    bar
@@ -260,7 +260,7 @@ zbr
 <p>xpto</p>
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 foo
 
    bar
@@ -279,7 +279,7 @@ zbr
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 foo
 
      bar
@@ -298,7 +298,7 @@ zbr
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   * one
   * two
 EOI
@@ -309,7 +309,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   - one
   - two
 EOI
@@ -320,7 +320,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   * one
     * one dot one
     * one dot two
@@ -337,7 +337,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   - one
     - one dot one
     - one dot two
@@ -360,7 +360,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   - a
     - b
       - c
@@ -381,7 +381,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   - a
     * b
       - c
@@ -403,7 +403,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   - a
   * b
 EOI
@@ -417,7 +417,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 EOI
 <table>
@@ -427,7 +427,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 | a | b | c |
 EOI
 <table>
@@ -437,7 +437,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 | a | b | c |
 EOI
@@ -449,7 +449,7 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 ^ a ^ b ^ c ^
 | a |b | c|
 EOI
@@ -459,7 +459,7 @@ EOI
 </table>
 
 EOO
-is(Quiki::Formatter::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({SCRIPT_NAME=>'quiki'},<<'EOI'), <<'EOO');
 ======foo======
 hello world
 EOI
@@ -469,21 +469,21 @@ EOI
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 {{http://www.xpto.foo/foo.png}}
 EOI
 <p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" alt="http://www.xpto.foo/foo.png" /></p>
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 {{  http://www.xpto.foo/foo.png}}
 EOI
 <p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" style="float: right" alt="http://www.xpto.foo/foo.png" /></p>
 EOO
 
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 {{http://www.xpto.foo/foo.png  }}
 EOI
 <p><img title="http://www.xpto.foo/foo.png" src="http://www.xpto.foo/foo.png" style="float: left" alt="http://www.xpto.foo/foo.png" /></p>
@@ -491,7 +491,7 @@ EOO
 
 
 # The space in the example bellow IS IMPORTANT
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
   * one
   * two
  
@@ -511,7 +511,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 | [[http://www.google.com|a]] | b | c |
 EOI
 <table>
@@ -520,7 +520,7 @@ EOI
 
 EOO
 
-is(Quiki::Formatter::format({},<<'EOI'), <<'EOO');
+is(Quiki::Formatter::HTML::format({},<<'EOI'), <<'EOO');
 Um corpus retirado do [[http://urd.let.rug.nl/tiedeman/OPUS/|OPUS]], que consiste nas legendas em Português do site [[http://www.opensubtitles.org/]].
 EOI
 <p>Um corpus retirado do <a href="http://urd.let.rug.nl/tiedeman/OPUS/">OPUS</a>, que consiste nas legendas em Português do site <a href="http://www.opensubtitles.org/">http://www.opensubtitles.org/</a>.</p>
